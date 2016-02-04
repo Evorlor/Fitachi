@@ -1,0 +1,270 @@
+fileFormatVersion: 2
+guid: 7d1d851dea5117241b4a90071f7046da
+timeCreated: 1454543597
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: endurance
+    21300002: speed
+    21300004: rest
+    21300006: nutrition
+    21300008: adventure
+    21300010: combat
+    21300012: eating
+    21300014: exit
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: endurance
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 485
+        height: 467
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -71.5, y: 77.6284}
+        - {x: -79.5, y: 69.6284}
+        - {x: -79.5, y: -9.371597}
+        - {x: -17.5, y: -76.3716}
+        - {x: 27.5, y: -76.3716}
+        - {x: 79.5, y: 1.6284027}
+        - {x: 79.5, y: 70.6284}
+        - {x: 69.5, y: 77.6284}
+    - name: speed
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 136
+        width: 787
+        height: 472
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 129.284, y: -17.125381}
+        - {x: 81.284, y: 17.874619}
+        - {x: -20.716003, y: 77.87462}
+        - {x: -124.716, y: 77.87462}
+        - {x: -128.716, y: 72.87462}
+        - {x: -128.716, y: -77.12538}
+        - {x: 129.284, y: -77.12538}
+    - name: rest
+      rect:
+        serializedVersion: 2
+        x: 1508
+        y: 60
+        width: 903
+        height: 602
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32.463745, y: 99.07704}
+        - {x: -147.46375, y: 99.07704}
+        - {x: -147.46375, y: 71.07704}
+        - {x: -144.46375, y: 62.07704}
+        - {x: -123.463745, y: 62.07704}
+        - {x: -125.463745, y: 62.07704}
+        - {x: -137.46375, y: 58.07704}
+        - {x: -137.46375, y: 31.077042}
+        - {x: -121.463745, y: 24.077042}
+        - {x: -40.463745, y: -26.922958}
+        - {x: 25.536255, y: -97.92296}
+        - {x: 121.536255, y: -97.92296}
+        - {x: 140.53625, y: -91.92296}
+        - {x: 147.53625, y: -63.92296}
+        - {x: 147.53625, y: 11.077042}
+    - name: nutrition
+      rect:
+        serializedVersion: 2
+        x: 2582
+        y: 26
+        width: 420
+        height: 613
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -43.53473, y: 100.98338}
+        - {x: -68.53473, y: 35.983383}
+        - {x: -68.53473, y: -82.01662}
+        - {x: -33.53473, y: -100.01662}
+        - {x: 23.465271, y: -100.01662}
+        - {x: 40.46527, y: -93.01662}
+        - {x: 69.46527, y: -23.016617}
+        - {x: 69.46527, y: 87.98338}
+        - {x: 62.46527, y: 100.98338}
+    - name: adventure
+      rect:
+        serializedVersion: 2
+        x: 3198
+        y: 23
+        width: 756
+        height: 576
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -47.543823, y: 95.00453}
+        - {x: -64.54382, y: 84.00453}
+        - {x: -123.54382, y: -38.99547}
+        - {x: -123.54382, y: -88.99547}
+        - {x: -120.54382, y: -93.99547}
+        - {x: 104.45618, y: -93.99547}
+        - {x: 124.45618, y: -92.99547}
+        - {x: 124.45618, y: -41.99547}
+        - {x: -15.543823, y: 95.00453}
+    - name: combat
+      rect:
+        serializedVersion: 2
+        x: 4098
+        y: 26
+        width: 523
+        height: 558
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -83.38818, y: 91.98338}
+        - {x: -85.38818, y: 90.98338}
+        - {x: -85.38818, y: -86.01662}
+        - {x: -83.38818, y: -91.01662}
+        - {x: 6.6118164, y: -91.01662}
+        - {x: 85.61182, y: -67.01662}
+        - {x: 85.61182, y: 81.98338}
+        - {x: 52.611816, y: 91.98338}
+    - name: eating
+      rect:
+        serializedVersion: 2
+        x: 4903
+        y: 84
+        width: 649
+        height: 481
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -104.729614, y: 27.407852}
+        - {x: -104.729614, y: -40.592148}
+        - {x: -58.729614, y: -78.59215}
+        - {x: 107.270386, y: -78.59215}
+        - {x: 107.270386, y: -26.592148}
+        - {x: 87.270386, y: 45.407852}
+        - {x: 37.270386, y: 79.40785}
+        - {x: -38.729614, y: 79.40785}
+        - {x: -81.729614, y: 68.40785}
+      - - {x: -47.729614, y: -42.592148}
+        - {x: -74.729614, y: 27.407852}
+        - {x: -4.7296143, y: 59.407852}
+        - {x: 27.270386, y: 45.407852}
+        - {x: 58.270386, y: -8.592148}
+        - {x: 59.270386, y: -9.592148}
+        - {x: 59.270386, y: -13.592148}
+        - {x: 60.270386, y: -14.592148}
+        - {x: 56.270386, y: -10.592148}
+        - {x: 45.270386, y: 9.407852}
+        - {x: 35.270386, y: 25.407852}
+        - {x: 32.270386, y: 28.407852}
+        - {x: 20.270386, y: 42.407852}
+        - {x: 9.270386, y: 52.407852}
+        - {x: 0.27038574, y: 51.407852}
+        - {x: -5.7296143, y: 43.407852}
+        - {x: -4.7296143, y: 35.407852}
+        - {x: 16.270386, y: 15.407852}
+        - {x: 19.270386, y: 11.407852}
+        - {x: 20.270386, y: 11.407852}
+        - {x: 17.270386, y: 14.407852}
+        - {x: 16.270386, y: 14.407852}
+        - {x: 14.270386, y: 16.407852}
+        - {x: 9.270386, y: 20.407852}
+        - {x: -2.7296143, y: 27.407852}
+        - {x: -9.729614, y: 27.407852}
+        - {x: -15.729614, y: 22.407852}
+        - {x: -17.729614, y: 15.407852}
+        - {x: -15.729614, y: 12.407852}
+        - {x: -9.729614, y: 7.407852}
+        - {x: -6.7296143, y: 5.407852}
+        - {x: 6.2703857, y: -3.5921478}
+        - {x: 10.270386, y: -4.592148}
+        - {x: 1.2703857, y: 2.4078522}
+        - {x: -17.729614, y: 11.407852}
+        - {x: -20.729614, y: 16.407852}
+        - {x: -37.729614, y: 9.407852}
+        - {x: -38.729614, y: -5.592148}
+        - {x: 8.270386, y: -27.592148}
+    - name: exit
+      rect:
+        serializedVersion: 2
+        x: 5665
+        y: 0
+        width: 605
+        height: 645
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -80.6012, y: 105.5}
+        - {x: -97.6012, y: 101.5}
+        - {x: -97.6012, y: 61.5}
+        - {x: -95.6012, y: 36.5}
+        - {x: -93.6012, y: 23.5}
+        - {x: -82.6012, y: -34.5}
+        - {x: -43.601196, y: -50.5}
+        - {x: -20.601196, y: -105.5}
+        - {x: 70.3988, y: -105.5}
+        - {x: 99.3988, y: -101.5}
+        - {x: 99.3988, y: -57.5}
+        - {x: 64.3988, y: 63.5}
+        - {x: -11.601196, y: 105.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
