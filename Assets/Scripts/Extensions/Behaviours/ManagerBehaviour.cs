@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+public class ExtenderClass : ManagerBehaviour<ExtenderClass>
+{
+}
+
 /// <summary>
 /// Extending this class creates a MonoBehaviour which may only have on instance and will not be destroyed between scenes.  When extending, the type of the inheriting class must be passed.
 /// </summary>
@@ -33,7 +37,7 @@ public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where Manage
             }
             if (Instance != manager)
             {
-                if (Instance.gameObject == manager.gameObject)
+                if (Instance.gameObject == manager.gameObject || manager.transform.childCount > 0)
                 {
                     Destroy(manager);
                 }
