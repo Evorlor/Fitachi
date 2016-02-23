@@ -17,10 +17,34 @@ public class FitbitRestClient : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		HTTPRestHelper<FitbitRestClient> request = new HTTPRestHelper<FitbitRestClient>("http://www.fiea.ucf.edu/", RestMethod.GET);
-		request.ExecAysnc(null);
+		//HTTPRestHelper<FitbitRestClient> request = new HTTPRestHelper<FitbitRestClient>("http://www.fiea.ucf.edu/", RestMethod.GET);
+		//request.ExecAysnc(test);
+
+
+		//WWW www = new WWW("http://www.fiea.ucf.edu/");
+		//StartCoroutine(WaitForRequest(www));
+		Application.OpenURL("http://www.fiea.ucf.edu/");
     }
-	
+
+	void test<FitbitRestClient>(uint httpCode, FitbitRestClient data)
+	{
+		Debug.Log(data);
+	}
+
+	IEnumerator WaitForRequest(WWW www)
+	{
+		yield return www;
+		// check for errors
+		if (www.error == null)
+		{
+			Debug.Log("WWW Ok!: " + www.text);
+		}
+		else
+		{
+			Debug.Log("WWW Error: " + www.error);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 	
