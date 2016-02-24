@@ -39,7 +39,7 @@ public class FitbitRestClient : MonoBehaviour {
 	private static string LOG_URL = "https://www.fitbit.com/oauth2/authorize";
 	private static string TOKEN_URL = "https://api.fitbit.com/oauth2/token";
 
-	private static string testurl = "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id="+ CLIENT_ID+ "&redirect_uri=fitachi%3A%2F%2Ffitachi.com&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800";
+	private static string testurl = "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id="+ CLIENT_ID+ "&redirect_uri=fitachi%3A%2F%2Fcb&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800";
 
 	// Use this for initialization
 	void Start () {
