@@ -25,6 +25,8 @@ public class UIController : MonoBehaviour
         DishButton.gameObject.SetActive(true);
         FoodPyramid.gameObject.SetActive(false);
         FoodMenu.gameObject.SetActive(false);
+
+        DestroyButtonsInList();
         Buttons.Clear();
     }
 
@@ -42,12 +44,25 @@ public class UIController : MonoBehaviour
 
     public void DisplayFoodToPurchase(int ButtonAmount)
     {
+        DestroyButtonsInList();
         Buttons.Clear();
+
         for (int i = 0; i < ButtonAmount; i++)
         {
             GameObject Button = Instantiate(FoodPanelButton);
             Button.transform.SetParent(DisplayPanel.transform, false);
             Buttons.Add(Button);
+        }
+    }
+
+    /// <summary>
+    /// Destroys the instantiated buttons in the food menu
+    /// </summary>
+    void DestroyButtonsInList()
+    {
+        foreach (GameObject button in Buttons)
+        {
+            Destroy(button);
         }
     }
 }
