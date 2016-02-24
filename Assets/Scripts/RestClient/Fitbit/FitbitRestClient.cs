@@ -1,5 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+public class PersistentLogin
+{
+	private const string TokenKey = "Token";
+	private const string UserIDKey = "UserID";
+
+	public static void SaveData(string token, int userID)
+	{
+		PlayerPrefs.SetString(TokenKey, token);
+		PlayerPrefs.SetInt(UserIDKey, userID);
+	}
+
+	public static Dictionary<string, object> LoadData()
+	{
+		var data = new Dictionary<string, object>();
+		string token = PlayerPrefs.GetString(TokenKey);
+		int userId = PlayerPrefs.GetInt(UserIDKey);
+		data.Add(TokenKey, token);
+		data.Add(UserIDKey, userId);
+		return data;
+	}
+}
+
 
 public class FitbitRestClient : MonoBehaviour {
 
@@ -49,7 +73,17 @@ public class FitbitRestClient : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+
+
+		AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        if (activity.Call<bool>("IsLogin"))
+		{
+			Debug.Log(activity.Call<string>("GetToken"));
+			Debug.Log(activity.Call<string>("GetUserId"));
+			Debug.Log(activity.Call<string>("GetExpires"));
+		}
 	}
 
 	public void Login()
