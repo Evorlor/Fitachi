@@ -15,15 +15,17 @@ public class FitbitRestClient : MonoBehaviour {
 	private static string LOG_URL = "https://www.fitbit.com/oauth2/authorize";
 	private static string TOKEN_URL = "https://api.fitbit.com/oauth2/token";
 
+	private static string testurl = "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id="+ CLIENT_ID+ "&redirect_uri=fitachi%3A%2F%2Ffitachi.com&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800";
+
 	// Use this for initialization
 	void Start () {
 		//HTTPRestHelper<FitbitRestClient> request = new HTTPRestHelper<FitbitRestClient>("http://www.fiea.ucf.edu/", RestMethod.GET);
 		//request.ExecAysnc(test);
 
-
+		
 		//WWW www = new WWW("http://www.fiea.ucf.edu/");
 		//StartCoroutine(WaitForRequest(www));
-		Application.OpenURL("http://www.fiea.ucf.edu/");
+		Application.OpenURL(testurl);
     }
 
 	void test<FitbitRestClient>(uint httpCode, FitbitRestClient data)
