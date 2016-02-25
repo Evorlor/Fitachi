@@ -13,7 +13,7 @@ public class BackgrounScroller : MonoBehaviour {
     }
 
     void Update() {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, (tileSizeZ*.75f));
+        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, (tileSizeZ*.60f));
         transform.position = startPosition + Vector3.left * newPosition;
 
         
