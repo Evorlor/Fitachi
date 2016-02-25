@@ -19,14 +19,11 @@ public class CombatController : MonoBehaviour
     private bool activeTurn = false;
     private bool takeTurn = false;
 
-    bool pollLock = false;
-    bool turnLock = false;
-
-    void Start()
+	void Start()
     {
         turnDisplay.text = NotPlayerTurnText;
-        StartCoroutine(DispatchPool());
-    }
+		StartCoroutine(DispatchPool());
+	}
 
     void Update()
     {
@@ -43,7 +40,7 @@ public class CombatController : MonoBehaviour
             return;
         }
         takeTurn = true;
-        turnDisplay.text = NotPlayerTurnText;
+		turnDisplay.text = NotPlayerTurnText;
 
         StartCoroutine(DispatchTakeTurn());
         StartCoroutine(DispatchPool());
@@ -51,46 +48,20 @@ public class CombatController : MonoBehaviour
 
     private IEnumerator DispatchTakeTurn()
     {
-        if (turnLock)
-        {
-            yield break;
-        }
-        else
-        {
-            turnLock = true;
-        }
-        yield return null;
-        Debug.Log("DispatchTakeTurn");
-
         // Send request
-        bool success = false;
         if (takeTurn && activeTurn)
         {
-            success = ServerManager.Instance.ServerTakeTurn();
-            Debug.Log("TURNED: " + success);
-            activeTurn = false;
+            yield return ServerManager.Instance.ServerTakeTurn();
         }
-
-        Debug.Log("DispatchTakeTurn Done");
-        turnLock = false;
-        yield break;
     }
 
     private IEnumerator DispatchPool()
     {
-        if (pollLock)
+		activeTurn = false;
+		while (!activeTurn)
         {
-            yield break;
-        } else
-        {
-            pollLock = true;
-        }
-        yield return null;
-        Debug.Log("DispatchPool");
-
-        while (!activeTurn)
-        {
-            activeTurn = ServerManager.Instance.CheckForTurn();
+			yield return ServerManager.Instance.CheckForTurn();
+			activeTurn = ServerManager.Instance.CheckForTurnResult;
             if (activeTurn)
             {
                 turnDisplay.text = PlayerTurnText;
@@ -98,9 +69,5 @@ public class CombatController : MonoBehaviour
             }
             yield return new WaitForSeconds(pollTime);
         }
-
-        Debug.Log("DispatchPool Done");
-        pollLock = false;
-        yield break;
     }
 }

@@ -9,27 +9,22 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private const string TakeTurnMethod = "take_turn/";
     private const string CheckForTurnMethod = "check_for_turn/";
 
-    public bool CheckForTurn()
+	public bool CheckForTurnResult = false;
+	public bool ServerTakeTurnResult = false;
+
+	public Coroutine CheckForTurn()
     {
         string url = ServerLink + CheckForTurnMethod + PlayerManager.Instance.UserID;
 
-        var www = new WWW(url);
-        while (!www.isDone) { }
-
-        var turnString = GetStringConversion(www.bytes);
-        return bool.Parse(turnString);
+		return StartCoroutine(CheckForTurnTask(url));
     }
 
-    public bool ServerTakeTurn()
+    public Coroutine ServerTakeTurn()
     {
         string url = ServerLink + TakeTurnMethod + PlayerManager.Instance.UserID;
 
-        var www = new WWW(url);
-        while (!www.isDone) { }
-
-        var success = GetStringConversion(www.bytes);
-        return bool.Parse(success);
-    }
+		return StartCoroutine(ServerTakeTurnTask(url));
+	}
 
     private string GetStringConversion(byte[] bytes)
     {
@@ -37,4 +32,28 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         var text = System.Text.Encoding.ASCII.GetString(bytes).Trim();
         return text;
     }
+
+	private IEnumerator CheckForTurnTask(string url)
+	{
+		var www = new WWW(url);
+		while (!www.isDone)
+		{
+			yield return null;
+        }
+
+		var result = GetStringConversion(www.bytes);
+		CheckForTurnResult = bool.Parse(result);
+    }
+
+	private IEnumerator ServerTakeTurnTask(string url)
+	{
+		var www = new WWW(url);
+		while (!www.isDone)
+		{
+			yield return null;
+		}
+
+		var result = GetStringConversion(www.bytes);
+		ServerTakeTurnResult = bool.Parse(result);
+	}
 }
