@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CombatController : MonoBehaviour
@@ -13,61 +11,38 @@ public class CombatController : MonoBehaviour
     private Text turnDisplay;
 
     [SerializeField]
-    [Tooltip("How often to poll the server to check if it is the player's turn yet")]
+    [Tooltip("How long of an interval between checks to see if it's the player's turn")]
     private float pollTime = 2.0f;
 
-    private bool activeTurn = false;
-    private bool takeTurn = false;
-
-	void Start()
+    void Start()
     {
         turnDisplay.text = NotPlayerTurnText;
-		StartCoroutine(DispatchPool());
-	}
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Debug.Log("P0 turn: " + activeTurn);
-        }
+        WaitForTurn();
     }
 
-    public void TakeTurn()
+    private void TakeTurn()
     {
-        if (!activeTurn)
+        ServerManager.Instance.TakeTurn(OnTurnComplete);
+    }
+
+    private void OnTurnComplete(string result)
+    {
+        bool success = bool.Parse(result);
+        if (!success)
         {
             return;
         }
-        takeTurn = true;
-		turnDisplay.text = NotPlayerTurnText;
-
-        StartCoroutine(DispatchTakeTurn());
-        StartCoroutine(DispatchPool());
+        turnDisplay.text = NotPlayerTurnText;
+        WaitForTurn();
     }
 
-    private IEnumerator DispatchTakeTurn()
+    private void WaitForTurn()
     {
-        // Send request
-        if (takeTurn && activeTurn)
-        {
-            yield return ServerManager.Instance.ServerTakeTurn();
-        }
+        ServerManager.Instance.NotifyOnTurnReady(OnTurnReady, pollTime);
     }
 
-    private IEnumerator DispatchPool()
+    private void OnTurnReady(string result)
     {
-		activeTurn = false;
-		while (!activeTurn)
-        {
-			yield return ServerManager.Instance.CheckForTurn();
-			activeTurn = ServerManager.Instance.CheckForTurnResult;
-            if (activeTurn)
-            {
-                turnDisplay.text = PlayerTurnText;
-                break;
-            }
-            yield return new WaitForSeconds(pollTime);
-        }
+        turnDisplay.text = PlayerTurnText;
     }
 }

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Collections;
+using System.Linq;
+using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
@@ -9,51 +9,52 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private const string TakeTurnMethod = "take_turn/";
     private const string CheckForTurnMethod = "check_for_turn/";
 
-	public bool CheckForTurnResult = false;
-	public bool ServerTakeTurnResult = false;
-
-	public Coroutine CheckForTurn()
+    public void NotifyOnTurnReady(Action<string> onTurnReady, float pollTime)
     {
-        string url = ServerLink + CheckForTurnMethod + PlayerManager.Instance.UserID;
-
-		return StartCoroutine(CheckForTurnTask(url));
+        StartCoroutine(WaitForTurn(onTurnReady, pollTime));
     }
 
-    public Coroutine ServerTakeTurn()
+    public void TakeTurn(Action<string> onTurnComplete)
+    {
+        StartCoroutine(WaitForTurnCompletion(onTurnComplete));
+    }
+
+    private IEnumerator WaitForTurnCompletion(Action<string> onTurnComplete)
     {
         string url = ServerLink + TakeTurnMethod + PlayerManager.Instance.UserID;
+        var www = new WWW(url);
+        yield return new WaitUntil(() => www.isDone);
+        string result = GetStringResult(www.bytes);
+        bool turnComplete = bool.Parse(result);
+        if (turnComplete)
+        {
+            onTurnComplete(result);
+            yield break;
+        }
+    }
 
-		return StartCoroutine(ServerTakeTurnTask(url));
-	}
+    private IEnumerator WaitForTurn(Action<string> onTurnReady, float pollTime)
+    {
+        string url = ServerLink + CheckForTurnMethod + PlayerManager.Instance.UserID;
+        while (true)
+        {
+            var www = new WWW(url);
+            yield return new WaitUntil(() => www.isDone);
+            var result = GetStringResult(www.bytes);
+            bool activeTurn = bool.Parse(result);
+            if (activeTurn)
+            {
+                onTurnReady(result);
+                yield break;
+            }
+            yield return new WaitForSeconds(pollTime);
+        }
+    }
 
-    private string GetStringConversion(byte[] bytes)
+    private string GetStringResult(byte[] bytes)
     {
         bytes = bytes.Where(x => x != 0x00).ToArray();
         var text = System.Text.Encoding.ASCII.GetString(bytes).Trim();
         return text;
     }
-
-	private IEnumerator CheckForTurnTask(string url)
-	{
-		var www = new WWW(url);
-		while (!www.isDone)
-		{
-			yield return null;
-        }
-
-		var result = GetStringConversion(www.bytes);
-		CheckForTurnResult = bool.Parse(result);
-    }
-
-	private IEnumerator ServerTakeTurnTask(string url)
-	{
-		var www = new WWW(url);
-		while (!www.isDone)
-		{
-			yield return null;
-		}
-
-		var result = GetStringConversion(www.bytes);
-		ServerTakeTurnResult = bool.Parse(result);
-	}
 }
