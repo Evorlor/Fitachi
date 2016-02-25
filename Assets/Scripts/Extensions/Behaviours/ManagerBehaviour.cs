@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
-public class ExtenderClass : ManagerBehaviour<ExtenderClass>
-{
-}
-
 /// <summary>
 /// Extending this class creates a MonoBehaviour which may only have on instance and will not be destroyed between scenes.  When extending, the type of the inheriting class must be passed.
 /// </summary>
-public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where ManagerType : Component
+public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where ManagerType : ManagerBehaviour<ManagerType>
 {
+    private const string ManagerName = "Manager";
+
     private static ManagerType instance;
 
     /// <summary>
@@ -21,12 +19,23 @@ public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where Manage
             if (!instance)
             {
                 instance = FindObjectOfType<ManagerType>();
+                if (!instance)
+                {
+                    var instanceGameObject = GameObjectFactory.GetOrAddGameObject(ManagerName);
+                    instance = instanceGameObject.AddComponent<ManagerType>();
+                }
             }
             return instance;
         }
     }
 
-    void Awake()
+    protected virtual void Awake()
+    {
+        DestroyDuplicateManagers();
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void DestroyDuplicateManagers()
     {
         var managers = FindObjectsOfType<ManagerType>();
         foreach (var manager in managers)
@@ -37,16 +46,19 @@ public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where Manage
             }
             if (Instance != manager)
             {
-                if (Instance.gameObject == manager.gameObject || manager.transform.childCount > 0)
-                {
-                    Destroy(manager);
-                }
-                else
+                bool sharesGameObjectWithManager = Instance.gameObject == manager.gameObject;
+                bool hasExtraComponents = manager.GetComponents<MonoBehaviour>().Length > 1;
+                bool hasChildren = transform.childCount > 0;
+                bool destroyGameObject = !(sharesGameObjectWithManager || hasExtraComponents || hasChildren);
+                if (destroyGameObject)
                 {
                     Destroy(manager.gameObject);
                 }
+                else
+                {
+                    Destroy(manager);
+                }
             }
         }
-        DontDestroyOnLoad(gameObject);
     }
 }
