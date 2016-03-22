@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
-    private const string ServerLink = "http://127.0.0.1:5000";
+    public string ServerLink = "http://127.0.0.1:5000";
     private const string CreatePlayerMethodName = "create_player";
     private const string FindMatchMethodName = "find_match";
     private const string AttackMethodName = "attack";
@@ -22,6 +22,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
 
     private IEnumerator WaitForAttack(Action<string> onAttack)
     {
+        Debug.Log("YOUR TOKEN: " + PlayerManager.Instance.Player.token);
         string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
         string url = CreateUrl(AttackMethodName, player);
         var www = new WWW(url);
