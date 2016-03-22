@@ -1,48 +1,85 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Linq;
+using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
-    private const string PlayerTurnText = "It's your turn!";
-    private const string NotPlayerTurnText = "It's not your turn!";
+    private const float pollTime = 2.0f;
 
-    [SerializeField]
-    [Tooltip("Keeps track of whose turn it is")]
-    private Text turnDisplay;
-
-    [SerializeField]
-    [Tooltip("How long of an interval between checks to see if it's the player's turn")]
-    private float pollTime = 2.0f;
-
-    void Start()
+    public void FindMatch()
     {
-        turnDisplay.text = NotPlayerTurnText;
-        WaitForTurn();
+        CreatePlayer();
+        Debug.Log("first: " + PlayerManager.Instance.Player.hitPoints);
+        ServerManager.Instance.FindMatch(OnMatchFound, pollTime);
     }
 
-    private void TakeTurn()
+    public void Attack()
     {
-        ServerManager.Instance.TakeTurn(OnTurnComplete);
+        ServerManager.Instance.Attack(OnAttack);
     }
 
-    private void OnTurnComplete(string result)
+    private void OnAttack(string result)
     {
-        bool success = bool.Parse(result);
-        if (!success)
-        {
-            return;
-        }
-        turnDisplay.text = NotPlayerTurnText;
-        WaitForTurn();
+        Debug.Log("attacked: " + result);
     }
 
-    private void WaitForTurn()
+    private void OnMatchFound()
     {
-        ServerManager.Instance.NotifyOnTurnReady(OnTurnReady, pollTime);
+        Debug.Log("match found");
     }
 
-    private void OnTurnReady(string result)
+    private void CreatePlayer()
     {
-        turnDisplay.text = PlayerTurnText;
+        var player = new Player();
+        player.token = GenerateRandomToken();
+        player.hitPoints = PlayerManager.StartingHitPoints;
+        PlayerManager.Instance.Player = player;
     }
+
+    private string GenerateRandomToken()
+    {
+        return "T" + Random.Range(0, 100000);
+    }
+
+    //private const string PlayerTurnText = "It's your turn!";
+    //private const string NotPlayerTurnText = "It's not your turn!";
+
+    //[SerializeField]
+    //[Tooltip("Keeps track of whose turn it is")]
+    //private Text turnDisplay;
+
+    //[SerializeField]
+    //[Tooltip("How long of an interval between checks to see if it's the player's turn")]
+    //private float pollTime = 2.0f;
+
+    //void Start()
+    //{
+    //    turnDisplay.text = NotPlayerTurnText;
+    //    WaitForTurn();
+    //}
+
+    //private void TakeTurn()
+    //{
+    //    //ServerManager.Instance.TakeTurn(OnTurnComplete);
+    //}
+
+    //private void OnTurnComplete(string result)
+    //{
+    //    bool success = bool.Parse(result);
+    //    if (!success)
+    //    {
+    //        return;
+    //    }
+    //    turnDisplay.text = NotPlayerTurnText;
+    //    WaitForTurn();
+    //}
+
+    //private void WaitForTurn()
+    //{
+    //    //ServerManager.Instance.NotifyOnTurnReady(OnTurnReady, pollTime);
+    //}
+
+    //private void OnTurnReady(string result)
+    //{
+    //    turnDisplay.text = PlayerTurnText;
+    //}
 }

@@ -5,50 +5,61 @@ using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
-    private const string ServerLink = "http://127.0.0.1:5000/";
-    private const string TakeTurnMethod = "take_turn/";
-    private const string CheckForTurnMethod = "check_for_turn/";
+    private const string ServerLink = "http://127.0.0.1:5000";
+    private const string CreatePlayerMethodName = "create_player";
+    private const string FindMatchMethodName = "find_match";
+    private const string AttackMethodName = "attack";
 
-    public void NotifyOnTurnReady(Action<string> onTurnReady, float pollTime)
+    public void FindMatch(Action onMatchFound, float pollTime)
     {
-        StartCoroutine(WaitForTurn(onTurnReady, pollTime));
+        StartCoroutine(WaitForMatch(onMatchFound, pollTime));
     }
 
-    public void TakeTurn(Action<string> onTurnComplete)
+    public void Attack(Action<string> onAttack)
     {
-        StartCoroutine(WaitForTurnCompletion(onTurnComplete));
+        StartCoroutine(WaitForAttack(onAttack));
     }
 
-    private IEnumerator WaitForTurnCompletion(Action<string> onTurnComplete)
+    private IEnumerator WaitForAttack(Action<string> onAttack)
     {
-        string url = ServerLink + TakeTurnMethod + PlayerManager.Instance.UserID;
+        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
+        string url = CreateUrl(AttackMethodName, player);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
-        string result = GetStringResult(www.bytes);
-        bool turnComplete = bool.Parse(result);
-        if (turnComplete)
-        {
-            onTurnComplete(result);
-            yield break;
-        }
+        Debug.Log(GetStringResult(www.bytes));
     }
 
-    private IEnumerator WaitForTurn(Action<string> onTurnReady, float pollTime)
+    private IEnumerator WaitForMatch(Action onMatchFound, float pollTime)
     {
-        string url = ServerLink + CheckForTurnMethod + PlayerManager.Instance.UserID;
+        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
+        Debug.Log(PlayerManager.Instance.Player.hitPoints + " hitpo");
+        string url = CreateUrl(CreatePlayerMethodName, player);
+        var www = new WWW(url);
+        yield return new WaitUntil(() => www.isDone);
         while (true)
         {
-            var www = new WWW(url);
+            url = CreateUrl(FindMatchMethodName);
+            www = new WWW(url);
             yield return new WaitUntil(() => www.isDone);
             var result = GetStringResult(www.bytes);
-            bool activeTurn = bool.Parse(result);
-            if (activeTurn)
+            bool matchFound = bool.Parse(result);
+            if (matchFound)
             {
-                onTurnReady(result);
+                onMatchFound();
                 yield break;
             }
             yield return new WaitForSeconds(pollTime);
         }
+    }
+
+    private string CreateUrl(string method, string parameters = null)
+    {
+        string url = ServerLink + "/" + method;
+        if (parameters != null)
+        {
+            url += "/" + parameters;
+        }
+        return url;
     }
 
     private string GetStringResult(byte[] bytes)

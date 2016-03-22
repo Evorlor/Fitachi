@@ -1,4 +1,6 @@
 from flask import Flask
+import time
+import json
 app = Flask(__name__)
 
 @app.route('/start')
@@ -6,42 +8,43 @@ def start():
     return "Launching server..."
 
 class Player:
-    hitPoints = 100
-    damage = 10
+    hitPoints = 0
 
-currentPlayerTurn = 0 #whether it's player 1 or player 2's turn
-player0 = Player()
-player1 = Player()
+players = {}
+turn = ""
 
-@app.route('/take_turn/<playerNumber>')
-def takeTurn(playerNumber):
-    global currentPlayerTurn
-    if(str(currentPlayerTurn) != playerNumber):
-        return "false"
-    currentPlayer = None
-    otherPlayer = None
-    global player0
-    global player1
-    if(playerNumber == str(0)):
-        currentPlayer = player0
-        otherPlayer = player1
-    elif(playerNumber == str(1)):
-        currentPlayer = player1
-        otherPlayer = player0    
-    attack(currentPlayer, otherPlayer)
-    currentPlayerTurn = (currentPlayerTurn + 1) % 2;
-    return "true"
+@app.route('/create_player/<player>')
+def createPlayer(player):
+    global players
+    playerJson = json.loads(player)
+    token = playerJson['token']
+    players[token] = Player()
+    players[token].hitPoints = int(playerJson['hitPoints'])
 
-@app.route('/check_for_turn/<playerNumber>')
-def checkForTurn(playerNumber):
-    if(str(currentPlayerTurn) == playerNumber):
-        return "true"
-    else:
-        return "false"
+@app.route('/find_match')
+def findMatch():
+    global players
+    if len(players) > 1:
+        for key in players:
+            turn = key
+            return "true"
+    return "false"
 
-def attack(player, otherPlayer):
-    otherPlayer.hitPoints -= player.damage
+@app.route('/attack/<player>')
+def attack(player):
+    global players
+    global turn
+    playerJson = json.loads(player)
+    token = playerJson['token']
+    if token != turn:
+        return token + " is not turn. its: " + turn
+    for key in players:
+        if key != turn:
+            turn = key
+            break
+    players[turn].hitPoints -= 1
+    return players[turn].hitPoints
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0')
