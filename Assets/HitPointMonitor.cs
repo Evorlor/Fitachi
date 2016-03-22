@@ -8,6 +8,7 @@ public class HitPointMonitor : MonoBehaviour
 
     public void UpdateHitpointText(string token0, int hp0, int hp1)
     {
+        PlayerManager.Instance.enemyHitPoints = hp1;
         hitPointsText.text = token0 + ": " + hp0 + "  --  " + "Enemy" + ": " + hp1;
     }
 }

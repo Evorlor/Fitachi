@@ -7,6 +7,7 @@ public class PlayerManager : ManagerBehaviour<PlayerManager>
     public const int StartingHitPoints = 100;
     public const int StartingAttackPower = 10;
     public Player Player { get; set; }
+    public int enemyHitPoints = 100;
 
     private const float pollTime = 2.0f;
 
@@ -29,8 +30,7 @@ public class PlayerManager : ManagerBehaviour<PlayerManager>
         Debug.Log(results);
         Player = JsonUtility.FromJson<Player>(results);
         var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
-        string sub = hitPointMonitor.hitPointsText.text.Substring(hitPointMonitor.hitPointsText.text.IndexOf("Enemy: "));
-        hitPointMonitor.UpdateHitpointText(Instance.Player.token, Instance.Player.hitPoints, int.Parse(sub));
+        hitPointMonitor.UpdateHitpointText(Instance.Player.token, Instance.Player.hitPoints, enemyHitPoints);
     }
 
     //public int UserID { get; set; }
