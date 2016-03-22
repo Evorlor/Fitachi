@@ -26,7 +26,11 @@ public class PlayerManager : ManagerBehaviour<PlayerManager>
 
     private void PlayerUpdated(string results)
     {
+        Debug.Log(results);
         Player = JsonUtility.FromJson<Player>(results);
+        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
+        string sub = hitPointMonitor.hitPointsText.text.Substring(hitPointMonitor.hitPointsText.text.IndexOf("Enemy: "));
+        hitPointMonitor.UpdateHitpointText(Instance.Player.token, Instance.Player.hitPoints, int.Parse(sub));
     }
 
     //public int UserID { get; set; }

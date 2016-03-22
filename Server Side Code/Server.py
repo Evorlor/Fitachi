@@ -14,6 +14,13 @@ class Player:
 players = {}
 turn = ""
 
+@app.route('/get_player/<player>')
+def getPlayer(player):
+    global players
+    playerJson = json.loads(player)
+    token = playerJson['token']
+    return getPlayerJson(token)
+
 @app.route('/create_player/<player>')
 def createPlayer(player):
     global players
@@ -49,9 +56,11 @@ def attack(player):
     return getPlayerJson(turn)
 
 def getPlayerJson(token):
+    return '{"token":"' + token + '","hitPoints":' + str(players[token].hitPoints) + ',"attackPower":' + str(players[token].attackPower) + '}'
+    
     json = '{'
-    json += '"hitPoints": ' + str(players[token].hitPoints) + ','
-    json += '"attackPower": ' + str(players[token].attackPower) + ''
+    json += '"hitPoints": "' + str(players[token].hitPoints) + '",'
+    json += '"attackPower": "' + str(players[token].attackPower) + '"'
     json += '}'
     return json
 

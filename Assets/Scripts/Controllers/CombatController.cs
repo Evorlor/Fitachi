@@ -8,7 +8,6 @@ public class CombatController : MonoBehaviour
     public void FindMatch()
     {
         CreatePlayer();
-        Debug.Log("first: " + PlayerManager.Instance.Player.hitPoints);
         ServerManager.Instance.FindMatch(OnMatchFound, pollTime);
     }
 
