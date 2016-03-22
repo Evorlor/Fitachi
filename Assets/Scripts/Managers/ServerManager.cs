@@ -9,6 +9,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private const string CreatePlayerMethodName = "create_player";
     private const string FindMatchMethodName = "find_match";
     private const string AttackMethodName = "attack";
+    private const string PlayerUpdateMethodName = "get_player";
 
     public void FindMatch(Action onMatchFound, float pollTime)
     {
@@ -18,6 +19,21 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     public void Attack(Action<string> onAttack)
     {
         StartCoroutine(WaitForAttack(onAttack));
+    }
+
+    public void GetPlayerJson(Action<string> onPlayerUpdated)
+    {
+        StartCoroutine(WaitForPlayerUpdate(onPlayerUpdated));
+    }
+
+    private IEnumerator WaitForPlayerUpdate(Action<string> onPlayerUpdated)
+    {
+        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
+        string url = CreateUrl(PlayerUpdateMethodName, player);
+        var www = new WWW(url);
+        yield return new WaitUntil(() => www.isDone);
+        var result = GetStringResult(www.bytes);
+        onPlayerUpdated(result);
     }
 
     private IEnumerator WaitForAttack(Action<string> onAttack)
