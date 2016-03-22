@@ -19,7 +19,9 @@ public class CombatController : MonoBehaviour
 
     private void OnAttack(string result)
     {
-        Debug.Log("attacked: " + result);
+        var enemy = JsonUtility.FromJson<Player>(result);
+        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
+        hitPointMonitor.UpdateHitpointText(PlayerManager.Instance.Player.token, PlayerManager.Instance.Player.hitPoints, enemy.hitPoints);
     }
 
     private void OnMatchFound()
@@ -32,6 +34,7 @@ public class CombatController : MonoBehaviour
         var player = new Player();
         player.token = GenerateRandomToken();
         player.hitPoints = PlayerManager.StartingHitPoints;
+        player.attackPower = PlayerManager.StartingAttackPower;
         PlayerManager.Instance.Player = player;
     }
 

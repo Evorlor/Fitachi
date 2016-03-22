@@ -26,12 +26,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         string url = CreateUrl(AttackMethodName, player);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
-
-        //temp code
-        Debug.Log("attacking");
-        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
-        var enemy = JsonUtility.FromJson<Player>(GetStringResult(www.bytes));
-        hitPointMonitor.UpdateHitpointText(PlayerManager.Instance.Player.token, PlayerManager.Instance.Player.hitPoints, enemy.token, enemy.hitPoints);
+        onAttack(GetStringResult(www.bytes));
     }
 
     private IEnumerator WaitForMatch(Action onMatchFound, float pollTime)

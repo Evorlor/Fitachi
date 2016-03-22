@@ -9,6 +9,7 @@ def start():
 
 class Player:
     hitPoints = 0
+    attackPower = 0
 
 players = {}
 turn = ""
@@ -20,6 +21,7 @@ def createPlayer(player):
     token = playerJson['token']
     players[token] = Player()
     players[token].hitPoints = int(playerJson['hitPoints'])
+    players[token].attackPower = int(playerJson['attackPower'])
 
 @app.route('/find_match')
 def findMatch():
@@ -37,7 +39,7 @@ def attack(player):
     global turn
     playerJson = json.loads(player)
     token = playerJson['token']
-    attackPower = playerJson['attackPower']
+    attackPower = int(playerJson['attackPower'])
     if token == turn:
         for key in players:
             if key != turn:
@@ -48,8 +50,8 @@ def attack(player):
 
 def getPlayerJson(token):
     json = '{'
-    json += '"hitPoints": "0",'
-    json += '"attackPower": "0"'
+    json += '"hitPoints": ' + str(players[token].hitPoints) + ','
+    json += '"attackPower": ' + str(players[token].attackPower) + ''
     json += '}'
     return json
 

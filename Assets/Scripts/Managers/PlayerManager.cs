@@ -2,6 +2,7 @@
 {
     public int TokenLength { get; set; }
     public const int StartingHitPoints = 100;
+    public const int StartingAttackPower = 10;
     public Player Player { get; set; }
     //public int UserID { get; set; }
     //public Nutrition Nutrition { get; set; }
