@@ -22,18 +22,21 @@ public class ServerManager : ManagerBehaviour<ServerManager>
 
     private IEnumerator WaitForAttack(Action<string> onAttack)
     {
-        Debug.Log("YOUR TOKEN: " + PlayerManager.Instance.Player.token);
         string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
         string url = CreateUrl(AttackMethodName, player);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
-        Debug.Log(GetStringResult(www.bytes));
+
+        //temp code
+        Debug.Log("attacking");
+        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
+        var enemy = JsonUtility.FromJson<Player>(GetStringResult(www.bytes));
+        hitPointMonitor.UpdateHitpointText(PlayerManager.Instance.Player.token, PlayerManager.Instance.Player.hitPoints, enemy.token, enemy.hitPoints);
     }
 
     private IEnumerator WaitForMatch(Action onMatchFound, float pollTime)
     {
         string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
-        Debug.Log(PlayerManager.Instance.Player.hitPoints + " hitpo");
         string url = CreateUrl(CreatePlayerMethodName, player);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);

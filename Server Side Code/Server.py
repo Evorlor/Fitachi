@@ -24,6 +24,7 @@ def createPlayer(player):
 @app.route('/find_match')
 def findMatch():
     global players
+    global turn
     if len(players) > 1:
         for key in players:
             turn = key
@@ -36,14 +37,21 @@ def attack(player):
     global turn
     playerJson = json.loads(player)
     token = playerJson['token']
-    if token != turn:
-        return token + " is not turn. its: " + turn
-    for key in players:
-        if key != turn:
-            turn = key
-            break
-    players[turn].hitPoints -= 1
-    return players[turn].hitPoints
+    attackPower = playerJson['attackPower']
+    if token == turn:
+        for key in players:
+            if key != turn:
+                turn = key
+                break
+        players[turn].hitPoints -= attackPower
+    return getPlayerJson(turn)
+
+def getPlayerJson(token):
+    json = '{'
+    json += '"hitPoints": "0",'
+    json += '"attackPower": "0"'
+    json += '}'
+    return json
 
 if __name__ == "__main__":
     app.debug = True

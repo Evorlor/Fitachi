@@ -5,4 +5,5 @@ public class Player
 {
     public string token;
     public int hitPoints;
+    public int attackPower;
 }
