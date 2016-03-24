@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FitbitRestClient : MonoBehaviour {
 
-	private FitbitRestClient mInstance = null;
+	private static FitbitRestClient Instance = null;
 
 	private static string CLIENT_ID = "227FWT";
 	private static string EXPIRED_TIME = "2592000";
@@ -20,37 +20,60 @@ public class FitbitRestClient : MonoBehaviour {
 	private string mUserId = "";
 
 	private bool mIsLogin = false;
-
-	public Fitbit.User User;
+	public static Fitbit.User.Profile Profile;
+	public static Fitbit.Activity.Activities Activities;
 
 	public static void SaveData(string token, string userID)
 	{
+		Debug.Log("Save.. " + token + " " + userID);
 		PlayerPrefs.SetString(TokenKey, token);
 		PlayerPrefs.SetString(UserIDKey, userID);
-	}
+		PlayerPrefs.Save();
+    }
 
-	public void LoadData()
+	public IEnumerator LoadData()
 	{
-		string mAccessToke = PlayerPrefs.GetString(TokenKey);
-		string mUserId = PlayerPrefs.GetString(UserIDKey);
+		mAccessToke = PlayerPrefs.GetString(TokenKey);
+		mUserId = PlayerPrefs.GetString(UserIDKey);
 
 		if (mAccessToke == "" || mUserId == "")
 		{
+			Debug.Log("Need to login");
 			mIsLogin = false;
 		}
 		else
 		{
-			mIsLogin = true;
+			Debug.Log("Got catched token");
+
+			// Validate the token, a very naive way...
+			var headers = new Dictionary<string, string>();
+			headers.Add("Authorization", "Bearer " + mAccessToke);
+			var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/profile.json", null, headers);
+
+			yield return www;
+			Debug.Log("Test...");
+			if (www.text.Contains("errors"))
+			{
+				Debug.Log(www.text);
+				Debug.Log("Error token: " + mUserId + " " + mAccessToke);
+				mIsLogin = false;
+            } else
+			{
+				Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
+				mIsLogin = true;
+				GetProfile();
+                GetActiviesLifeTimeState();
+            }
 		}
 	}
 
 	// Use this for initialization
-	void Start () {
-
-		mInstance = this;
+	IEnumerator Start () {
+		Debug.Log("Start Fitbit Rest Client");
+		Instance = this;
 
 		// try get access toke from preference
-		LoadData();
+		yield return LoadData();
 
 		if (!mIsLogin) {
 
@@ -64,19 +87,21 @@ public class FitbitRestClient : MonoBehaviour {
 			{
 				url = WIN_URL;
 			}
-
+			Debug.Log("Login...");
 			Application.OpenURL(url);
 		}
     }
 
-	Coroutine GetUser()
+	public static Coroutine GetProfile()
 	{
-		return StartCoroutine(GetUserInternal());
+		if (Instance == null) return null;
+		return Instance.StartCoroutine(Instance.GetProfileInternal());
 	}
 
-	IEnumerator GetUserInternal()
+	IEnumerator GetProfileInternal()
 	{
-		var headers = new Dictionary<string, string>();
+		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
+        var headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/profile.json", null, headers);
 
@@ -84,9 +109,31 @@ public class FitbitRestClient : MonoBehaviour {
 		{
 			yield return null;
 		}
-		Debug.Log(www.text);
-		User = JsonUtility.FromJson<Fitbit.User>(www.text);
-		Debug.Log("name " + User.fullName);
+		Debug.Log("DEBUG: " + www.text);
+		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
+		Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
+	}
+
+	public static Coroutine GetActiviesLifeTimeState()
+	{
+		if (Instance == null) return null;
+		return Instance.StartCoroutine(Instance.GetActiviesLifeTimeStateInternal());
+	}
+
+	IEnumerator GetActiviesLifeTimeStateInternal()
+	{
+		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
+		var headers = new Dictionary<string, string>();
+		headers.Add("Authorization", "Bearer " + mAccessToke);
+		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities.json", null, headers);
+
+		while (!www.isDone)
+		{
+			yield return null;
+		}
+		Debug.Log("DEBUG: " + www.text);
+		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
+		Debug.Log("DEBUG: " + JsonUtility.ToJson(Activities));
 	}
 
 	// Update is called once per frame
@@ -98,7 +145,6 @@ public class FitbitRestClient : MonoBehaviour {
 			{
 				AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 				AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-				Debug.Log("Done");
                 if (activity.Call<bool>("IsLogin"))
 				{
 					mAccessToke = activity.Call<string>("GetToken");
@@ -106,16 +152,17 @@ public class FitbitRestClient : MonoBehaviour {
 					// TODO Debug.Log(activity.Call<string>("GetExpires"));
 
 					SaveData(mAccessToke, mUserId);
+
+					GetProfile();
+					GetActiviesLifeTimeState();
+
 					mIsLogin = true;
-				}
+                }
 			}
 			catch
 			{
 
 			}
-		} else
-		{
-			//GetUser();
 		}
 	}
 }
