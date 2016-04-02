@@ -16,6 +16,7 @@ class Match:
     turn = None
 
 playersWaiting = []
+matchesReady = {}
 
 matchesWaiting = []
 matches = []
@@ -41,6 +42,13 @@ def getMatchStatus(player):
     global playersWaiting
     global matchCount
     searchingPlayer = createPlayerFromJson(player)
+    if searchingPlayer.id in matchesReady:
+        matchReady = matchesReady[searchingPlayer.id]
+        for playerWaiting in playersWaiting:
+            if playerWaiting.id == searchingPlayer.id:
+                playersWaiting.remove(playerWaiting)
+        del matchesReady[searchingPlayer.id]
+        return getMatchJson(matchReady)
     for playerWaiting in playersWaiting:
         if playerWaiting.id == searchingPlayer.id or isMatched(playerWaiting, searchingPlayer):
             continue
@@ -50,6 +58,11 @@ def getMatchStatus(player):
         match.player0 = playerWaiting
         match.player1 = searchingPlayer
         match.turn = match.player0 if random.choice([True, False]) else match.player1
+        matches.append(match)
+        matchesReady[playerWaiting.id] = match
+        for playerWaiting in playersWaiting:
+            if playerWaiting.id == searchingPlayer.id:
+                playersWaiting.remove(playerWaiting)
         return getMatchJson(match)
     invalidMatch = createInvalidMatch()
     print invalidMatch.id
@@ -113,18 +126,6 @@ def getPlayerJson(player):
     playerJson = json.dumps(playerData)
     return playerJson
 
-#starts a match between two players
-def startMatch(player):
-    global matchesWaiting
-    global matchCount
-    match = Match()
-    match.number = matchCount
-    matchCount += 1
-    match.player0 = player
-    match.turn = player
-    matchesWaiting.append(match)
-    return match
-
 #takes the json for a player and creates a player from it
 def createPlayerFromJson(player):
     playerJson = json.loads(player)
@@ -133,57 +134,6 @@ def createPlayerFromJson(player):
     newPlayer.hitPoints = int(playerJson['hitPoints'])
     newPlayer.attackPower = int(playerJson['attackPower'])
     return newPlayer
-
-
-
-#@app.route('/get_player/<player>')
-#def getPlayer(player):
-#    global players
-#    playerJson = json.loads(player)
-#    token = playerJson['token']
-#    return getPlayerJson(token)
-
-#@app.route('/create_player/<player>')
-#def createPlayer(player):
-    #global players
-    #playerJson = json.loads(player)
-    #token = playerJson['token']
-    #players[token] = Player()
-    #players[token].hitPoints = int(playerJson['hitPoints'])
-    #players[token].attackPower = int(playerJson['attackPower'])
-
-#def initializeMatch(token0, token1):
-    #matches.append((token, potentialToken))
-
-#def isMatched(token0, token1):
-    #for match in matches:
-    #    if token0 in match and token1 in match:
-    #        return true
-    #return false
-
-#@app.route('/attack/<player>')
-#def attack(player):
-    #global players
-    #global turn
-    #playerJson = json.loads(player)
-    #token = playerJson['token']
-    #attackPower = int(playerJson['attackPower'])
-    #if token == turn:
-    #    for key in players:
-    #        if key != turn:
-    #            turn = key
-    #            break
-    #    players[turn].hitPoints -= attackPower
-    #return getPlayerJson(turn)
-
-#def getPlayerJson(token):
-    #return '{"token":"' + token + '","hitPoints":' + str(players[token].hitPoints) + ',"attackPower":' + str(players[token].attackPower) + '}'
-    
-    #json = '{'
-    #json += '"hitPoints": "' + str(players[token].hitPoints) + '",'
-    #json += '"attackPower": "' + str(players[token].attackPower) + '"'
-    #json += '}'
-    #return json
 
 if __name__ == "__main__":
     app.debug = True

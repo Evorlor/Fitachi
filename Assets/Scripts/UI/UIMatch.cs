@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class UIMatch : MonoBehaviour {
+public class UIMatch : MonoBehaviour
+{
     private const string MatchIDPrefix = "Match #";
     private const string PlayerHitpointsPrefix = "Player HP: ";
     private const string EnemyHitpointsPrefix = "Enemy HP: ";
@@ -27,5 +28,6 @@ public class UIMatch : MonoBehaviour {
         matchID.text = MatchIDPrefix + match.id;
         playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
         enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
+        attack.interactable = match.turn.id == PlayerManager.ID;
     }
 }

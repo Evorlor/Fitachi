@@ -26,12 +26,12 @@ public class CombatController : MonoBehaviour
 
     private void OnMatchFound(Match match)
     {
-        AddMatch(match);
+        matches.Add(match);
+        UpdateMatches(match);
     }
 
-    private void AddMatch(Match match)
+    private void UpdateMatches(Match match)
     {
-        matches.Add(match);
         var matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
         for(int i = 0; i < matchesUIArray.Length; i++)
         {
@@ -47,14 +47,15 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    public void Attack(Match button)
+    public void Attack(int matchIndex)
     {
-        //ServerManager.Instance.Attack(OnAttack, button.matchNumber);
+        var match = matches[matchIndex];
+        ServerManager.Instance.Attack(match, OnAttack);
     }
 
-    private void OnAttack(string result)
+    private void OnAttack(Match match)
     {
-        Debug.Log(result);
+        UpdateMatches(match);
     }
 
     private Player CreatePlayer()

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
-    public string ServerLink = "http://127.0.0.1:5000";
+    //public string ServerLink = "http://127.0.0.1:5000";
+    public string ServerLink = "http://10.8.3.43:5000";
     private const string FindMatchMethodName = "find_match";
     private const string AttackMethodName = "attack";
     private const string PlayerUpdateMethodName = "get_player";
@@ -16,9 +17,9 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         StartCoroutine(WaitForMatch(player, onMatchFound, pollTime));
     }
 
-    public void Attack(Action<string> onAttack, int matchNumber)
+    public void Attack(Match match, Action<Match> onAttack)
     {
-        StartCoroutine(WaitForAttack(onAttack, matchNumber));
+        StartCoroutine(WaitForAttack(match, onAttack));
     }
 
     //public void GetPlayerJson(Action<string> onPlayerUpdated)
@@ -36,15 +37,15 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     //    onPlayerUpdated(result);
     //}
 
-    private IEnumerator WaitForAttack(Action<string> onAttack, int matchNumber)
+    private IEnumerator WaitForAttack(Match match, Action<Match> onAttack)
     {
-        var player = PlayerManager.Instance.Player;
-        //player.matchNumber = matchNumber;
-        string playerJson = JsonUtility.ToJson(player);
-        string url = CreateUrl(AttackMethodName, playerJson);
+        string matchJson = JsonUtility.ToJson(match);
+        string url = CreateUrl(AttackMethodName, matchJson);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
-        onAttack(GetStringResult(www.bytes));
+        var result = GetStringResult(www.bytes);
+        match = JsonUtility.FromJson<Match>(result);
+        onAttack(match);
     }
 
     private IEnumerator WaitForMatch(Player player, Action<Match> onMatchFound, float pollTime)
