@@ -1,45 +1,69 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatController : MonoBehaviour
 {
-    private const float pollTime = 2.0f;
+    [Tooltip("Container for Matches UI")]
+    [SerializeField]
+    private CanvasRenderer matchesUI;
 
-    public void FindMatch()
+    private const float PollTime = 2.0f;
+    private const string SearchingForMatch = "Searching for match...";
+    private List<Match> matches = new List<Match>();
+
+    public void FindMatch(Button matchButton)
     {
-        CreatePlayer();
-        ServerManager.Instance.FindMatch(OnMatchFound, pollTime);
+        var startMatchButtonText = matchButton.GetComponentInChildren<Text>();
+        if (startMatchButtonText)
+        {
+            startMatchButtonText.text = SearchingForMatch;
+        }
+        matchButton.interactable = false;
+        var player = CreatePlayer();
+        ServerManager.Instance.FindMatch(player, OnMatchFound, PollTime);
     }
 
-    public void Attack()
+    private void OnMatchFound(Match match)
     {
-        ServerManager.Instance.Attack(OnAttack);
+        AddMatch(match);
+    }
+
+    private void AddMatch(Match match)
+    {
+        matches.Add(match);
+        var matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
+        for(int i = 0; i < matchesUIArray.Length; i++)
+        {
+            if(matches.Count > i)
+            {
+                matchesUIArray[i].enabled = true;
+                matchesUIArray[i].UpdateUI(matches[i]);
+            }
+            else
+            {
+                matchesUIArray[i].enabled = false;
+            }
+        }
+    }
+
+    public void Attack(Match button)
+    {
+        //ServerManager.Instance.Attack(OnAttack, button.matchNumber);
     }
 
     private void OnAttack(string result)
     {
-        var enemy = JsonUtility.FromJson<Player>(result);
-        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
-        hitPointMonitor.UpdateHitpointText(PlayerManager.Instance.Player.token, PlayerManager.Instance.Player.hitPoints, enemy.hitPoints);
+        Debug.Log(result);
     }
 
-    private void OnMatchFound()
-    {
-        Debug.Log("match found");
-    }
-
-    private void CreatePlayer()
+    private Player CreatePlayer()
     {
         var player = new Player();
-        player.token = GenerateRandomToken();
+        player.id = PlayerManager.ID;
         player.hitPoints = PlayerManager.StartingHitPoints;
         player.attackPower = PlayerManager.StartingAttackPower;
-        PlayerManager.Instance.Player = player;
-    }
-
-    private string GenerateRandomToken()
-    {
-        return "T" + Random.Range(0, 100000);
+        return player;
     }
 
     //private const string PlayerTurnText = "It's your turn!";

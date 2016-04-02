@@ -6,64 +6,64 @@ using UnityEngine;
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
     public string ServerLink = "http://127.0.0.1:5000";
-    private const string CreatePlayerMethodName = "create_player";
     private const string FindMatchMethodName = "find_match";
     private const string AttackMethodName = "attack";
     private const string PlayerUpdateMethodName = "get_player";
+    private const string GetMatchStatusMethodName = "get_match_status";
 
-    public void FindMatch(Action onMatchFound, float pollTime)
+    public void FindMatch(Player player, Action<Match> onMatchFound, float pollTime)
     {
-        StartCoroutine(WaitForMatch(onMatchFound, pollTime));
+        StartCoroutine(WaitForMatch(player, onMatchFound, pollTime));
     }
 
-    public void Attack(Action<string> onAttack)
+    public void Attack(Action<string> onAttack, int matchNumber)
     {
-        StartCoroutine(WaitForAttack(onAttack));
+        StartCoroutine(WaitForAttack(onAttack, matchNumber));
     }
 
-    public void GetPlayerJson(Action<string> onPlayerUpdated)
-    {
-        StartCoroutine(WaitForPlayerUpdate(onPlayerUpdated));
-    }
+    //public void GetPlayerJson(Action<string> onPlayerUpdated)
+    //{
+    //    StartCoroutine(WaitForPlayerUpdate(onPlayerUpdated));
+    //}
 
-    private IEnumerator WaitForPlayerUpdate(Action<string> onPlayerUpdated)
-    {
-        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
-        string url = CreateUrl(PlayerUpdateMethodName, player);
-        var www = new WWW(url);
-        yield return new WaitUntil(() => www.isDone);
-        var result = GetStringResult(www.bytes);
-        onPlayerUpdated(result);
-    }
+    //private IEnumerator WaitForPlayerUpdate(Action<string> onPlayerUpdated)
+    //{
+    //    string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
+    //    string url = CreateUrl(PlayerUpdateMethodName, player);
+    //    var www = new WWW(url);
+    //    yield return new WaitUntil(() => www.isDone);
+    //    var result = GetStringResult(www.bytes);
+    //    onPlayerUpdated(result);
+    //}
 
-    private IEnumerator WaitForAttack(Action<string> onAttack)
+    private IEnumerator WaitForAttack(Action<string> onAttack, int matchNumber)
     {
-        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
-        string url = CreateUrl(AttackMethodName, player);
+        var player = PlayerManager.Instance.Player;
+        //player.matchNumber = matchNumber;
+        string playerJson = JsonUtility.ToJson(player);
+        string url = CreateUrl(AttackMethodName, playerJson);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
         onAttack(GetStringResult(www.bytes));
     }
 
-    private IEnumerator WaitForMatch(Action onMatchFound, float pollTime)
+    private IEnumerator WaitForMatch(Player player, Action<Match> onMatchFound, float pollTime)
     {
-        string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
-        string url = CreateUrl(CreatePlayerMethodName, player);
+        string playerJson = JsonUtility.ToJson(player);
+        string url = CreateUrl(FindMatchMethodName, playerJson);
         var www = new WWW(url);
-        yield return new WaitUntil(() => www.isDone);
         while (true)
         {
-            url = CreateUrl(FindMatchMethodName);
-            www = new WWW(url);
             yield return new WaitUntil(() => www.isDone);
             var result = GetStringResult(www.bytes);
-            bool matchFound = bool.Parse(result);
-            if (matchFound)
+            var match = JsonUtility.FromJson<Match>(result);
+            if (match.id > 0)
             {
-                onMatchFound();
-                yield break;
+                onMatchFound(match);
             }
             yield return new WaitForSeconds(pollTime);
+            url = CreateUrl(GetMatchStatusMethodName, playerJson);
+            www = new WWW(url);
         }
     }
 

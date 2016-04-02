@@ -3,7 +3,7 @@
 [Serializable]
 public class Player
 {
-    public string token;
+    public string id;
     public int hitPoints;
     public int attackPower;
 }

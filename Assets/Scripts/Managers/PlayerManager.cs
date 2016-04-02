@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerManager : ManagerBehaviour<PlayerManager>
 {
+
+    public static readonly string ID = "ID" + Random.Range(0, 100000);
     public int TokenLength { get; set; }
     public const int StartingHitPoints = 100;
     public const int StartingAttackPower = 10;
@@ -13,14 +15,14 @@ public class PlayerManager : ManagerBehaviour<PlayerManager>
 
     void Start()
     {
-        StartCoroutine(UpdatePlayer());
+        //StartCoroutine(UpdatePlayer());
     }
 
     private IEnumerator UpdatePlayer()
     {
         while (true)
         {
-            ServerManager.Instance.GetPlayerJson(PlayerUpdated);
+            //ServerManager.Instance.GetPlayerJson(PlayerUpdated);
             yield return new WaitForSeconds(pollTime);
         }
     }
@@ -29,8 +31,8 @@ public class PlayerManager : ManagerBehaviour<PlayerManager>
     {
         Debug.Log(results);
         Player = JsonUtility.FromJson<Player>(results);
-        var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
-        hitPointMonitor.UpdateHitpointText(Instance.Player.token, Instance.Player.hitPoints, enemyHitPoints);
+        //var hitPointMonitor = FindObjectOfType<HitPointMonitor>();
+        //hitPointMonitor.UpdateHitpointText(Instance.Player.token, Instance.Player.hitPoints, enemyHitPoints);
     }
 
     //public int UserID { get; set; }
