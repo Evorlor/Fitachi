@@ -17,7 +17,8 @@ public class CombatController : MonoBehaviour
     private const float CurrentStatusPollTime = 2.0f;
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
-    private const string UpdateStatusMethodName = "UpdateMatches";
+    private const string UpdateMatchesMethodName = "UpdateMatches";
+    private const string UpdateMatchesUIMethodName = "UpdateMatchesUI";
 
     private List<Match> matches = new List<Match>();
     private UIMatch[] matchesUIArray;
@@ -29,7 +30,8 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating(UpdateStatusMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
+        InvokeRepeating(UpdateMatchesMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
+        InvokeRepeating(UpdateMatchesUIMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
     }
 
     public void FindMatch()
@@ -53,10 +55,26 @@ public class CombatController : MonoBehaviour
         }
         searchForMatch.interactable = true;
         matches.Add(match);
-        UpdateMatches();
+        UpdateMatchesUI();
     }
 
     private void UpdateMatches()
+    {
+        foreach(var match in matches)
+        {
+            ServerManager.Instance.UpdateMatch(match, OnMatchUpdated);
+        }
+    }
+
+    private void OnMatchUpdated(Match match)
+    {
+        var clientMatch = matches.Where(m => m.id == match.id).First();
+        int matchIndex = matches.IndexOf(clientMatch);
+        matches[matchIndex] = match;
+        UpdateMatchesUI();
+    }
+
+    private void UpdateMatchesUI()
     {
         for (int i = 0; i < matchesUIArray.Length; i++)
         {
@@ -83,7 +101,7 @@ public class CombatController : MonoBehaviour
         var clientMatch = matches.Where(m => m.id == match.id).First();
         int matchIndex = matches.IndexOf(clientMatch);
         matches[matchIndex] = match;
-        UpdateMatches();
+        UpdateMatchesUI();
     }
 
     private Player CreatePlayer()

@@ -68,9 +68,20 @@ def getMatchStatus(player):
     print invalidMatch.id
     return getMatchJson(invalidMatch)
 
+#gets the updated status for the match
+@app.route('/update_match/<match>')
+def updateMatch(match):
+    global matches
+    currentMatch = createMatchFromJson(match)
+    for matchInstance in matches:
+        if currentMatch.id == matchInstance.id:
+            return getMatchJson(matchInstance)
+    return getMatchJson(createInvalidMatch())
+
 #Attacks for the player in the specified match
 @app.route('/attack/<match>')
 def attack(match):
+    global matches
     matchInstance = createMatchFromJson(match)
     if matchInstance.player0.id == matchInstance.turn.id:
         matchInstance.turn = matchInstance.player1
@@ -78,6 +89,9 @@ def attack(match):
     else:
         matchInstance.turn = matchInstance.player0
         matchInstance.player0.hitPoints -= matchInstance.player1.attackPower
+    for matcherIteration in matches:
+        if matchIteration.id == matchInstance.id:
+            matchIteration = matchInstance
     return getMatchJson(matchInstance)
 
 #checks if two players are currently in a match
