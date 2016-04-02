@@ -81,7 +81,8 @@ public class CombatController : MonoBehaviour
     private void OnAttack(Match match)
     {
         var clientMatch = matches.Where(m => m.id == match.id).First();
-        clientMatch = match;
+        int matchIndex = matches.IndexOf(clientMatch);
+        matches[matchIndex] = match;
         UpdateMatches();
     }
 
