@@ -8,24 +8,35 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private CanvasRenderer matchesUI;
 
+    [Tooltip("Search for match button")]
+    [SerializeField]
+    private Button searchForMatch;
+
     private const float PollTime = 2.0f;
+    private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
     private List<Match> matches = new List<Match>();
 
-    public void FindMatch(Button matchButton)
+    public void FindMatch()
     {
-        var startMatchButtonText = matchButton.GetComponentInChildren<Text>();
+        var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
             startMatchButtonText.text = SearchingForMatch;
         }
-        matchButton.interactable = false;
+        searchForMatch.interactable = false;
         var player = CreatePlayer();
         ServerManager.Instance.FindMatch(player, OnMatchFound, PollTime);
     }
 
     private void OnMatchFound(Match match)
     {
+        var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
+        if (startMatchButtonText)
+        {
+            startMatchButtonText.text = MatchSearchable;
+        }
+        searchForMatch.interactable = true;
         matches.Add(match);
         UpdateMatches(match);
     }

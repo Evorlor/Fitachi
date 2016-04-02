@@ -56,7 +56,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         while (true)
         {
             yield return new WaitUntil(() => www.isDone);
-            var result = GetStringResult(www.bytes);
+            var result = GetStringResult(www.bytes);//.Replace("\\","");
             var match = JsonUtility.FromJson<Match>(result);
             if (match.id > 0)
             {
