@@ -28,8 +28,6 @@ public class UIMatch : MonoBehaviour
         matchID.text = MatchIDPrefix + match.id;
         playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
         enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
-        Debug.Log("UI MATCH ID: " + match.turn.id);
-        Debug.Log("PLAYER ID: " + PlayerManager.ID);
         attack.interactable = match.turn.id == PlayerManager.ID;
     }
 }

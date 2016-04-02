@@ -69,19 +69,17 @@ def getMatchStatus(player):
     return getMatchJson(invalidMatch)
 
 #Attacks for the player in the specified match
-@app.route('/attack/<player>')
-def attack(player):
-    #global matches
-    #attackingPlayer = createPlayer(player)
-    #playerJson = json.loads(player)
-    #matchNumber = int(playerJson['matchNumber'])
-    #for match in matches:
-        #if match.number == matchNumber:
-            #if attackingPlayer == match.player0:
-                #match.player1.hitPoints -= match.player0.attackPower
-            #elif attackingPlayer == match.player1:
-                #match.player0.hitPoints -= match.player1.attackPower
-    return ""
+@app.route('/attack/<match>')
+def attack(match):
+    #create match from json
+    matchInstance = createMatchFromJson(match)
+    if matchInstance.player0.id == matchInstance.turn.id:
+        matchInstance.turn = matchInstance.player1
+        matchInstance.player1.hitPoints -= matchInstance.player0.attackPower
+    else:
+        matchInstance.turn = matchInstance.player0
+        matchInstance.player0.hitPoints -= matchInstance.player1.attackPower
+    return getMatchJson(matchInstance)
 
 #checks if two players are currently in a match
 def isMatched(player0, player1):
@@ -132,13 +130,26 @@ def getMatchJson(match):
     matchJson = json.dumps(matchData)
     return matchJson
 
+#takes the json for a match and creates a match from it
+def createMatchFromJson(match):
+    matchJson = json.loads(match)
+    newMatch = Match()
+    newMatch.id = matchJson['id']
+    player0Json = json.dumps(matchJson['player0'])
+    player1Json = json.dumps(matchJson['player1'])
+    turnJson =  json.dumps(matchJson['turn'])
+    newMatch.player0 = createPlayerFromJson(player0Json)
+    newMatch.player1 = createPlayerFromJson(player1Json)
+    newMatch.turn = createPlayerFromJson(turnJson)
+    return newMatch
+
 #takes the json for a player and creates a player from it
 def createPlayerFromJson(player):
     playerJson = json.loads(player)
     newPlayer = Player()
     newPlayer.id = playerJson['id']
-    newPlayer.hitPoints = int(playerJson['hitPoints'])
-    newPlayer.attackPower = int(playerJson['attackPower'])
+    newPlayer.hitPoints = playerJson['hitPoints']
+    newPlayer.attackPower = playerJson['attackPower']
     return newPlayer
 
 if __name__ == "__main__":

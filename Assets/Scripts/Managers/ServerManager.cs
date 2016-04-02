@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
-    //public string ServerLink = "http://127.0.0.1:5000";
     public string ServerLink = "http://10.8.3.43:5000";
     private const string FindMatchMethodName = "find_match";
     private const string AttackMethodName = "attack";
@@ -21,21 +20,6 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     {
         StartCoroutine(WaitForAttack(match, onAttack));
     }
-
-    //public void GetPlayerJson(Action<string> onPlayerUpdated)
-    //{
-    //    StartCoroutine(WaitForPlayerUpdate(onPlayerUpdated));
-    //}
-
-    //private IEnumerator WaitForPlayerUpdate(Action<string> onPlayerUpdated)
-    //{
-    //    string player = JsonUtility.ToJson(PlayerManager.Instance.Player);
-    //    string url = CreateUrl(PlayerUpdateMethodName, player);
-    //    var www = new WWW(url);
-    //    yield return new WaitUntil(() => www.isDone);
-    //    var result = GetStringResult(www.bytes);
-    //    onPlayerUpdated(result);
-    //}
 
     private IEnumerator WaitForAttack(Match match, Action<Match> onAttack)
     {
@@ -56,7 +40,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         while (true)
         {
             yield return new WaitUntil(() => www.isDone);
-            var result = GetStringResult(www.bytes);//.Replace("\\","");
+            var result = GetStringResult(www.bytes);
             var match = JsonUtility.FromJson<Match>(result);
             if (match.id > 0)
             {

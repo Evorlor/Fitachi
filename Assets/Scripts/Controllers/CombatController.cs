@@ -12,10 +12,18 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private Button searchForMatch;
 
-    private const float PollTime = 2.0f;
+    private const float MatchSearchPollTime = 2.0f;
+    private const float CurrentStatusPollTime = 2.0f;
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
+    private const string UpdateStatusMethodName = "UpdateStatus";
+
     private List<Match> matches = new List<Match>();
+
+    void Start()
+    {
+        InvokeRepeating(UpdateStatusMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
+    }
 
     public void FindMatch()
     {
@@ -26,7 +34,12 @@ public class CombatController : MonoBehaviour
         }
         searchForMatch.interactable = false;
         var player = CreatePlayer();
-        ServerManager.Instance.FindMatch(player, OnMatchFound, PollTime);
+        ServerManager.Instance.FindMatch(player, OnMatchFound, MatchSearchPollTime);
+    }
+
+    private void UpdateStatus()
+    {
+        UpdateMatches();
     }
 
     private void OnMatchFound(Match match)
@@ -38,15 +51,15 @@ public class CombatController : MonoBehaviour
         }
         searchForMatch.interactable = true;
         matches.Add(match);
-        UpdateMatches(match);
+        UpdateMatches();
     }
 
-    private void UpdateMatches(Match match)
+    private void UpdateMatches()
     {
         var matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
-        for(int i = 0; i < matchesUIArray.Length; i++)
+        for (int i = 0; i < matchesUIArray.Length; i++)
         {
-            if(matches.Count > i)
+            if (matches.Count > i)
             {
                 matchesUIArray[i].enabled = true;
                 matchesUIArray[i].UpdateUI(matches[i]);
@@ -66,7 +79,7 @@ public class CombatController : MonoBehaviour
 
     private void OnAttack(Match match)
     {
-        UpdateMatches(match);
+        UpdateMatches();
     }
 
     private Player CreatePlayer()
@@ -77,47 +90,4 @@ public class CombatController : MonoBehaviour
         player.attackPower = PlayerManager.StartingAttackPower;
         return player;
     }
-
-    //private const string PlayerTurnText = "It's your turn!";
-    //private const string NotPlayerTurnText = "It's not your turn!";
-
-    //[SerializeField]
-    //[Tooltip("Keeps track of whose turn it is")]
-    //private Text turnDisplay;
-
-    //[SerializeField]
-    //[Tooltip("How long of an interval between checks to see if it's the player's turn")]
-    //private float pollTime = 2.0f;
-
-    //void Start()
-    //{
-    //    turnDisplay.text = NotPlayerTurnText;
-    //    WaitForTurn();
-    //}
-
-    //private void TakeTurn()
-    //{
-    //    //ServerManager.Instance.TakeTurn(OnTurnComplete);
-    //}
-
-    //private void OnTurnComplete(string result)
-    //{
-    //    bool success = bool.Parse(result);
-    //    if (!success)
-    //    {
-    //        return;
-    //    }
-    //    turnDisplay.text = NotPlayerTurnText;
-    //    WaitForTurn();
-    //}
-
-    //private void WaitForTurn()
-    //{
-    //    //ServerManager.Instance.NotifyOnTurnReady(OnTurnReady, pollTime);
-    //}
-
-    //private void OnTurnReady(string result)
-    //{
-    //    turnDisplay.text = PlayerTurnText;
-    //}
 }
