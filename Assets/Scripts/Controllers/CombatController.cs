@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +17,15 @@ public class CombatController : MonoBehaviour
     private const float CurrentStatusPollTime = 2.0f;
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
-    private const string UpdateStatusMethodName = "UpdateStatus";
+    private const string UpdateStatusMethodName = "UpdateMatches";
 
     private List<Match> matches = new List<Match>();
+    private UIMatch[] matchesUIArray;
+
+    void Awake()
+    {
+        matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
+    }
 
     void Start()
     {
@@ -37,11 +44,6 @@ public class CombatController : MonoBehaviour
         ServerManager.Instance.FindMatch(player, OnMatchFound, MatchSearchPollTime);
     }
 
-    private void UpdateStatus()
-    {
-        UpdateMatches();
-    }
-
     private void OnMatchFound(Match match)
     {
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
@@ -56,17 +58,16 @@ public class CombatController : MonoBehaviour
 
     private void UpdateMatches()
     {
-        var matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
         for (int i = 0; i < matchesUIArray.Length; i++)
         {
             if (matches.Count > i)
             {
-                matchesUIArray[i].enabled = true;
+                matchesUIArray[i].gameObject.SetActive(true);
                 matchesUIArray[i].UpdateUI(matches[i]);
             }
             else
             {
-                matchesUIArray[i].enabled = false;
+                matchesUIArray[i].gameObject.SetActive(false);
             }
         }
     }
@@ -79,6 +80,8 @@ public class CombatController : MonoBehaviour
 
     private void OnAttack(Match match)
     {
+        var clientMatch = matches.Where(m => m.id == match.id).First();
+        clientMatch = match;
         UpdateMatches();
     }
 

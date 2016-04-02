@@ -71,7 +71,6 @@ def getMatchStatus(player):
 #Attacks for the player in the specified match
 @app.route('/attack/<match>')
 def attack(match):
-    #create match from json
     matchInstance = createMatchFromJson(match)
     if matchInstance.player0.id == matchInstance.turn.id:
         matchInstance.turn = matchInstance.player1
