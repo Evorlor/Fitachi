@@ -1,13 +1,12 @@
-﻿public class PlayerManager : ManagerBehaviour<PlayerManager>
-{
-    public int UserID { get; set; }
-    public Nutrition Nutrition { get; set; }
-    public Speed Speed { get; set; }
-    public Endurance Endurance { get; set; }
-    public Rest Rest { get; set; }
+﻿using System.Collections;
+using UnityEngine;
 
-    protected override void Awake()
-    {
-        UserID = 0;
-    }
+public class PlayerManager : ManagerBehaviour<PlayerManager>
+{
+    public static readonly string ID = "ID" + Random.Range(0, 100000);
+    public int TokenLength { get; set; }
+    public const int StartingHitPoints = 100;
+    public const int StartingAttackPower = 10;
+    public Player Player { get; set; }
+    public int enemyHitPoints = 100;
 }

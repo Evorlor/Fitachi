@@ -5,50 +5,78 @@ using UnityEngine;
 
 public class ServerManager : ManagerBehaviour<ServerManager>
 {
-    private const string ServerLink = "http://127.0.0.1:5000/";
-    private const string TakeTurnMethod = "take_turn/";
-    private const string CheckForTurnMethod = "check_for_turn/";
+    public string ServerLink = "http://10.8.3.43:5000";
+    private const string FindMatchMethodName = "find_match";
+    private const string AttackMethodName = "attack";
+    private const string PlayerUpdateMethodName = "get_player";
+    private const string GetMatchStatusMethodName = "get_match_status";
+    private const string UpdateMatchMethodName = "update_match";
 
-    public void NotifyOnTurnReady(Action<string> onTurnReady, float pollTime)
+    public void FindMatch(Player player, Action<Match> onMatchFound, float pollTime)
     {
-        StartCoroutine(WaitForTurn(onTurnReady, pollTime));
+        StartCoroutine(WaitForMatch(player, onMatchFound, pollTime));
     }
 
-    public void TakeTurn(Action<string> onTurnComplete)
+    public void Attack(Match match, Action<Match> onAttack)
     {
-        StartCoroutine(WaitForTurnCompletion(onTurnComplete));
+        StartCoroutine(WaitForAttack(match, onAttack));
     }
 
-    private IEnumerator WaitForTurnCompletion(Action<string> onTurnComplete)
+    public void UpdateMatch(Match match, Action<Match> onMatchUpdated)
     {
-        string url = ServerLink + TakeTurnMethod + PlayerManager.Instance.UserID;
+        StartCoroutine(WaitForMatchUpdate(match, onMatchUpdated));
+    }
+
+    private IEnumerator WaitForMatchUpdate(Match match, Action<Match> onMatchUpdated)
+    {
+        string matchJson = JsonUtility.ToJson(match);
+        string url = CreateUrl(UpdateMatchMethodName, matchJson);
         var www = new WWW(url);
         yield return new WaitUntil(() => www.isDone);
-        string result = GetStringResult(www.bytes);
-        bool turnComplete = bool.Parse(result);
-        if (turnComplete)
+        var result = GetStringResult(www.bytes);
+        match = JsonUtility.FromJson<Match>(result);
+        onMatchUpdated(match);
+    }
+
+    private IEnumerator WaitForAttack(Match match, Action<Match> onAttack)
+    {
+        string matchJson = JsonUtility.ToJson(match);
+        string url = CreateUrl(AttackMethodName, matchJson);
+        var www = new WWW(url);
+        yield return new WaitUntil(() => www.isDone);
+        var result = GetStringResult(www.bytes);
+        match = JsonUtility.FromJson<Match>(result);
+        onAttack(match);
+    }
+
+    private IEnumerator WaitForMatch(Player player, Action<Match> onMatchFound, float pollTime)
+    {
+        string playerJson = JsonUtility.ToJson(player);
+        string url = CreateUrl(FindMatchMethodName, playerJson);
+        var www = new WWW(url);
+        while (true)
         {
-            onTurnComplete(result);
-            yield break;
+            yield return new WaitUntil(() => www.isDone);
+            var result = GetStringResult(www.bytes);
+            var match = JsonUtility.FromJson<Match>(result);
+            if (match.id > 0)
+            {
+                onMatchFound(match);
+            }
+            yield return new WaitForSeconds(pollTime);
+            url = CreateUrl(GetMatchStatusMethodName, playerJson);
+            www = new WWW(url);
         }
     }
 
-    private IEnumerator WaitForTurn(Action<string> onTurnReady, float pollTime)
+    private string CreateUrl(string method, string parameters = null)
     {
-        string url = ServerLink + CheckForTurnMethod + PlayerManager.Instance.UserID;
-        while (true)
+        string url = ServerLink + "/" + method;
+        if (parameters != null)
         {
-            var www = new WWW(url);
-            yield return new WaitUntil(() => www.isDone);
-            var result = GetStringResult(www.bytes);
-            bool activeTurn = bool.Parse(result);
-            if (activeTurn)
-            {
-                onTurnReady(result);
-                yield break;
-            }
-            yield return new WaitForSeconds(pollTime);
+            url += "/" + parameters;
         }
+        return url;
     }
 
     private string GetStringResult(byte[] bytes)
