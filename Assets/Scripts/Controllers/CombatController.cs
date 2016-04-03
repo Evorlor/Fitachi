@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -72,9 +73,19 @@ public class CombatController : MonoBehaviour
         int matchIndex = matches.IndexOf(clientMatch);
         matches[matchIndex] = match;
         UpdateMatchesUI();
+
+		CheckForGameOver(match);
     }
 
-    private void UpdateMatchesUI()
+	private void CheckForGameOver(Match match)
+	{
+		if (match.player0.hitPoints <= 0 || match.player1.hitPoints <= 0)
+		{
+			matches.Remove(match);
+		}
+	}
+
+	private void UpdateMatchesUI()
     {
         for (int i = 0; i < matchesUIArray.Length; i++)
         {
