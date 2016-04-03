@@ -26,8 +26,16 @@ public class UIMatch : MonoBehaviour
     public void UpdateUI(Match match)
     {
         matchID.text = MatchIDPrefix + match.id;
-        playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
-        enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
+        if(match.player0.id == PlayerManager.ID)
+        {
+            playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
+            enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
+        }
+        else
+        {
+            playerHitpoints.text = PlayerHitpointsPrefix + match.player1.hitPoints;
+            enemyHitpoints.text = EnemyHitpointsPrefix + match.player0.hitPoints;
+        }
         attack.interactable = match.turn.id == PlayerManager.ID;
     }
 }

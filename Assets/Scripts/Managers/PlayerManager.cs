@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerManager : ManagerBehaviour<PlayerManager>
 {
-
     public static readonly string ID = "ID" + Random.Range(0, 100000);
     public int TokenLength { get; set; }
     public const int StartingHitPoints = 100;

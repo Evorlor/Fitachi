@@ -89,9 +89,10 @@ def attack(match):
     else:
         matchInstance.turn = matchInstance.player0
         matchInstance.player0.hitPoints -= matchInstance.player1.attackPower
-    for matcherIteration in matches:
+    for matchIteration in matches:
         if matchIteration.id == matchInstance.id:
-            matchIteration = matchInstance
+            matches.remove(matchIteration)
+            matches.append(matchInstance)
     return getMatchJson(matchInstance)
 
 #checks if two players are currently in a match
