@@ -15,11 +15,10 @@ public class CombatController : MonoBehaviour
     private Button searchForMatch;
 
     private const float MatchSearchPollTime = 2.0f;
-    private const float CurrentStatusPollTime = 2.0f;
+    private const float CurrentStatusPollTime = 1.0f;
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
     private const string UpdateMatchesMethodName = "UpdateMatches";
-    private const string UpdateMatchesUIMethodName = "UpdateMatchesUI";
 
     private List<Match> matches = new List<Match>();
     private UIMatch[] matchesUIArray;
@@ -31,8 +30,7 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating(UpdateMatchesMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
-        InvokeRepeating(UpdateMatchesUIMethodName, CurrentStatusPollTime, CurrentStatusPollTime);
+        InvokeRepeating(UpdateMatchesMethodName, 0, CurrentStatusPollTime);
     }
 
     public void FindMatch()
@@ -61,7 +59,7 @@ public class CombatController : MonoBehaviour
 
     private void UpdateMatches()
     {
-        foreach(var match in matches)
+        foreach (var match in matches)
         {
             ServerManager.Instance.UpdateMatch(match, OnMatchUpdated);
         }
@@ -72,20 +70,19 @@ public class CombatController : MonoBehaviour
         var clientMatch = matches.Where(m => m.id == match.id).First();
         int matchIndex = matches.IndexOf(clientMatch);
         matches[matchIndex] = match;
+        CheckForGameOver(match);
         UpdateMatchesUI();
-
-		CheckForGameOver(match);
     }
 
-	private void CheckForGameOver(Match match)
-	{
-		if (match.player0.hitPoints <= 0 || match.player1.hitPoints <= 0)
-		{
-			matches.Remove(match);
-		}
-	}
+    private void CheckForGameOver(Match match)
+    {
+        if (match.player0.hitPoints <= 0 || match.player1.hitPoints <= 0)
+        {
+            matches.Remove(match);
+        }
+    }
 
-	private void UpdateMatchesUI()
+    private void UpdateMatchesUI()
     {
         for (int i = 0; i < matchesUIArray.Length; i++)
         {
