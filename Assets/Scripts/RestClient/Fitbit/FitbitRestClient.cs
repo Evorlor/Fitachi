@@ -23,6 +23,16 @@ public class FitbitRestClient : MonoBehaviour {
 	public static Fitbit.User.Profile Profile;
 	public static Fitbit.Activity.Activities Activities;
 
+	public static bool IsLogin()
+	{
+		return Instance.mIsLogin;
+	}
+
+	public static string GetUserId()
+	{
+		return Instance.mUserId;
+	}
+
 	public static void SaveData(string token, string userID)
 	{
 		Debug.Log("Save.. " + token + " " + userID);
