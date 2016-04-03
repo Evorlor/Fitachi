@@ -115,8 +115,8 @@ public class CombatController : MonoBehaviour
     private Player CreatePlayer()
     {
         var player = new Player();
-        player.hitPoints = int.Parse(FitbitRestClient.Activities.lifetime.total.steps);
-		player.attackPower = int.Parse(FitbitRestClient.Activities.lifetime.total.steps) / UnityEngine.Random.Range(5, 10);
+        player.hitPoints = int.Parse(FitbitRestClient.Activities.lifetime.total.steps) + 10;
+		player.attackPower = (int.Parse(FitbitRestClient.Activities.lifetime.total.steps) + 10) / UnityEngine.Random.Range(5, 10);
 		player.id = FitbitRestClient.GetUserId();
         return player;
     }
