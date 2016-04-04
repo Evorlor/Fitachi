@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class FitbitRestClient : MonoBehaviour {
 
+	public string DEBUG_USERID = "";
+	public string DEBUG_TOKEN = "";
+
 	private static FitbitRestClient Instance = null;
 
 	private static string CLIENT_ID = "227FWT";
@@ -95,7 +98,19 @@ public class FitbitRestClient : MonoBehaviour {
 			}
 			catch
 			{
-				url = WIN_URL;
+				if (DEBUG_USERID != string.Empty && DEBUG_TOKEN != string.Empty) {
+					mAccessToke = DEBUG_TOKEN;
+					mUserId = DEBUG_USERID;
+
+					SaveData(mAccessToke, mUserId);
+
+					GetProfile();
+					GetActiviesLifeTimeState();
+
+					mIsLogin = true;
+					url = WIN_URL;
+                    Application.OpenURL(url);
+				}
 			}
 			Debug.Log("Login...");
 			Application.OpenURL(url);
