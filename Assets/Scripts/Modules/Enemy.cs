@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     Rigidbody2D characterRigidbody;
 
     void Start() {
-        currHP = maxHP = (int)Time.timeSinceLevelLoad;
+        currHP = maxHP = (int)(Time.timeSinceLevelLoad / 1.1f);
         characterRigidbody = GetComponent<Rigidbody2D>();
     }
 
