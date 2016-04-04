@@ -108,6 +108,8 @@ public class FitbitRestClient : MonoBehaviour {
 					GetActiviesLifeTimeState();
 
 					mIsLogin = true;
+					url = WIN_URL;
+                    Application.OpenURL(url);
 				}
 			}
 			Debug.Log("Login...");
