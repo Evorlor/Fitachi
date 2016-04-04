@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FitbitRestClient : MonoBehaviour {
+public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
+{
 
 	public string DEBUG_USERID = "";
 	public string DEBUG_TOKEN = "";
-
-	private static FitbitRestClient Instance = null;
 
 	private static string CLIENT_ID = "227FWT";
 	private static string EXPIRED_TIME = "2592000";
@@ -83,7 +82,6 @@ public class FitbitRestClient : MonoBehaviour {
 	// Use this for initialization
 	IEnumerator Start () {
 		Debug.Log("Start Fitbit Rest Client");
-		Instance = this;
 
 		// try get access toke from preference
 		yield return LoadData();
@@ -98,6 +96,7 @@ public class FitbitRestClient : MonoBehaviour {
 			}
 			catch
 			{
+				url = WIN_URL;
 				if (DEBUG_USERID != string.Empty && DEBUG_TOKEN != string.Empty) {
 					mAccessToke = DEBUG_TOKEN;
 					mUserId = DEBUG_USERID;
@@ -108,8 +107,9 @@ public class FitbitRestClient : MonoBehaviour {
 					GetActiviesLifeTimeState();
 
 					mIsLogin = true;
-					url = WIN_URL;
-                    Application.OpenURL(url);
+				} else
+				{
+					Application.OpenURL(url);
 				}
 			}
 			Debug.Log("Login...");
