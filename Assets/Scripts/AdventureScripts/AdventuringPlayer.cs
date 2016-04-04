@@ -4,13 +4,19 @@ using System.Collections.Generic;
 
 public class AdventuringPlayer : MonoBehaviour {
 
-    public int AttackDamage;
-    public float attackSpeed;
+    private int AttackDamage;
+    private float attackSpeed;
 
     List<Enemy> enemies;
 
-	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
+        attackSpeed = int.Parse(FitbitRestClient.Activities.lifetime.total.steps) / 2;
+        AttackDamage = int.Parse(FitbitRestClient.Activities.lifetime.total.steps);
+    }
+
+    // Use this for initialization
+    void Start () {
         enemies = new List<Enemy>();
         InvokeRepeating("attackEnemies", 0, attackSpeed);
         Physics.queriesHitTriggers = true;
