@@ -32,6 +32,10 @@ public class Enemy : MonoBehaviour
     void OnKill() {
         for (int i = 0; i<coinDrops; i++) {
             Instantiate(coin, new Vector3(transform.position.x+Random.Range(-CoinDropRange, CoinDropRange),transform.position.y + Random.Range(-CoinDropRange, CoinDropRange), transform.position.z ), Quaternion.identity);
+            AdventureStats.Endurance.HeartRate++;
+            AdventureStats.Nutrition.Hunger++;
+            AdventureStats.Rest.Sleep++;
+            AdventureStats.Speed.Steps++;
         }
     }
 
