@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     Rigidbody2D characterRigidbody;
 
     void Start() {
-        currHP = maxHP;
+        currHP = maxHP = (int)Time.timeSinceLevelLoad;
         characterRigidbody = GetComponent<Rigidbody2D>();
     }
 
