@@ -93,6 +93,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 			{
 				AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 				AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+				Debug.Log("Login...");
+				Application.OpenURL(url);
 			}
 			catch
 			{
@@ -112,8 +114,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 					Application.OpenURL(url);
 				}
 			}
-			Debug.Log("Login...");
-			Application.OpenURL(url);
 		}
     }
 
