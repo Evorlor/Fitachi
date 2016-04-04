@@ -1,21 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BackgrounScroller : MonoBehaviour {
+public class BackgrounScroller : MonoBehaviour
+{
+	[Tooltip("Time in seconds for the background to make one full loop.")]
+	public float fullScrollSpeed = 5.0f;
 
-    public float scrollSpeed;
-    public float tileSizeZ;
-
-    private Vector3 startPosition;
-
-    void Start() {
-        startPosition = transform.position;
-    }
-
-    void Update() {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, (tileSizeZ*.60f));
-        transform.position = startPosition + Vector3.left * newPosition;
-
-        
-    }
+	void Update()
+	{
+		MeshRenderer myMR = GetComponent<MeshRenderer>();
+		Material myMat = myMR.material;
+		Vector2 offset = myMat.mainTextureOffset;
+		offset.x += Time.deltaTime / fullScrollSpeed;
+		myMat.mainTextureOffset = offset;
+	}
 }
