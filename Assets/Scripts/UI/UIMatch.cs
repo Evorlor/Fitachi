@@ -36,6 +36,6 @@ public class UIMatch : MonoBehaviour
             playerHitpoints.text = PlayerHitpointsPrefix + match.player1.hitPoints;
             enemyHitpoints.text = EnemyHitpointsPrefix + match.player0.hitPoints;
         }
-        attack.interactable = match.turn.id == PlayerManager.ID;
-    }
+        attack.interactable = match.turn.id == FitbitRestClient.GetUserId();
+	}
 }

@@ -18,6 +18,12 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly Color spawnLineColor = Color.red;
 
+
+    void Start() {
+        Physics2D.IgnoreLayerCollision(8,8,true);
+        InvokeRepeating("SpawnEnemy", 1, spawnRate);
+    }
+
     void Update()
     {
         //PlayerManager.Instance.Rest;
@@ -34,5 +40,9 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawLine(startingPosition, endingPosition);
         Gizmos.DrawIcon(startingPosition, FileNames.EnemySpawnPositionGizmo);
         Gizmos.DrawIcon(endingPosition, FileNames.EnemySpawnPositionGizmo);
+    }
+
+    private void SpawnEnemy() {
+        Instantiate(enemiesToSpawn[Random.Range(0,enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)) , Quaternion.identity);
     }
 }
