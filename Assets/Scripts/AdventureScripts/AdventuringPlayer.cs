@@ -12,8 +12,8 @@ public class AdventuringPlayer : MonoBehaviour {
 
     void Awake()
     {
-        attackSpeed = int.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
-        AttackDamage = (int)(int.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
+        attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
+        AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
     }
 
     // Use this for initialization
