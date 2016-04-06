@@ -15,6 +15,7 @@ public class AdventuringPlayer : MonoBehaviour {
 
 		yield return FitbitRestClient.GetProfile();
 		yield return FitbitRestClient.GetActiviesLifeTimeState();
+		yield return FitbitRestClient.GetActiviesDailyState(System.DateTime.Now);
 		attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
 		AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
 

@@ -24,6 +24,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 	private bool mIsLogin = false;
 	public static Fitbit.User.Profile Profile;
 	public static Fitbit.Activity.Activities Activities;
+	public static Fitbit.ActivitiesDaily.ActivitiesDaily ActivitiesDaily;
 
 	public static bool IsLogin()
 	{
@@ -159,6 +160,28 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		Debug.Log("DEBUG: " + www.text);
 		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
 		Debug.Log("DEBUG: " + JsonUtility.ToJson(Activities));
+	}
+
+	public static Coroutine GetActiviesDailyState(System.DateTime date)
+	{
+		if (Instance == null) return null;
+		return Instance.StartCoroutine(Instance.GetActiviesDailyStateInternal(date));
+	}
+
+	IEnumerator GetActiviesDailyStateInternal(System.DateTime date)
+	{
+		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
+		var headers = new Dictionary<string, string>();
+		headers.Add("Authorization", "Bearer " + mAccessToke);
+		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities/date/" + date.ToString("yyyy-MM-dd")+ ".json", null, headers);
+		Debug.Log("DEBUG: " + www.url);
+		while (!www.isDone)
+		{
+			yield return null;
+		}
+		Debug.Log("DEBUG: " + www.text);
+		ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
+		Debug.Log("DEBUG: " + JsonUtility.ToJson(ActivitiesDaily));
 	}
 
 	// Update is called once per frame
