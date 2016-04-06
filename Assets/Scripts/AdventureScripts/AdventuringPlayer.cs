@@ -10,15 +10,15 @@ public class AdventuringPlayer : MonoBehaviour {
 
     List<Enemy> enemies = new List<Enemy>();
 
-    void Awake()
-    {
-        attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
-        AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
-    }
-
     // Use this for initialization
-    void Start () {
-        enemies = new List<Enemy>();
+    IEnumerator Start () {
+
+		yield return FitbitRestClient.GetProfile();
+		yield return FitbitRestClient.GetActiviesLifeTimeState();
+		attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
+		AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
+
+		enemies = new List<Enemy>();
         InvokeRepeating("attackEnemies", 0, attackSpeed);
         Physics.queriesHitTriggers = true;
 	}
