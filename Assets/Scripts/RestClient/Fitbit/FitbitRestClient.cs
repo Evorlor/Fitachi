@@ -174,7 +174,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		var headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities/date/" + date.ToString("yyyy-MM-dd")+ ".json", null, headers);
-		Debug.Log("DEBUG: " + www.url);
+
 		while (!www.isDone)
 		{
 			yield return null;
