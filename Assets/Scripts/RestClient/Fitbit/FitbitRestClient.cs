@@ -56,7 +56,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
 		else
 		{
-			Debug.Log("Got catched token");
+			Debug.Log("Got catched id and token" + mUserId + " " + mAccessToke);
 
 			// Validate the token, a very naive way...
 			var headers = new Dictionary<string, string>();
@@ -64,7 +64,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 			var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/profile.json", null, headers);
 
 			yield return www;
-			Debug.Log("Test...");
 			if (www.text.Contains("errors"))
 			{
 				Debug.Log(www.text);
@@ -74,16 +73,13 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 			{
 				Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
 				mIsLogin = true;
-				GetProfile();
-                GetActiviesLifeTimeState();
-            }
+				GetAll();
+			}
 		}
 	}
 
 	// Use this for initialization
 	IEnumerator Start () {
-		Debug.Log("Start Fitbit Rest Client");
-
 		// try get access toke from preference
 		yield return LoadData();
 
@@ -106,10 +102,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 					SaveData(mAccessToke, mUserId);
 
-					GetProfile();
-					GetActiviesLifeTimeState();
-
 					mIsLogin = true;
+					GetAll();
 				} else
 				{
 					Application.OpenURL(url);
@@ -126,7 +120,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	IEnumerator GetProfileInternal()
 	{
-		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
         var headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/profile.json", null, headers);
@@ -137,7 +130,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
 		Debug.Log("DEBUG: " + www.text);
 		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
-		Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
 	}
 
 	public static Coroutine GetActiviesLifeTimeState()
@@ -148,7 +140,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	IEnumerator GetActiviesLifeTimeStateInternal()
 	{
-		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
 		var headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities.json", null, headers);
@@ -159,7 +150,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
 		Debug.Log("DEBUG: " + www.text);
 		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
-		Debug.Log("DEBUG: " + JsonUtility.ToJson(Activities));
 	}
 
 	public static Coroutine GetActiviesDailyState(System.DateTime date)
@@ -170,7 +160,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	IEnumerator GetActiviesDailyStateInternal(System.DateTime date)
 	{
-		Debug.Log("GetUserInternal " + mUserId + " " + mAccessToke);
 		var headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities/date/" + date.ToString("yyyy-MM-dd")+ ".json", null, headers);
@@ -181,7 +170,6 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
 		Debug.Log("DEBUG: " + www.text);
 		ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
-		Debug.Log("DEBUG: " + JsonUtility.ToJson(ActivitiesDaily));
 	}
 
 	// Update is called once per frame
@@ -201,10 +189,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 					SaveData(mAccessToke, mUserId);
 
-					GetProfile();
-					GetActiviesLifeTimeState();
-
 					mIsLogin = true;
+					GetAll();
                 }
 			}
 			catch
@@ -212,5 +198,12 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 			}
 		}
+	}
+
+	private void GetAll()
+	{
+		GetProfile();
+		GetActiviesLifeTimeState();
+		GetActiviesDailyState(System.DateTime.Now);
 	}
 }
