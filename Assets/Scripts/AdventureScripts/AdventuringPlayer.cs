@@ -11,11 +11,7 @@ public class AdventuringPlayer : MonoBehaviour {
     List<Enemy> enemies = new List<Enemy>();
 
     // Use this for initialization
-    IEnumerator Start () {
-
-		yield return FitbitRestClient.GetProfile();
-		yield return FitbitRestClient.GetActiviesLifeTimeState();
-		yield return FitbitRestClient.GetActiviesDailyState(System.DateTime.Now);
+    void Start () {
 		attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
 		AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
 
