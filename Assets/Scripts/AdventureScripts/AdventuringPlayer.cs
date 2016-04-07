@@ -1,18 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class AdventuringPlayer : MonoBehaviour {
 
+    [SerializeField]
     private int AttackDamage;
+    [SerializeField]
     private float attackSpeed;
+    [SerializeField]
+    private float hp;
     public float weakenPlayerMultiplier = 10.0f;
+    public float attackspeedmodifier;
 
     List<Enemy> enemies = new List<Enemy>();
 
     // Use this for initialization
     void Start () {
-		attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / 2 / weakenPlayerMultiplier;
+        hp = 10;
+		attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / attackspeedmodifier;
 		AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
 
 		enemies = new List<Enemy>();
@@ -22,8 +29,14 @@ public class AdventuringPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (hp<=0) {
+            SceneManager.LoadScene("Main");
+        }
 	}
+
+    public void injurePlayer(int incommmingDamage) {
+        hp -= incommmingDamage;
+    }
 
     void OnTriggerEnter2D(Collider2D attackedMonster) {
         if (attackedMonster.tag=="Monster") {
@@ -40,5 +53,8 @@ public class AdventuringPlayer : MonoBehaviour {
         foreach (Enemy monster in enemies) {
             monster.TakeDamage(AttackDamage);
         }
+    }
+    public void IgnoreMonster(Enemy ignoreMonster) {
+        enemies.Remove(ignoreMonster);
     }
 }
