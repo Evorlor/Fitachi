@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CombatController : MonoBehaviour
@@ -35,6 +36,7 @@ public class CombatController : MonoBehaviour
 
     public void FindMatch()
     {
+        AdventureStats.Endurance.HeartRate = 1000;
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
@@ -47,6 +49,7 @@ public class CombatController : MonoBehaviour
 
     private void OnMatchFound(Match match)
     {
+
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
@@ -100,8 +103,22 @@ public class CombatController : MonoBehaviour
 
     public void Attack(int matchIndex)
     {
-        var match = matches[matchIndex];
-        ServerManager.Instance.Attack(match, OnAttack);
+        this.matchIndex = matchIndex;
+        SceneManager.LoadScene("FuryStrikes", LoadSceneMode.Additive);
+
+    }
+
+    private int matchIndex;
+
+    void OnLevelWasLoaded(int level)
+    {
+        if(level == 8)
+        {
+            var match = matches[matchIndex];
+            var attackingPlayer = MatchHelper.GetAttackingPlayer(match);
+            attackingPlayer.attackPower = 5;
+            ServerManager.Instance.Attack(match, OnAttack);
+        }
     }
 
     private void OnAttack(Match match)

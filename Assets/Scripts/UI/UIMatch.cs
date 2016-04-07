@@ -26,7 +26,7 @@ public class UIMatch : MonoBehaviour
     public void UpdateUI(Match match)
     {
         matchID.text = MatchIDPrefix + match.id;
-        if(match.player0.id == PlayerManager.ID)
+        if (FitbitRestClient.GetUserId() == match.player0.id)
         {
             playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
             enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;

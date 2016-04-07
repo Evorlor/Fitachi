@@ -13,7 +13,7 @@ public class FuryStrikesScript : MonoBehaviour
     public GameObject AttackButton;
 
     private GameObject[] ButtonList;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -68,7 +68,8 @@ public class FuryStrikesScript : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("Combat");
+        SceneManager.UnloadScene(8);
+        //SceneManager.LoadScene("Combat");
     }
 
     private void SetButtons(int ButtonsToDisable, int ButtonsToEnable)

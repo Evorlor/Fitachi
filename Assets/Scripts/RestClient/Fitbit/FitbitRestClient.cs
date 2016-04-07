@@ -80,8 +80,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	// Use this for initialization
 	IEnumerator Start () {
-		// try get access toke from preference
-		yield return LoadData();
+        //PlayerPrefs.DeleteAll();
+        // try get access toke from preference
+        yield return LoadData();
 
 		if (!mIsLogin) {
 
