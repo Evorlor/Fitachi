@@ -46,6 +46,18 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	public IEnumerator LoadData()
 	{
+		try
+		{
+			AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+			AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+		} catch
+		{
+			mUserId = "";
+			mAccessToke = "";
+			mIsLogin = false;
+			yield break;
+		}
+
 		mAccessToke = PlayerPrefs.GetString(TokenKey);
 		mUserId = PlayerPrefs.GetString(UserIDKey);
 
