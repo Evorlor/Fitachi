@@ -18,8 +18,8 @@ public class EnemyDestroyer : MonoBehaviour {
 	{
 		if (attackedMonster.tag == "Monster")
 		{
-			Destroy(attackedMonster.gameObject);
-			SceneManager.LoadScene("Main");
+            transform.parent.GetComponent<AdventuringPlayer>().injurePlayer(1);
+            transform.parent.GetComponent<AdventuringPlayer>().IgnoreMonster(attackedMonster.GetComponent<Enemy>());
         }
 
 	}

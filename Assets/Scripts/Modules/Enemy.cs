@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        currHP = maxHP = (int)(Time.timeSinceLevelLoad / 1.1f);
+        currHP = maxHP = (int)(Time.timeSinceLevelLoad / Random.Range(3.0f, 6.5f));
         characterRigidbody = GetComponent<Rigidbody2D>();
     }
 

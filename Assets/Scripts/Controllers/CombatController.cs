@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class CombatController : ManagerBehaviour<CombatController>
 {
+	public GameObject victoryText;
+
     [Tooltip("Container for Matches UI")]
     [SerializeField]
     private CanvasRenderer matchesUI;
@@ -19,7 +21,7 @@ public class CombatController : ManagerBehaviour<CombatController>
     private const float CurrentStatusPollTime = 1.0f;
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
-    private const string UpdateMatchesMethodName = "UpdateMatches";
+	private const string UpdateMatchesMethodName = "UpdateMatches";
 
     private List<Match> matches = new List<Match>();
     private UIMatch[] matchesUIArray;
@@ -106,7 +108,22 @@ public class CombatController : ManagerBehaviour<CombatController>
     {
         if (match.player0.hitPoints <= 0 || match.player1.hitPoints <= 0)
         {
-            matches.Remove(match);
+			//bool isPlayer0 = FitbitRestClient.GetUserId() == match.player0.id;
+			//if (isPlayer0 && match.player1.hitPoints <= 0)
+			//{
+			//	victoryText.SetActive(true);
+			//	Text tempText = victoryText.GetComponent<Text>();
+			//	tempText.text = "VICTORY!";
+			//	tempText.color = Color.green;
+			//}
+			//else
+			//{
+			//	victoryText.SetActive(true);
+			//	Text tempText = victoryText.GetComponent<Text>();
+			//	tempText.text = "DEFEAT.";
+			//	tempText.color = Color.red;
+			//}
+			matches.Remove(match);
         }
     }
 
@@ -128,6 +145,11 @@ public class CombatController : ManagerBehaviour<CombatController>
                 matchesUIArray[i].gameObject.SetActive(false);
             }
         }
+
+		//if (victoryText.activeSelf)
+		//{
+		//	victoryText.SetActive(false);
+		//}
     }
 
     public void Attack(int matchIndex)
