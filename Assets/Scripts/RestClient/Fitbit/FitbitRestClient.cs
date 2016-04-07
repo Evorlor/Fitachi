@@ -22,9 +22,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 	private string mUserId = "";
 
 	private bool mIsLogin = false;
-	public static Fitbit.User.Profile Profile;
-	public static Fitbit.Activity.Activities Activities;
-	public static Fitbit.ActivitiesDaily.ActivitiesDaily ActivitiesDaily;
+	public static Fitbit.User.Profile Profile = new Fitbit.User.Profile();
+	public static Fitbit.Activity.Activities Activities = new Fitbit.Activity.Activities();
+	public static Fitbit.ActivitiesDaily.ActivitiesDaily ActivitiesDaily = new Fitbit.ActivitiesDaily.ActivitiesDaily();
 
 	public static bool IsLogin()
 	{
