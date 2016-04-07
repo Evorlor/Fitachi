@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bbe991bf31533a14cabd1975639f4f1d
+timeCreated: 1459724017
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - AttackButtonPositions: {fileID: 142364, guid: 2d94609e46f906e4fafa4bca8ce3f87f,
+      type: 2}
+  - AttackButton: {fileID: 110776, guid: 97878a6fe22151f4a9776b62089bd8e1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
