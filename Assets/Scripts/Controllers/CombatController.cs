@@ -24,6 +24,21 @@ public class CombatController : ManagerBehaviour<CombatController>
     private List<Match> matches = new List<Match>();
     private UIMatch[] matchesUIArray;
 
+    void OnLevelWasLoaded(int level)
+    {
+        if(level == 2)
+        {
+            Debug.Log("YIO");
+            //matchesUI = GameObject.Find("Matches").GetComponent<CanvasRenderer>();
+            matchesUIArray = new UIMatch[5];
+            for(int i = 0; i < matchesUIArray.Length; i++)
+            {
+                matchesUIArray[i] = GameObject.Find("Match #" + (i + 1)).GetComponent<UIMatch>();
+            }
+            searchForMatch = GameObject.Find("Start Battle").GetComponent<Button>();
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,7 +53,9 @@ public class CombatController : ManagerBehaviour<CombatController>
 
     public void FindMatch()
     {
-        AdventureStats.Endurance.HeartRate = 1000;
+        //AdventureStats.Endurance.HeartRate = 1000;
+
+        AdventureStats.Endurance.HeartRate += 20;
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
@@ -71,9 +88,9 @@ public class CombatController : ManagerBehaviour<CombatController>
     {
         foreach (var match in matches)
         {
-            Debug.Log(match.id);
             ServerManager.Instance.UpdateMatch(match, OnMatchUpdated);
         }
+        UpdateMatchesUI();
     }
 
     private void OnMatchUpdated(Match match)
@@ -121,21 +138,7 @@ public class CombatController : ManagerBehaviour<CombatController>
         ServerManager.Instance.Attack(match, OnAttack);
 
     }
-
-    public void FinishAttack()
-    {
-
-    }
-
-    private bool finishedRayScene = false;
-
-    void OnLevelWasLoaded(int level)
-    {
-        if(level == 8)
-        {
-            finishedRayScene = true;
-        }
-    }
+    
 
     private void OnAttack(Match match)
     {
