@@ -53,6 +53,7 @@ public class FuryStrikesScript : MonoBehaviour
         {
             SetButtons(2, 6);
         }
+        AdventureStats.gold++;
     }
 
     private IEnumerator timer()
@@ -67,8 +68,8 @@ public class FuryStrikesScript : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.UnloadScene(8);
-        //SceneManager.LoadScene("Combat");
+        //SceneManager.UnloadScene(8);
+        SceneManager.LoadScene("Main");
     }
 
     private void SetButtons(int ButtonsToDisable, int ButtonsToEnable)

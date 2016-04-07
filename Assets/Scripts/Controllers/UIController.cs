@@ -12,6 +12,10 @@ public class UIController : MonoBehaviour
 
     public List<GameObject> Buttons = new List<GameObject>();
 
+    void Awake()
+    {
+    }
+
     /// <summary>
     /// Loads the specified scene
     /// </summary>
@@ -36,10 +40,15 @@ public class UIController : MonoBehaviour
         FoodPyramid.gameObject.SetActive(true);
         FoodMenu.gameObject.SetActive(true);
     }
-    
+
     public void BuyFood(int foodCost)
     {
-        Debug.Log("Test food cost is: " + foodCost);
+        AdventureStats.gold -= 9;
+        AdventureStats.gold = Mathf.Max(0, AdventureStats.gold);
+        AdventureStats.Endurance.HeartRate += 3;
+        AdventureStats.Nutrition.Hunger++;
+        AdventureStats.Rest.Sleep++;
+        AdventureStats.Speed.Steps++;
     }
 
     public void DisplayFoodToPurchase(int ButtonAmount)

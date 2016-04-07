@@ -143,7 +143,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
 		Debug.Log("DEBUG: " + www.text);
 		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
-	}
+        Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
+    }
 
 	public static Coroutine GetActiviesLifeTimeState()
 	{
