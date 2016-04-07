@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CombatController : MonoBehaviour
+public class CombatController : ManagerBehaviour<CombatController>
 {
     [Tooltip("Container for Matches UI")]
     [SerializeField]
@@ -24,13 +24,15 @@ public class CombatController : MonoBehaviour
     private List<Match> matches = new List<Match>();
     private UIMatch[] matchesUIArray;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
     }
 
     void Start()
     {
+        GetExistingMatches();
         InvokeRepeating(UpdateMatchesMethodName, 0, CurrentStatusPollTime);
     }
 
@@ -45,6 +47,11 @@ public class CombatController : MonoBehaviour
         searchForMatch.interactable = false;
         var player = CreatePlayer();
         ServerManager.Instance.FindMatch(player, OnMatchFound, MatchSearchPollTime);
+    }
+
+    private void GetExistingMatches()
+    {
+
     }
 
     private void OnMatchFound(Match match)
@@ -64,6 +71,7 @@ public class CombatController : MonoBehaviour
     {
         foreach (var match in matches)
         {
+            Debug.Log(match.id);
             ServerManager.Instance.UpdateMatch(match, OnMatchUpdated);
         }
     }
@@ -89,6 +97,10 @@ public class CombatController : MonoBehaviour
     {
         for (int i = 0; i < matchesUIArray.Length; i++)
         {
+            if (!matchesUIArray[i])
+            {
+                return;
+            }
             if (matches.Count > i)
             {
                 matchesUIArray[i].gameObject.SetActive(true);
@@ -103,21 +115,25 @@ public class CombatController : MonoBehaviour
 
     public void Attack(int matchIndex)
     {
-        this.matchIndex = matchIndex;
-        SceneManager.LoadScene("FuryStrikes", LoadSceneMode.Additive);
+        var match = matches[matchIndex];
+        var attackingPlayer = MatchHelper.GetAttackingPlayer(match);
+        attackingPlayer.attackPower = 5;
+        ServerManager.Instance.Attack(match, OnAttack);
 
     }
 
-    private int matchIndex;
+    public void FinishAttack()
+    {
+
+    }
+
+    private bool finishedRayScene = false;
 
     void OnLevelWasLoaded(int level)
     {
         if(level == 8)
         {
-            var match = matches[matchIndex];
-            var attackingPlayer = MatchHelper.GetAttackingPlayer(match);
-            attackingPlayer.attackPower = 5;
-            ServerManager.Instance.Attack(match, OnAttack);
+            finishedRayScene = true;
         }
     }
 

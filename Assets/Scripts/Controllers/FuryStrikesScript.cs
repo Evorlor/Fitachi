@@ -53,7 +53,6 @@ public class FuryStrikesScript : MonoBehaviour
         {
             SetButtons(2, 6);
         }
-        Debug.Log("Attack Amount: " + AttackAmount);
     }
 
     private IEnumerator timer()
