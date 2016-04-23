@@ -10,12 +10,16 @@ public class UpdateTomsName : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-   
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (FitbitRestClient.Profile.user == null)
+        {
+            return;
+        }
         tom.text = "Welcome back " + FitbitRestClient.Profile.user.fullName + "!";
     }
 }
