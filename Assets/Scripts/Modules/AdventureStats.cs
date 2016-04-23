@@ -2,9 +2,19 @@
 
 public class AdventureStats
 {
-    public static int gold = 10;
-    public static Endurance Endurance = new Endurance();
-    public static Nutrition Nutrition = new Nutrition();
-    public static Rest Rest = new Rest();
-    public static Speed Speed = new Speed();
+    public static int Gold;
+
+    public static int Protien;
+
+    public static int Dairy;
+
+    public static int Grain;
+
+    public static int Vegetable;
+
+    public static int Fruit;
+
+    public static int Sweets;
+
 }
+

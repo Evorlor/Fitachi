@@ -57,7 +57,7 @@ public class CombatController : ManagerBehaviour<CombatController>
     {
         //AdventureStats.Endurance.HeartRate = 1000;
 
-        AdventureStats.Endurance.HeartRate += 20;
+        //AdventureStats.Endurance.HeartRate += 20;
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
@@ -176,8 +176,8 @@ public class CombatController : ManagerBehaviour<CombatController>
         //player.hitPoints = int.Parse(FitbitRestClient.Activities.lifetime.total.steps) + 10;
         //player.attackPower = (int.Parse(FitbitRestClient.Activities.lifetime.total.steps) + 10) / UnityEngine.Random.Range(5, 10);
         player.id = FitbitRestClient.GetUserId();
-        player.hitPoints = AdventureStats.Endurance.HeartRate;
-        player.attackPower = AdventureStats.Speed.Steps;
+        //player.hitPoints = AdventureStats.Endurance.HeartRate;
+        //player.attackPower = AdventureStats.Speed.Steps;
         return player;
     }
 }

@@ -16,6 +16,6 @@ public class HackyScript : MonoBehaviour {
     void OnDestroy()
     {
         Debug.Log("Destorying hack");
-        AdventureStats.Speed.Steps = 22;
+        //AdventureStats.Speed.Steps = 22;
     }
 }

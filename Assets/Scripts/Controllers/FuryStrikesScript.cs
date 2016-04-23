@@ -53,7 +53,7 @@ public class FuryStrikesScript : MonoBehaviour
         {
             SetButtons(2, 6);
         }
-        AdventureStats.gold++;
+        AdventureStats.Gold++;
     }
 
     private IEnumerator timer()

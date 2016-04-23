@@ -16,6 +16,6 @@ public class DontKillMe : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        goldPurseText.text = "Gold\n" + AdventureStats.gold;
+        goldPurseText.text = "Gold\n" + AdventureStats.Gold;
 	}
 }
