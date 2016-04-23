@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class AdventureStats
+﻿public static class AdventureStats
 {
     public static int gold = 10;
     public static Endurance Endurance = new Endurance();

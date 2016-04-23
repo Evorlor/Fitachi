@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Tooltip("How long enemies spawn for")]
+    [SerializeField]
+    [Range(5.0f, 60.0f)]
+    private float spawnDuration = 30.0f;
+
     [Tooltip("Rate at which the enemies will spawn")]
-    [Range(0, 100)]
-    public float spawnRate = 1.0f;
+    public float spawnRate;
 
     [Tooltip("Enemies which will be randomly spawned on the spawn line")]
     public Enemy[] enemiesToSpawn;
@@ -18,15 +23,24 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly Color spawnLineColor = Color.red;
 
+    void Awake()
+    {
+        spawnRate = 1.0f / (int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps) + 1.0f);
+    }
 
-    void Start() {
-        Physics2D.IgnoreLayerCollision(8,8,true);
+    void Start()
+    {
+        Physics2D.IgnoreLayerCollision(8, 8, true);
         InvokeRepeating("SpawnEnemy", 1, spawnRate);
     }
 
     void Update()
     {
-        //PlayerManager.Instance.Rest;
+        spawnDuration -= Time.deltaTime;
+        if (spawnDuration <= 0)
+        {
+            SceneManager.LoadScene(SceneNames.MainMenu);
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -42,7 +56,8 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawIcon(endingPosition, FileNames.EnemySpawnPositionGizmo);
     }
 
-    private void SpawnEnemy() {
-        Instantiate(enemiesToSpawn[Random.Range(0,enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)) , Quaternion.identity);
+    private void SpawnEnemy()
+    {
+        Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
     }
 }
