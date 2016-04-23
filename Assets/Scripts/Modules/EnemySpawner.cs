@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static int stepsTaken = 0;
+
+    [Tooltip("How long enemies spawn for")]
+    [SerializeField]
+    [Range(5.0f, 60.0f)]
+    private float spawnDuration = 30.0f;
+
     [Tooltip("Rate at which the enemies will spawn")]
-    [Range(0, 100)]
-    public float spawnRate = 1.0f;
+    public float spawnRate;
 
     [Tooltip("Enemies which will be randomly spawned on the spawn line")]
     public Enemy[] enemiesToSpawn;
@@ -18,15 +25,30 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly Color spawnLineColor = Color.red;
 
+    private int steps = int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps);
 
-    void Start() {
-        Physics2D.IgnoreLayerCollision(8,8,true);
+    void Awake()
+    {
+        steps = 10000;
+        spawnRate = 1.0f / (steps + 1.0f);
+        bagoodyba = spawnDuration;
+    }
+
+    void Start()
+    {
+        Physics2D.IgnoreLayerCollision(8, 8, true);
         InvokeRepeating("SpawnEnemy", 1, spawnRate);
     }
 
+    public float bagoodyba;
     void Update()
     {
-        //PlayerManager.Instance.Rest;
+        spawnDuration -= Time.deltaTime;
+        stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
+        if (spawnDuration <= 0)
+        {
+            SceneManager.LoadScene(SceneNames.MainMenu);
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -42,7 +64,8 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawIcon(endingPosition, FileNames.EnemySpawnPositionGizmo);
     }
 
-    private void SpawnEnemy() {
-        Instantiate(enemiesToSpawn[Random.Range(0,enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)) , Quaternion.identity);
+    private void SpawnEnemy()
+    {
+        Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
     }
 }
