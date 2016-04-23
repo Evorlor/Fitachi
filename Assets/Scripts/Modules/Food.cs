@@ -12,6 +12,8 @@ public class Food : MonoBehaviour {
     [SerializeField]
     int value;
 
+    [SerializeField]
+    int calories;
 
     public void Eat() {
 

@@ -14,5 +14,7 @@
 
     public static int Sweets;
 
+    public static int calories;
+
 }
 
