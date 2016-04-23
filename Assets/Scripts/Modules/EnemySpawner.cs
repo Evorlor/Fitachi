@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static int stepsTaken = 0;
+
     [Tooltip("How long enemies spawn for")]
     [SerializeField]
     [Range(5.0f, 60.0f)]
@@ -23,9 +25,13 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly Color spawnLineColor = Color.red;
 
+    private int steps = int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps);
+
     void Awake()
     {
-        spawnRate = 1.0f / (int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps) + 1.0f);
+        steps = 10000;
+        spawnRate = 1.0f / (steps + 1.0f);
+        bagoodyba = spawnDuration;
     }
 
     void Start()
@@ -34,9 +40,11 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 1, spawnRate);
     }
 
+    public float bagoodyba;
     void Update()
     {
         spawnDuration -= Time.deltaTime;
+        stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
         if (spawnDuration <= 0)
         {
             SceneManager.LoadScene(SceneNames.MainMenu);
