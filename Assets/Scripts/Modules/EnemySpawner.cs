@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
@@ -10,6 +9,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     [Range(5.0f, 60.0f)]
     private float spawnDuration = 30.0f;
+
+    [Tooltip("How many steps for the treasure turtle to spawn (repeatedly)")]
+    [SerializeField]
+    [Range(1, 10000)]
+    private int treasureTurtleStep = 5000;
+
+    [Tooltip("Treasure turtle to be spawned")]
+    [SerializeField]
+    private TreasureTurtle treasureTurtle;
 
     [Tooltip("Rate at which the enemies will spawn")]
     public float spawnRate;
@@ -30,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
     void Awake()
     {
         steps = 10000;
+        Debug.LogError("There is a hardcode value of 10 steps...is this what you want?");
         spawnRate = 1.0f / (steps + 1.0f);
         bagoodyba = spawnDuration;
     }
@@ -45,6 +54,10 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnDuration -= Time.deltaTime;
         stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
+        if(stepsTaken % treasureTurtleStep == 0)
+        {
+            Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+        }
         if (spawnDuration <= 0)
         {
             SceneManager.LoadScene(SceneNames.MainMenu);
