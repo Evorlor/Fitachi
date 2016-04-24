@@ -43,12 +43,12 @@ public class UIController : MonoBehaviour
 
     public void BuyFood(int foodCost)
     {
-        AdventureStats.gold -= 9;
-        AdventureStats.gold = Mathf.Max(0, AdventureStats.gold);
-        AdventureStats.Endurance.HeartRate += 3;
-        AdventureStats.Nutrition.Hunger++;
-        AdventureStats.Rest.Sleep++;
-        AdventureStats.Speed.Steps++;
+        AdventureStats.Gold -= 9;
+        AdventureStats.Gold = Mathf.Max(0, AdventureStats.Gold);
+        //AdventureStats.Endurance.HeartRate += 3;
+        //AdventureStats.Nutrition.Hunger++;
+        //AdventureStats.Rest.Sleep++;
+        //AdventureStats.Speed.Steps++;
     }
 
     public void DisplayFoodToPurchase(int ButtonAmount)
