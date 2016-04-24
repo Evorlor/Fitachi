@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using adventureUI;
 
 public class AdventuringPlayer : MonoBehaviour
 {
