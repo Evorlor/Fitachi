@@ -54,8 +54,8 @@ public class Enemy : MonoBehaviour
 		}
 		else
         {
-            Debug.Log("The enemy ate shit and spawned a coin");
-            var coinPosition = transform.position;
+
+            var coinPosition = player.transform.position;
             coinPosition.y += coinYOffset;
             Instantiate(coin, coinPosition, Quaternion.identity);
         }
