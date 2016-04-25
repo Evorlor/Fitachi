@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-﻿public static class AdventureStats
-{
-    public static int Gold;
-
-    public static int Protien;
-=======
 ﻿using System.Collections.Generic;
 
 public static class AdventureStats {
@@ -13,7 +6,8 @@ public static class AdventureStats {
     private static Queue<int> fourDaysOfSteps = new Queue<int>(1);
 
     private static int[] AdventurerNutrition = new int[5];
->>>>>>> Stashed changes
+
+    private static int[] RecomendedNutrition = new int[5] { 3, 6, 3, 4, 7};
 
     public static int Dairy;
 
@@ -21,9 +15,8 @@ public static class AdventureStats {
 
     public static int Vegetable;
 
-<<<<<<< Updated upstream
     public static int Fruit;
-=======
+
     public static int averageStepsOverFourDays;
 
     public static int currentStepCount;
@@ -32,15 +25,11 @@ public static class AdventureStats {
         AdventurerNutrition[(int)food] = foodValue;
         calories += foodCaloires;
     }
->>>>>>> Stashed changes
 
     public static int Sweets;
 
-<<<<<<< Updated upstream
     public static int calories;
-=======
 
-    }
     public static void UpdateSteps(int newStepsCount) {
         if (fourDaysOfSteps.Count==4) {
             fourDaysOfSteps.Dequeue();
@@ -87,7 +76,5 @@ public static class AdventureStats {
 public enum Sex {
     Male,
     Female
->>>>>>> Stashed changes
-
 }
 
