@@ -17,26 +17,7 @@ public class Food : MonoBehaviour {
 
     public void Eat() {
 
-        switch (type) {
-            case (FoodType.Dairy):
-                AdventureStats.Dairy += value;
-                break;
-            case (FoodType.Protien):
-                AdventureStats.Protien += value;
-                break;
-            case (FoodType.Vegetable):
-                AdventureStats.Vegetable += value;
-                break;
-            case (FoodType.Fruit):
-                AdventureStats.Fruit += value;
-                break;
-            case (FoodType.Grain):
-                AdventureStats.Grain += value;
-                break;
-            case (FoodType.Sweets):
-                AdventureStats.Sweets += value;
-                break;
-        }    
+        AdventureStats.Feed(type, calories, value);   
 
     }
 

@@ -1,20 +1,89 @@
-﻿public static class AdventureStats
-{
+﻿public static class AdventureStats {
     public static int Gold;
 
-    public static int Protien;
+    private static int[] AdventurerNutrition = new int[5];
 
-    public static int Dairy;
+    private static int[] RecomendedNutrition = new int[5] { 3, 6, 3, 2, 7 };
 
-    public static int Grain;
+    private static int calories;
 
-    public static int Vegetable;
+    public static int DailyRecomendedCalories;
 
-    public static int Fruit;
+    public static void Feed(FoodType food, int foodCaloires, int foodValue) {
+        AdventurerNutrition[(int)food] = foodValue;
+        calories += foodCaloires;
+    }
 
-    public static int Sweets;
+    public static void SetRecomendedCalories(int age, Sex sex) {
+        if (sex == Sex.Female) {
+            if (age == 12) {
+                DailyRecomendedCalories = 1800;
+            }
+            else if (age > 12 && age < 15) {
+                DailyRecomendedCalories = 2000;
+            }
+            else if (age == 15) {
+                DailyRecomendedCalories = 2200;
+            }
+            else if (age > 16 && age < 19) {
+                DailyRecomendedCalories = 2400;
+            }
+            else if (age > 18 && age < 21) {
+                DailyRecomendedCalories = 2600;
+            }
+            else {
+                DailyRecomendedCalories = 2400;
+            }
+        }
+        if (sex == Sex.Male) {
+            if (age <14) {
+                DailyRecomendedCalories = 1600;
+            }
+            else if (age > 13 && age < 19) {
+                DailyRecomendedCalories = 1800;
+            }
+            
+            else {
+                DailyRecomendedCalories = 2000;
+            }
+            
+        }
 
-    public static int calories;
+
+    }
+
+    public static void Reset() {
+        for (int i = 0; i < AdventurerNutrition.Length; i++) {
+            AdventurerNutrition[i] = 0;
+        }
+        calories = 0;
+    }
+
+    public static int GetStat(FoodType type) {
+        return AdventurerNutrition[(int)type];
+    }
+
+    public static float GetCombatStrength() {
+        float combatStrength = 0;
+        float totalOverage = 0;
+        for (int i = 0; i < AdventurerNutrition.Length; i++) {
+            float value = AdventurerNutrition[i] / RecomendedNutrition[i];
+            combatStrength += (value < 0) ? 0 : (value > 1) ? 1 : value;
+            if (AdventurerNutrition[i] - RecomendedNutrition[i] > 0) {
+                totalOverage++;
+            }
+        }
+        totalOverage = totalOverage * .05f;
+
+        combatStrength *= (1-totalOverage);
+
+        return combatStrength;
+    }
+
+}
+public enum Sex {
+    Male,
+    Female
 
 }
 
