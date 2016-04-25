@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
 
     public int CoinDropRange;
     public int coinDrops;
-    private Animator animator;
 
 	private adventureUI.AdventureUI adventureUI;
     private AdventuringPlayer player;
@@ -28,35 +27,22 @@ public class Enemy : MonoBehaviour
 
 	void Awake()
 	{
-        adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
-        animator = GetComponent<Animator>();
+		adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
     }
 
     void Start()
     {
         player = FindObjectOfType<AdventuringPlayer>();
         characterRigidbody = GetComponent<Rigidbody2D>();
-        characterRigidbody.velocity = (Vector3.left * movespeed);
     }
 
     void Update()
     {
-        if (dead)
-        {
-            characterRigidbody.velocity = Vector3.zero;
-        }
-		if (!dead && transform.position.x <= xDeath)
+        characterRigidbody.velocity = (Vector3.left * movespeed);
+		if (transform.position.x <= xDeath)
         {
             Die();
         }
-    }
-
-    void OnDestroy()
-    {
-
-        var coinPosition = player.transform.position;
-        coinPosition.y += coinYOffset;
-        Instantiate(coin, coinPosition, Quaternion.identity);
     }
 
     private void Die()
@@ -68,13 +54,13 @@ public class Enemy : MonoBehaviour
 		}
 		else
         {
-
-            animator.SetTrigger("Die");
+            Debug.Log("The enemy ate shit and spawned a coin");
+            var coinPosition = transform.position;
+            coinPosition.y += coinYOffset;
+            Instantiate(coin, coinPosition, Quaternion.identity);
         }
 		adventureUI.UpdateMonstersDefeatedUI();
-        dead = true;
-        Destroy(gameObject, 0.8f);
+        Destroy(gameObject);
     }
-    private bool dead = false;
 
 }
