@@ -1,8 +1,19 @@
+<<<<<<< Updated upstream
 ﻿public static class AdventureStats
 {
     public static int Gold;
 
     public static int Protien;
+=======
+﻿using System.Collections.Generic;
+
+public static class AdventureStats {
+    public static int Gold;
+
+    private static Queue<int> fourDaysOfSteps = new Queue<int>(1);
+
+    private static int[] AdventurerNutrition = new int[5];
+>>>>>>> Stashed changes
 
     public static int Dairy;
 
@@ -10,11 +21,73 @@
 
     public static int Vegetable;
 
+<<<<<<< Updated upstream
     public static int Fruit;
+=======
+    public static int averageStepsOverFourDays;
+
+    public static int currentStepCount;
+
+    public static void Feed(FoodType food, int foodCaloires, int foodValue) {
+        AdventurerNutrition[(int)food] = foodValue;
+        calories += foodCaloires;
+    }
+>>>>>>> Stashed changes
 
     public static int Sweets;
 
+<<<<<<< Updated upstream
     public static int calories;
+=======
+
+    }
+    public static void UpdateSteps(int newStepsCount) {
+        if (fourDaysOfSteps.Count==4) {
+            fourDaysOfSteps.Dequeue();
+        }
+        fourDaysOfSteps.Enqueue(newStepsCount);
+        currentStepCount = newStepsCount;
+        int averageHolder = 0;
+        foreach (int steps in fourDaysOfSteps) {
+            averageHolder += steps;
+        }
+        averageStepsOverFourDays = averageHolder / 4;
+
+    }
+
+    public static void Reset() {
+        for (int i = 0; i < AdventurerNutrition.Length; i++) {
+            AdventurerNutrition[i] = 0;
+        }
+        calories = 0;
+    }
+
+    public static int GetStat(FoodType type) {
+        return AdventurerNutrition[(int)type];
+    }
+
+    public static float GetCombatStrength() {
+        float combatStrength = 0;
+        float totalOverage = 0;
+        for (int i = 0; i < AdventurerNutrition.Length; i++) {
+            float value = AdventurerNutrition[i] / RecomendedNutrition[i];
+            combatStrength += (value < 0) ? 0 : (value > 1) ? 1 : value;
+            if (AdventurerNutrition[i] - RecomendedNutrition[i] > 0) {
+                totalOverage++;
+            }
+        }
+        totalOverage = totalOverage * .05f;
+
+        combatStrength *= (1-totalOverage);
+
+        return combatStrength;
+    }
+
+}
+public enum Sex {
+    Male,
+    Female
+>>>>>>> Stashed changes
 
 }
 
