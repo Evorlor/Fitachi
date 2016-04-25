@@ -9,9 +9,11 @@ public static class AdventureStats {
 
     private static int[] RecomendedNutrition = new int[5] { 3, 6, 3, 4, 7};
 
-    public static int Dairy;
+	public static int Dairy;
 
-    public static int Grain;
+	public static int Protein;
+
+	public static int Grain;
 
     public static int Vegetable;
 

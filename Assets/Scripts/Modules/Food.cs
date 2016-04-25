@@ -22,7 +22,7 @@ public class Food : MonoBehaviour {
                 AdventureStats.Dairy += value;
                 break;
             case (FoodType.Protien):
-                AdventureStats.Protien += value;
+                AdventureStats.Protein += value;
                 break;
             case (FoodType.Vegetable):
                 AdventureStats.Vegetable += value;
