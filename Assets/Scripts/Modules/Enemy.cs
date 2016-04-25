@@ -20,15 +20,9 @@ public class Enemy : MonoBehaviour
     public int CoinDropRange;
     public int coinDrops;
 
-	private adventureUI.AdventureUI adventureUI;
     private AdventuringPlayer player;
 
     Rigidbody2D characterRigidbody;
-
-	void Awake()
-	{
-		adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
-    }
 
     void Start()
     {
@@ -39,7 +33,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         characterRigidbody.velocity = (Vector3.left * movespeed);
-		if (transform.position.x <= xDeath)
+        if (transform.position.x <= xDeath)
         {
             Die();
         }
@@ -50,16 +44,14 @@ public class Enemy : MonoBehaviour
         if (GetComponent<TreasureTurtle>())
         {
             Debug.Log("Treasure turtle is DEADDDDD!!!");
-			adventureUI.UpdatePowerUpsCollectedUI();
-		}
-		else
+        }
+        else
         {
             Debug.Log("The enemy ate shit and spawned a coin");
             var coinPosition = transform.position;
             coinPosition.y += coinYOffset;
             Instantiate(coin, coinPosition, Quaternion.identity);
         }
-		adventureUI.UpdateMonstersDefeatedUI();
         Destroy(gameObject);
     }
 
