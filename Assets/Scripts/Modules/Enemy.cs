@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
 
     public int CoinDropRange;
     public int coinDrops;
+    private Animator animator;
 
 	private adventureUI.AdventureUI adventureUI;
     private AdventuringPlayer player;
@@ -27,19 +28,24 @@ public class Enemy : MonoBehaviour
 
 	void Awake()
 	{
-		adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
+        adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
     {
         player = FindObjectOfType<AdventuringPlayer>();
         characterRigidbody = GetComponent<Rigidbody2D>();
+        characterRigidbody.velocity = (Vector3.left * movespeed);
     }
 
     void Update()
     {
-        characterRigidbody.velocity = (Vector3.left * movespeed);
-		if (transform.position.x <= xDeath)
+        if (dead)
+        {
+            characterRigidbody.velocity = Vector3.zero;
+        }
+		if (!dead && transform.position.x <= xDeath)
         {
             Die();
         }
@@ -58,9 +64,12 @@ public class Enemy : MonoBehaviour
             var coinPosition = player.transform.position;
             coinPosition.y += coinYOffset;
             Instantiate(coin, coinPosition, Quaternion.identity);
+            animator.SetTrigger("Die");
         }
 		adventureUI.UpdateMonstersDefeatedUI();
-        Destroy(gameObject);
+        dead = true;
+        Destroy(gameObject, 2);
     }
+    private bool dead = false;
 
 }

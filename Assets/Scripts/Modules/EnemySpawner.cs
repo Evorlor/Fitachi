@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
         stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
         if(stepsTaken % treasureTurtleStep == 0)
         {
-            Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+            //Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
         }
         if (spawnDuration <= 0)
         {
