@@ -30,8 +30,8 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private IEnumerator WaitForMatchUpdate(Match match, Action<Match> onMatchUpdated)
     {
         string matchJson = JsonUtility.ToJson(match);
-        string url = CreateUrl(UpdateMatchMethodName, matchJson);
-        var www = new WWW(url);
+        string method = UpdateMatchMethodName;
+        var www = CreatePost(method, matchJson);
         yield return new WaitUntil(() => www.isDone);
         var result = GetStringResult(www.bytes);
         match = JsonUtility.FromJson<Match>(result);
@@ -41,9 +41,9 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private IEnumerator WaitForAttack(Match match, Action<Match> onAttack)
     {
         string matchJson = JsonUtility.ToJson(match);
-        string url = CreateUrl(AttackMethodName, matchJson);
-        var www = new WWW(url);
-        yield return new WaitUntil(() => www.isDone);
+        string method = AttackMethodName;
+        var www = CreatePost(method, matchJson);
+		yield return new WaitUntil(() => www.isDone);
         var result = GetStringResult(www.bytes);
         match = JsonUtility.FromJson<Match>(result);
         onAttack(match);
@@ -52,9 +52,9 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private IEnumerator WaitForMatch(Player player, Action<Match> onMatchFound, float pollTime)
     {
         string playerJson = JsonUtility.ToJson(player);
-        string url = CreateUrl(FindMatchMethodName, playerJson);
-        var www = new WWW(url);
-        while (true)
+        string method = FindMatchMethodName;
+        var www = CreatePost(method, playerJson);
+		while (true)
         {
             yield return new WaitUntil(() => www.isDone);
             var result = GetStringResult(www.bytes);
@@ -64,19 +64,9 @@ public class ServerManager : ManagerBehaviour<ServerManager>
                 onMatchFound(match);
             }
             yield return new WaitForSeconds(pollTime);
-            url = CreateUrl(GetMatchStatusMethodName, playerJson);
-            www = new WWW(url);
-        }
-    }
-
-    private string CreateUrl(string method, string parameters = null)
-    {
-        string url = ServerLink + "/" + method;
-        if (parameters != null)
-        {
-            url += "/" + parameters;
-        }
-        return url;
+			method = GetMatchStatusMethodName;
+            www = CreatePost(method, playerJson);
+		}
     }
 
     private string GetStringResult(byte[] bytes)
@@ -85,4 +75,12 @@ public class ServerManager : ManagerBehaviour<ServerManager>
         var text = System.Text.Encoding.ASCII.GetString(bytes).Trim();
         return text;
     }
+
+	private WWW CreatePost(string method, string postData)
+	{
+		string url = ServerLink + "/" + method;
+		WWWForm form = new WWWForm();
+		form.AddField("post_data", postData);
+		return new WWW(url, form);
+	}
 }

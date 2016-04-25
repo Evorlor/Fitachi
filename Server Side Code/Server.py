@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import time
 import json
 import random
@@ -17,8 +17,6 @@ class Match:
 
 playersWaiting = []
 matchesReady = {}
-
-matchesWaiting = []
 matches = []
 matchCount = 0
 
@@ -28,16 +26,24 @@ def start():
     return "Launching server..."
 
 #Finds the player a match, or enqueues them if none are available
-@app.route('/find_match/<player>')
-def findMatch(player):
+@app.route('/find_match', methods=['POST'])
+def findMatch():
     global playersWaiting
-    searchingPlayer = createPlayerFromJson(player)
+    postData = request.form['post_data']
+    print(postData)
+    searchingPlayer = createPlayerFromJson(postData)
     if searchingPlayer not in playersWaiting:
         playersWaiting.append(searchingPlayer)
-    return getMatchStatus(player)
+    return getMatchStatus(postData)
 
 #Checks if the match is ready to begin
-@app.route('/get_match_status/<player>')
+@app.route('/get_match_status', methods=['POST'])
+def getMatchStatus():
+    postData = request.form['post_data']
+    print(postData)
+    return getMatchStatus(postData)
+
+
 def getMatchStatus(player):
     global playersWaiting
     global matchCount
@@ -68,21 +74,27 @@ def getMatchStatus(player):
     print invalidMatch.id
     return getMatchJson(invalidMatch)
 
+
+
 #gets the updated status for the match
-@app.route('/update_match/<match>')
-def updateMatch(match):
+@app.route('/update_match', methods=['POST'])
+def updateMatch():
     global matches
-    currentMatch = createMatchFromJson(match)
+    postData = request.form['post_data']
+    print(postData)
+    currentMatch = createMatchFromJson(postData)
     for matchInstance in matches:
         if currentMatch.id == matchInstance.id:
             return getMatchJson(matchInstance)
     return getMatchJson(createInvalidMatch())
 
 #Attacks for the player in the specified match
-@app.route('/attack/<match>')
-def attack(match):
+@app.route('/attack', methods=['POST'])
+def attack():
     global matches
-    matchInstance = createMatchFromJson(match)
+    postData = request.form['post_data']
+    print(postData)
+    matchInstance = createMatchFromJson(postData)
     if matchInstance.player0.id == matchInstance.turn.id:
         matchInstance.turn = matchInstance.player1
         matchInstance.player1.hitPoints -= matchInstance.player0.attackPower
