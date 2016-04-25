@@ -37,8 +37,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Awake()
     {
-        steps = 10000;
-        Debug.LogError("There is a hardcode value of 10 steps...is this what you want?");
+        steps /= 1000;
         spawnRate = 1.0f / (steps + 1.0f);
         bagoodyba = spawnDuration;
     }

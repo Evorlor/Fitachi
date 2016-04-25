@@ -1,4 +1,7 @@
-﻿public static class StringExtensions
+﻿/// <summary>
+/// These are extensions for Strings
+/// </summary>
+public static class StringExtensions
 {
     /// <summary>
     /// Removes the substring at the end of a string

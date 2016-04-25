@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
-public class GameObjectFactory
+/// <summary>
+/// This is the factory for Game Objects
+/// </summary>
+public class GameObjectUtility
 {
     private const string CloneSuffix = "(Clone)";
 
@@ -42,22 +46,18 @@ public class GameObjectFactory
     {
         var container = GetOrAddGameObject(clone.name.TrimEnd(CloneSuffix));
         clone.transform.parent = container.transform;
-        container.GetOrAddComponent<DestroyedWhenChildless>();
-    }
-}
-
-class DestroyedWhenChildless : MonoBehaviour
-{
-    void Awake()
-    {
-        hideFlags = HideFlags.HideInInspector;
+        container.GetOrAddComponent<DestroyedWhenEmpty>();
+        container.hideFlags = HideFlags.HideInInspector;
     }
 
-    void Update()
+    /// <summary>
+    /// Finds all GameObjects of the specified type, and returns them in order of ascending distance from the Vector3.
+    /// This is an expensive operation, and should not be performed every frame.
+    /// </summary>
+    public static GameObjectType[] FindObjectsOfTypeByDistance<GameObjectType>(Vector3 position) where GameObjectType : MonoBehaviour
     {
-        if (transform.childCount == 0)
-        {
-            Destroy(gameObject);
-        }
+        var gameObjectTypes = Object.FindObjectsOfType<GameObjectType>();
+        gameObjectTypes = gameObjectTypes.OrderBy(o => Vector3.Distance(position, o.transform.position)).ToArray();
+        return gameObjectTypes;
     }
 }
