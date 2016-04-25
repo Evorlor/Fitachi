@@ -8,16 +8,23 @@ public class BarController : MonoBehaviour {
 
     int activeBar;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         activeBar = 0;
-	}
+        for (int i = 0; i<bars.Length; i++) {
+            bars[i].gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        bars[0].gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(0)) {
             bars[activeBar].StopBar();
             activeBar++;
+            if (activeBar<bars.Length) {
+                bars[activeBar].gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
         }
         if (activeBar>=bars.Length) {
             Debug.Log("Final Multiplier: " + getdamageModifier());
