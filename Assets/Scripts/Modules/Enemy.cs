@@ -51,6 +51,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+
+        var coinPosition = player.transform.position;
+        coinPosition.y += coinYOffset;
+        Instantiate(coin, coinPosition, Quaternion.identity);
+    }
+
     private void Die()
     {
         if (GetComponent<TreasureTurtle>())
@@ -61,14 +69,11 @@ public class Enemy : MonoBehaviour
 		else
         {
 
-            var coinPosition = player.transform.position;
-            coinPosition.y += coinYOffset;
-            Instantiate(coin, coinPosition, Quaternion.identity);
             animator.SetTrigger("Die");
         }
 		adventureUI.UpdateMonstersDefeatedUI();
         dead = true;
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 0.8f);
     }
     private bool dead = false;
 
