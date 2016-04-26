@@ -35,13 +35,13 @@ public class BarController : MonoBehaviour {
         for (int i = 0; i<bars.Length;i++) {
             totalXMiss += Mathf.Abs(bars[i].gameObject.transform.position.x);
         }
-        if (totalXMiss < 2.1) {
+        if (totalXMiss < 3.8) {
             return 1;
         }
-        else if (totalXMiss < 4.5) {
+        else if (totalXMiss < 6) {
             return .8f;
         }
-        else if (totalXMiss < 6.6) {
+        else if (totalXMiss < 8) {
             return .75f;
         }
         else {
