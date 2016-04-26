@@ -10,7 +10,7 @@ public class BarController : MonoBehaviour
 
     int activeBar;
 
-    private const int gameValue = 250;
+    private const int gameValue = 100;
 
     // Use this for initialization
     void Start()

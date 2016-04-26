@@ -9,7 +9,7 @@ public class RangedTargetScript : MonoBehaviour
 
     float startMovementTime;
 
-    private const float gameMultiplier = 1.5f;
+    private const float gameMultiplier = 0.5f;
 
     [SerializeField]
     float speed;
