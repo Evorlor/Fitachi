@@ -95,24 +95,18 @@ public class UIController : MonoBehaviour
         switch (FoodCategory)
         {
             case 1:
-                Debug.Log("ok");
-                AdventureStats.Dairy += 1;
                 SpawnFoodItems(DairyList);
                 break;
             case 2:
-                AdventureStats.Protein += 1;
                 SpawnFoodItems(ProteinList);
                 break;
             case 3:
-                AdventureStats.Grain += 1;
                 SpawnFoodItems(GrainList);
                 break;
             case 4:
-                AdventureStats.Vegetable += 1;
                 SpawnFoodItems(VegetableList);
                 break;
             case 5:
-                AdventureStats.Fruit += 1;
                 SpawnFoodItems(FruitList);
                 break;
             default:

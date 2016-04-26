@@ -37,6 +37,10 @@ public class EnemySpawner : MonoBehaviour
 
     void Awake()
     {
+        if(steps == 0)
+        {
+            steps = 10000;
+        }
         steps /= 1000;
         spawnRate = 1.0f / (steps + 1.0f);
         bagoodyba = spawnDuration;
@@ -52,10 +56,12 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         spawnDuration -= Time.deltaTime;
-        stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
-        if(stepsTaken % treasureTurtleStep == 0)
+        float timeTaken = (bagoodyba - spawnDuration) / bagoodyba;
+        stepsTaken = (int)(steps * 1000 * timeTaken);
+        if (stepsTaken > treasureTurtleStep)
         {
-            //Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+            treasureTurtleStep += treasureTurtleStep;
+            Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
         }
         if (spawnDuration <= 0)
         {

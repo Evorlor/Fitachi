@@ -1,9 +1,14 @@
 fileFormatVersion: 2
 guid: 81a8bec0436c0474a84b155623afda2e
-timeCreated: 1461676523
+timeCreated: 1461680713
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: PoofDeath_Spritesheet_0
+    21300002: PoofDeath_Spritesheet_1
+    21300004: PoofDeath_Spritesheet_3
+    21300006: PoofDeath_Spritesheet_7
+    21300008: PoofDeath_Spritesheet_14
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +35,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +43,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +54,265 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: PoofDeath_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 322
+        width: 184
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 71, y: 90}
+        - {x: -27, y: 90}
+        - {x: -92, y: 72}
+        - {x: -92, y: -35}
+        - {x: -84, y: -70}
+        - {x: -61, y: -90}
+        - {x: 71, y: -90}
+        - {x: 91, y: -79}
+        - {x: 92, y: -71}
+        - {x: 92, y: 68}
+    - name: PoofDeath_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 320
+        width: 149
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.5, y: 82}
+        - {x: -74.5, y: 49}
+        - {x: -74.5, y: -21}
+        - {x: -46.5, y: -82}
+        - {x: 2.5, y: -92}
+        - {x: 74.5, y: -92}
+        - {x: 74.5, y: 48}
+        - {x: 54.5, y: 82}
+      - - {x: -50.5, y: 92}
+        - {x: -65.5, y: 83}
+        - {x: -65.5, y: 56}
+        - {x: -56.5, y: 52}
+        - {x: -30.5, y: 52}
+        - {x: -24.5, y: 59}
+        - {x: -24.5, y: 82}
+        - {x: -31.5, y: 92}
+    - name: PoofDeath_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 335
+        width: 140
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7, y: -41.5}
+        - {x: -28, y: -41.5}
+        - {x: -34, y: -42.5}
+        - {x: -36, y: -50.5}
+        - {x: -36, y: -71.5}
+        - {x: -29, y: -76.5}
+        - {x: -11, y: -76.5}
+        - {x: -1, y: -71.5}
+        - {x: -1, y: -55.5}
+        - {x: -3, y: -45.5}
+      - - {x: -70, y: 76.5}
+        - {x: -70, y: 30.5}
+        - {x: -38, y: -54.5}
+        - {x: 57, y: -54.5}
+        - {x: 65, y: -51.5}
+        - {x: 65, y: 35.5}
+        - {x: -12, y: 76.5}
+      - - {x: -66, y: 17.5}
+        - {x: -70, y: 13.5}
+        - {x: -70, y: -6.5}
+        - {x: -68, y: -10.5}
+        - {x: -53, y: -10.5}
+        - {x: -46, y: -7.5}
+        - {x: -46, y: 13.5}
+        - {x: -52, y: 17.5}
+      - - {x: 49, y: 76.5}
+        - {x: 39, y: 72.5}
+        - {x: 39, y: 50.5}
+        - {x: 44, y: 41.5}
+        - {x: 64, y: 41.5}
+        - {x: 70, y: 43.5}
+        - {x: 70, y: 74.5}
+        - {x: 69, y: 76.5}
+    - name: PoofDeath_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 341
+        width: 132
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: -50}
+        - {x: 23, y: -56}
+        - {x: 23, y: -69}
+        - {x: 27, y: -71}
+        - {x: 44, y: -71}
+        - {x: 46, y: -68}
+        - {x: 46, y: -56}
+        - {x: 41, y: -50}
+      - - {x: -17, y: -32}
+        - {x: -22, y: -36}
+        - {x: -22, y: -57}
+        - {x: -21, y: -60}
+        - {x: -17, y: -63}
+        - {x: 1, y: -63}
+        - {x: 9, y: -58}
+        - {x: 9, y: -38}
+        - {x: -3, y: -32}
+      - - {x: -52, y: -20}
+        - {x: -65, y: -25}
+        - {x: -65, y: -46}
+        - {x: -52, y: -56}
+        - {x: -38, y: -56}
+        - {x: -27, y: -45}
+        - {x: -27, y: -31}
+        - {x: -39, y: -20}
+      - - {x: 30, y: -11}
+        - {x: 28, y: -13}
+        - {x: 28, y: -35}
+        - {x: 32, y: -40}
+        - {x: 53, y: -40}
+        - {x: 56, y: -38}
+        - {x: 56, y: -16}
+        - {x: 49, y: -11}
+      - - {x: 2, y: 39}
+        - {x: -23, y: 39}
+        - {x: -37, y: 17}
+        - {x: -37, y: -4}
+        - {x: -14, y: -23}
+        - {x: 10, y: -23}
+        - {x: 28, y: 1}
+        - {x: 28, y: 24}
+        - {x: 15, y: 35}
+      - - {x: -66, y: 2}
+        - {x: -64, y: -2}
+        - {x: -52, y: -2}
+        - {x: -45, y: 1}
+        - {x: -45, y: 15}
+        - {x: -47, y: 21}
+        - {x: -60, y: 21}
+        - {x: -66, y: 16}
+      - - {x: 51, y: 37}
+        - {x: 47, y: 32}
+        - {x: 47, y: 20}
+        - {x: 51, y: 15}
+        - {x: 59, y: 15}
+        - {x: 66, y: 17}
+        - {x: 66, y: 36}
+        - {x: 64, y: 37}
+      - - {x: 19, y: 71}
+        - {x: 6, y: 65}
+        - {x: 6, y: 47}
+        - {x: 12, y: 39}
+        - {x: 28, y: 39}
+        - {x: 39, y: 44}
+        - {x: 39, y: 62}
+        - {x: 32, y: 71}
+      - - {x: -57, y: 71}
+        - {x: -63, y: 67}
+        - {x: -66, y: 61}
+        - {x: -66, y: 47}
+        - {x: -65, y: 44}
+        - {x: -60, y: 43}
+        - {x: -45, y: 43}
+        - {x: -37, y: 53}
+        - {x: -37, y: 63}
+        - {x: -41, y: 71}
+    - name: PoofDeath_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 366
+        width: 90
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: -32}
+        - {x: -13, y: -35}
+        - {x: -13, y: -43}
+        - {x: -12, y: -46}
+        - {x: 4, y: -46}
+        - {x: 4, y: -34}
+        - {x: 2, y: -33}
+      - - {x: 17, y: -23}
+        - {x: 12, y: -25}
+        - {x: 12, y: -32}
+        - {x: 13, y: -36}
+        - {x: 21, y: -36}
+        - {x: 25, y: -33}
+        - {x: 25, y: -28}
+        - {x: 21, y: -23}
+      - - {x: -13, y: -10}
+        - {x: -20, y: -10}
+        - {x: -26, y: -17}
+        - {x: -26, y: -26}
+        - {x: -21, y: -29}
+        - {x: -9, y: -29}
+        - {x: -6, y: -24}
+        - {x: -6, y: -16}
+      - - {x: 35, y: -11}
+        - {x: 31, y: -14}
+        - {x: 31, y: -26}
+        - {x: 34, y: -27}
+        - {x: 45, y: -27}
+        - {x: 45, y: -11}
+      - - {x: -42, y: -7}
+        - {x: -45, y: -8}
+        - {x: -45, y: -18}
+        - {x: -44, y: -20}
+        - {x: -37, y: -20}
+        - {x: -33, y: -19}
+        - {x: -33, y: -11}
+        - {x: -35, y: -7}
+      - - {x: -11, y: 23}
+        - {x: -20, y: 23}
+        - {x: -20, y: 2}
+        - {x: -11, y: -15}
+        - {x: 6, y: -15}
+        - {x: 17, y: -9}
+        - {x: 17, y: 11}
+        - {x: -5, y: 21}
+      - - {x: 26, y: 14}
+        - {x: 22, y: 13}
+        - {x: 22, y: 6}
+        - {x: 25, y: 2}
+        - {x: 31, y: 2}
+        - {x: 35, y: 4}
+        - {x: 35, y: 10}
+        - {x: 34, y: 14}
+      - - {x: 14, y: 40}
+        - {x: 14, y: 24}
+        - {x: 17, y: 22}
+        - {x: 30, y: 22}
+        - {x: 31, y: 27}
+        - {x: 31, y: 36}
+        - {x: 27, y: 40}
+      - - {x: -34, y: 34}
+        - {x: -32, y: 32}
+        - {x: -23, y: 32}
+        - {x: -19, y: 34}
+        - {x: -19, y: 44}
+        - {x: -20, y: 46}
+        - {x: -33, y: 46}
+        - {x: -34, y: 42}
     outline: []
   spritePackingTag: 
   userData: 

@@ -36,9 +36,20 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        if (GetComponent<Flyer>())
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
+        }
         player = FindObjectOfType<AdventuringPlayer>();
         characterRigidbody = GetComponent<Rigidbody2D>();
-        characterRigidbody.velocity = (Vector3.left * movespeed);
+        if (GetComponent<TreasureTurtle>())
+        {
+            characterRigidbody.velocity = (Vector3.left * movespeed / 3.0f);
+        }
+        else
+        {
+            characterRigidbody.velocity = (Vector3.left * movespeed);
+        }
     }
 
     void Update()
@@ -70,6 +81,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Treasure turtle is DEADDDDD!!!");
             adventureUI.UpdatePowerUpsCollectedUI();
+            animator.SetTrigger("Die");
         }
         else
         {
