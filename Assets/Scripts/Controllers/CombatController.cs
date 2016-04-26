@@ -38,16 +38,18 @@ public class CombatController : ManagerBehaviour<CombatController>
 
     public void FindMatch()
     {
+        fight.gameObject.SetActive(true);
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
             startMatchButtonText.text = SearchingForMatch;
         }
         searchForMatch.interactable = false;
+        searchForMatch.gameObject.SetActive(false);
         var player = CreatePlayer();
         ServerManager.Instance.FindMatch(player, OnMatchFound, MatchSearchPollTime);
     }
-
+    public Animator fight;
     private void OnMatchFound(Match match)
     {
         var playerData = match.player0.id == FitbitRestClient.Instance.GetUserId() ? match.player0.playerdata : match.player1.playerdata;
@@ -75,6 +77,7 @@ public class CombatController : ManagerBehaviour<CombatController>
             Debug.Log("LOSE");
             victoryImg.sprite = lose;
         }
+        fight.gameObject.SetActive(false);
         AdventureStats.Dairy = Mathf.Max(0, playerData.dairy - opponentData.dairy);
         AdventureStats.Fruit = Mathf.Max(0, playerData.fruit - opponentData.fruit);
         AdventureStats.Grain = Mathf.Max(0, playerData.grain - opponentData.grain);
