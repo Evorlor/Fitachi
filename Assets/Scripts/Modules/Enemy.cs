@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     public int CoinDropRange;
     public int coinDrops;
+    public AudioClip HitSound;
+
     private Animator animator;
 
 	private adventureUI.AdventureUI adventureUI;
@@ -68,7 +70,7 @@ public class Enemy : MonoBehaviour
 		}
 		else
         {
-
+            AudioManager.Instance.PlayAudio(HitSound);
             animator.SetTrigger("Die");
         }
 		adventureUI.UpdateMonstersDefeatedUI();
