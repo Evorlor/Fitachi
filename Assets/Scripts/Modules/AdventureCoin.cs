@@ -18,6 +18,7 @@ public class AdventureCoin : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        AdventureStats.Gold++;
         InvokeRepeating(InvisiblizeMethodName, InvisiblizeRate, InvisiblizeRate);
     }
 
@@ -26,7 +27,6 @@ public class AdventureCoin : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime, transform.position.z);
         if (spriteRenderer.color.a <= 0)
         {
-            AdventureStats.Gold++;
             Destroy(gameObject);
         }
     }

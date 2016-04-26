@@ -30,6 +30,12 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void PlayRandomMiniGame()
+    {
+        var sceneNames = new string[3] { SceneNames.BigHit, SceneNames.RangedAttack, SceneNames.FuryStrikes };
+        SceneManager.LoadScene(sceneNames[Random.Range(0, sceneNames.Length)]);
+    }
+
     public void CloseFoodScreen()
     {
         //DishButton.gameObject.SetActive(true);
