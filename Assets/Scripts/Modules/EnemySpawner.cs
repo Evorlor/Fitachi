@@ -35,13 +35,17 @@ public class EnemySpawner : MonoBehaviour
 
     private int steps = int.Parse(FitbitRestClient.Instance.ActivitiesDaily.summary.steps);
 
+    private int stepRate = 5000;
+
+    public int defaultSteps = 10000;
+
     void Awake()
     {
         if(steps == 0)
         {
-            steps = 10000;
+            steps = defaultSteps;
         }
-        steps /= 1000;
+        steps /= stepRate;
         spawnRate = 1.0f / (steps + 1.0f);
         bagoodyba = spawnDuration;
     }
@@ -57,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
     {
         spawnDuration -= Time.deltaTime;
         float timeTaken = (bagoodyba - spawnDuration) / bagoodyba;
-        stepsTaken = (int)(steps * 1000 * timeTaken);
+        stepsTaken = (int)(steps * stepRate * timeTaken);
         if (stepsTaken > treasureTurtleStep)
         {
             treasureTurtleStep += treasureTurtleStep;
