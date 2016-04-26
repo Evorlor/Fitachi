@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
@@ -18,9 +19,23 @@ public class UIController : MonoBehaviour
 
     private List<GameObject> Buttons = new List<GameObject>();
 
-    void Awake()
-    {
-        Debug.Log("WHYYY");
+    public Image DairySlider;
+    private Image ProteinSlider;
+    private Image GrainSlider;
+    private Image VegetableSlider;
+    private Image FruitSlider;
+
+    private static int activeFood = -2;
+
+    void Start()
+    {        
+        DairySlider = GameObject.FindGameObjectWithTag("DairySlider").GetComponent<Image>();
+        ProteinSlider = GameObject.FindGameObjectWithTag("ProteinSlider").GetComponent<Image>();
+        GrainSlider = GameObject.FindGameObjectWithTag("GrainSlider").GetComponent<Image>();
+        VegetableSlider = GameObject.FindGameObjectWithTag("VegetableSlider").GetComponent<Image>();
+        FruitSlider = GameObject.FindGameObjectWithTag("FruitSlider").GetComponent<Image>();
+
+        //Debug.Log("WHYYY");
     }
 
     /// <summary>
@@ -54,7 +69,7 @@ public class UIController : MonoBehaviour
         FoodMenu.gameObject.SetActive(true);
     }
     //private string activeFood = "sam";
-    private static int activeFood = -2;
+  
 
     public void BuyFood(int foodCost)
     {
@@ -68,22 +83,33 @@ public class UIController : MonoBehaviour
         {
             case 0:
                 AdventureStats.Dairy += foodCost;
+                //DairySlider.fillAmount += 0.2f;
                 break;
             case 1:
                 AdventureStats.Protein += foodCost;
+                //ProteinSlider.fillAmount += 0.2f;
                 break;
             case 2:
                 AdventureStats.Grain += foodCost;
+                //GrainSlider.fillAmount += 0.2f;
                 break;
             case 3:
                 AdventureStats.Vegetable += foodCost;
+                //VegetableSlider.fillAmount += 0.2f;
                 break;
             case 4:
                 AdventureStats.Fruit += foodCost;
+                //FruitSlider.fillAmount += 0.2f;
                 break;
             default:
                 break;
         }
+    }
+
+    // Applies calories to the player
+    public void ApplyCalories(int Calories)
+    {
+        AdventureStats.calories += Calories;
     }
 
     public void DisplayFoodToPurchase(int FoodCategory)
@@ -95,28 +121,21 @@ public class UIController : MonoBehaviour
         switch (FoodCategory)
         {
             case 1:
-                Debug.Log("ok");
-                AdventureStats.Dairy += 1;
                 SpawnFoodItems(DairyList);
                 break;
             case 2:
-                AdventureStats.Protein += 1;
                 SpawnFoodItems(ProteinList);
                 break;
             case 3:
-                AdventureStats.Grain += 1;
                 SpawnFoodItems(GrainList);
                 break;
             case 4:
-                AdventureStats.Vegetable += 1;
                 SpawnFoodItems(VegetableList);
                 break;
             case 5:
-                AdventureStats.Fruit += 1;
                 SpawnFoodItems(FruitList);
                 break;
             default:
-                Debug.Log("fuck");
                 break;
         }
     }
