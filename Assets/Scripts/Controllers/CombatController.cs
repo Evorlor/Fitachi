@@ -52,9 +52,6 @@ public class CombatController : ManagerBehaviour<CombatController>
 
     public void FindMatch()
     {
-        //AdventureStats.Endurance.HeartRate = 1000;
-
-        //AdventureStats.Endurance.HeartRate += 20;
         var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         if (startMatchButtonText)
         {
@@ -77,31 +74,6 @@ public class CombatController : ManagerBehaviour<CombatController>
         //}
         //searchForMatch.interactable = true;
         //matches.Add(match);
-    }
-
-    private void UpdateMatchesUI()
-    {
-        for (int i = 0; i < matchesUIArray.Length; i++)
-        {
-            if (!matchesUIArray[i])
-            {
-                return;
-            }
-            if (matches.Count > i)
-            {
-                matchesUIArray[i].gameObject.SetActive(true);
-                matchesUIArray[i].UpdateUI(matches[i]);
-            }
-            else
-            {
-                matchesUIArray[i].gameObject.SetActive(false);
-            }
-        }
-
-		//if (victoryText.activeSelf)
-		//{
-		//	victoryText.SetActive(false);
-		//}
     }
 
     private Player CreatePlayer()
