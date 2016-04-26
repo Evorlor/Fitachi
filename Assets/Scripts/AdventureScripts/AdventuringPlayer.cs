@@ -20,7 +20,7 @@ public class AdventuringPlayer : MonoBehaviour
         hitPoints = int.Parse(FitbitRestClient.Instance.ActivitiesDaily.summary.steps);
         Debug.Log(hitPoints);
 
-		gender = FitbitRestClient.Profile.user.gender;
+		gender = FitbitRestClient.Instance.Profile.user.gender;
 		animator = GetComponent<Animator>().runtimeAnimatorController;
 	}
 
