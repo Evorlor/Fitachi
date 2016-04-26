@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly Color spawnLineColor = Color.red;
 
-    private int steps = int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps);
+    private int steps = int.Parse(FitbitRestClient.Instance.ActivitiesDaily.summary.steps);
 
     void Awake()
     {

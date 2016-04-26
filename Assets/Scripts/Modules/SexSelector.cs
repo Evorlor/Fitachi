@@ -8,7 +8,7 @@ public class SexSelector : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
-        yield return FitbitRestClient.GetProfile();
+        yield return FitbitRestClient.Instance.GetProfile();
 	}
 
     private bool sexed = false;
@@ -20,7 +20,7 @@ public class SexSelector : MonoBehaviour {
             return;
         }
 
-        var gender = FitbitRestClient.Profile.user.gender;
+        var gender = FitbitRestClient.Instance.Profile.user.gender;
         if(gender != null)
         {
             sexed = true;

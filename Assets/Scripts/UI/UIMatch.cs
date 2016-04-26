@@ -25,17 +25,17 @@ public class UIMatch : MonoBehaviour
 
     public void UpdateUI(Match match)
     {
-        matchID.text = MatchIDPrefix + match.id;
-        if (FitbitRestClient.GetUserId() == match.player0.id)
-        {
-            playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
-            enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
-        }
-        else
-        {
-            playerHitpoints.text = PlayerHitpointsPrefix + match.player1.hitPoints;
-            enemyHitpoints.text = EnemyHitpointsPrefix + match.player0.hitPoints;
-        }
-        attack.interactable = match.turn.id == FitbitRestClient.GetUserId();
+        //matchID.text = MatchIDPrefix + match.id;
+        //if (FitbitRestClient.Instance.GetUserId() == match.player0.id)
+        //{
+        //    playerHitpoints.text = PlayerHitpointsPrefix + match.player0.hitPoints;
+        //    enemyHitpoints.text = EnemyHitpointsPrefix + match.player1.hitPoints;
+        //}
+        //else
+        //{
+        //    playerHitpoints.text = PlayerHitpointsPrefix + match.player1.hitPoints;
+        //    enemyHitpoints.text = EnemyHitpointsPrefix + match.player0.hitPoints;
+        //}
+        //attack.interactable = match.turn.id == FitbitRestClient.Instance.GetUserId();
 	}
 }

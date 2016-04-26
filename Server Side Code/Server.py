@@ -1,25 +1,28 @@
-from flask import Flask
+from flask import Flask, request
 import time
 import json
 import random
 app = Flask(__name__)
 
+class PlayerData:
+    dairy = 0
+    protein = 0
+    grain = 0
+    vegetable = 0
+    fruit = 0
+    sweets = 0
+
 class Player:
     id = None
-    hitPoints = 0
-    attackPower = 0
+    playerdata = None
 
 class Match:
     id = 0
     player0 = None
     player1 = None
-    turn = None
 
 playersWaiting = []
 matchesReady = {}
-
-matchesWaiting = []
-matches = []
 matchCount = 0
 
 #Default entry point for server
@@ -28,16 +31,24 @@ def start():
     return "Launching server..."
 
 #Finds the player a match, or enqueues them if none are available
-@app.route('/find_match/<player>')
-def findMatch(player):
+@app.route('/find_match', methods=['POST'])
+def findMatch():
     global playersWaiting
-    searchingPlayer = createPlayerFromJson(player)
+    postData = request.form['post_data']
+    print(postData)
+    searchingPlayer = createPlayerFromJson(postData)
     if searchingPlayer not in playersWaiting:
         playersWaiting.append(searchingPlayer)
-    return getMatchStatus(player)
+    return getMatchStatus(postData)
 
 #Checks if the match is ready to begin
-@app.route('/get_match_status/<player>')
+@app.route('/get_match_status', methods=['POST'])
+def getMatchStatus():
+    postData = request.form['post_data']
+    print(postData)
+    return getMatchStatus(postData)
+
+
 def getMatchStatus(player):
     global playersWaiting
     global matchCount
@@ -50,15 +61,13 @@ def getMatchStatus(player):
         del matchesReady[searchingPlayer.id]
         return getMatchJson(matchReady)
     for playerWaiting in playersWaiting:
-        if playerWaiting.id == searchingPlayer.id or isMatched(playerWaiting, searchingPlayer):
+        if playerWaiting.id == searchingPlayer.id:
             continue
         matchCount += 1
         match = Match()
         match.id = matchCount
         match.player0 = playerWaiting
         match.player1 = searchingPlayer
-        match.turn = playerWaiting if random.choice([True, False]) else searchingPlayer
-        matches.append(match)
         matchesReady[playerWaiting.id] = match
         for playerWaiting in playersWaiting:
             if playerWaiting.id == searchingPlayer.id:
@@ -68,40 +77,6 @@ def getMatchStatus(player):
     print invalidMatch.id
     return getMatchJson(invalidMatch)
 
-#gets the updated status for the match
-@app.route('/update_match/<match>')
-def updateMatch(match):
-    global matches
-    currentMatch = createMatchFromJson(match)
-    for matchInstance in matches:
-        if currentMatch.id == matchInstance.id:
-            return getMatchJson(matchInstance)
-    return getMatchJson(createInvalidMatch())
-
-#Attacks for the player in the specified match
-@app.route('/attack/<match>')
-def attack(match):
-    global matches
-    matchInstance = createMatchFromJson(match)
-    if matchInstance.player0.id == matchInstance.turn.id:
-        matchInstance.turn = matchInstance.player1
-        matchInstance.player1.hitPoints -= matchInstance.player0.attackPower
-    else:
-        matchInstance.turn = matchInstance.player0
-        matchInstance.player0.hitPoints -= matchInstance.player1.attackPower
-    for matchIteration in matches:
-        if matchIteration.id == matchInstance.id:
-            matches.remove(matchIteration)
-            matches.append(matchInstance)
-    return getMatchJson(matchInstance)
-
-#checks if two players are currently in a match
-def isMatched(player0, player1):
-    global matches
-    for match in matches:
-        if match.player0.id == player0.id and match.player1.id == player1.id or match.player0.id == player1.id and match.player1.id == player0.id:
-            return True
-    return False
 
 #creates an invalid match
 def createInvalidMatch():
@@ -109,13 +84,13 @@ def createInvalidMatch():
     invalidPlayer = createInvalidPlayer()
     match.player0 = invalidPlayer
     match.player1 = invalidPlayer
-    match.turn = invalidPlayer
     return match
 
 #creates an invalid player
 def createInvalidPlayer():
     player = Player()
     player.id = ""
+    player.playerdata = PlayerData()
     return player
 
 #converts a match to json
@@ -125,20 +100,28 @@ def getMatchJson(match):
         'player0':
             {
             'id':match.player0.id,
-            'hitPoints':match.player0.hitPoints,
-            'attackPower':match.player0.attackPower,
+            'playerdata':
+                {
+                    'dairy':match.player0.playerdata.dairy,
+                    'protein':match.player0.playerdata.protein,
+                    'grain':match.player0.playerdata.grain,
+                    'vegetable':match.player0.playerdata.vegetable,
+                    'fruit':match.player0.playerdata.fruit,
+                    'sweets':match.player0.playerdata.sweets,
+                }
             },
         'player1':
             {
             'id':match.player1.id,
-            'hitPoints':match.player1.hitPoints,
-            'attackPower':match.player1.attackPower,
-            },
-        'turn':
-            {
-            'id':match.turn.id,
-            'hitPoints':match.turn.hitPoints,
-            'attackPower':match.turn.attackPower,
+            'playerdata':
+                {
+                    'dairy':match.player1.playerdata.dairy,
+                    'protein':match.player1.playerdata.protein,
+                    'grain':match.player1.playerdata.grain,
+                    'vegetable':match.player1.playerdata.vegetable,
+                    'fruit':match.player1.playerdata.fruit,
+                    'sweets':match.player1.playerdata.sweets,
+                }
             },
         }
     matchJson = json.dumps(matchData)
@@ -151,10 +134,8 @@ def createMatchFromJson(match):
     newMatch.id = matchJson['id']
     player0Json = json.dumps(matchJson['player0'])
     player1Json = json.dumps(matchJson['player1'])
-    turnJson =  json.dumps(matchJson['turn'])
     newMatch.player0 = createPlayerFromJson(player0Json)
     newMatch.player1 = createPlayerFromJson(player1Json)
-    newMatch.turn = createPlayerFromJson(turnJson)
     return newMatch
 
 #takes the json for a player and creates a player from it
@@ -162,9 +143,20 @@ def createPlayerFromJson(player):
     playerJson = json.loads(player)
     newPlayer = Player()
     newPlayer.id = playerJson['id']
-    newPlayer.hitPoints = playerJson['hitPoints']
-    newPlayer.attackPower = playerJson['attackPower']
+    playerdataJson = json.dumps(playerJson['playerdata'])
+    newPlayer.playerdata = createPlayerDataFromJson(playerdataJson)
     return newPlayer
+
+def createPlayerDataFromJson(playerdata):
+    playerdataJson = json.loads(playerdata)
+    newPlayerdata = PlayerData()
+    newPlayerdata.dairy = playerdataJson['dairy']
+    newPlayerdata.protein = playerdataJson['protein']
+    newPlayerdata.grain = playerdataJson['grain']
+    newPlayerdata.vegetable = playerdataJson['vegetable']
+    newPlayerdata.fruit = playerdataJson['fruit']
+    newPlayerdata.sweets = playerdataJson['sweets']
+    return newPlayerdata
 
 if __name__ == "__main__":
     app.debug = True
