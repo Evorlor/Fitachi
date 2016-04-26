@@ -17,6 +17,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
     private IEnumerator WaitForMatch(Player player, Action<Match> onMatchFound, float pollTime)
     {
         string playerJson = JsonUtility.ToJson(player);
+		Debug.Log(playerJson);
         string method = FindMatchMethodName;
         var www = CreatePost(method, playerJson);
 		while (true)
@@ -27,6 +28,7 @@ public class ServerManager : ManagerBehaviour<ServerManager>
             if (match.id > 0)
             {
                 onMatchFound(match);
+				break;
             }
             yield return new WaitForSeconds(pollTime);
 			method = GetMatchStatusMethodName;

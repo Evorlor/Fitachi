@@ -4,10 +4,17 @@ import json
 import random
 app = Flask(__name__)
 
+class PlayerData:
+    dairy = 0
+    protein = 0
+    grain = 0
+    vegetable = 0
+    fruit = 0
+    sweets = 0
+
 class Player:
     id = None
-    hitPoints = 0
-    attackPower = 0
+    playerdata = None
 
 class Match:
     id = 0
@@ -16,7 +23,6 @@ class Match:
 
 playersWaiting = []
 matchesReady = {}
-matches = []
 matchCount = 0
 
 #Default entry point for server
@@ -55,14 +61,13 @@ def getMatchStatus(player):
         del matchesReady[searchingPlayer.id]
         return getMatchJson(matchReady)
     for playerWaiting in playersWaiting:
-        if playerWaiting.id == searchingPlayer.id or isMatched(playerWaiting, searchingPlayer):
+        if playerWaiting.id == searchingPlayer.id:
             continue
         matchCount += 1
         match = Match()
         match.id = matchCount
         match.player0 = playerWaiting
         match.player1 = searchingPlayer
-        matches.append(match)
         matchesReady[playerWaiting.id] = match
         for playerWaiting in playersWaiting:
             if playerWaiting.id == searchingPlayer.id:
@@ -72,13 +77,6 @@ def getMatchStatus(player):
     print invalidMatch.id
     return getMatchJson(invalidMatch)
 
-#checks if two players are currently in a match
-def isMatched(player0, player1):
-    global matches
-    for match in matches:
-        if match.player0.id == player0.id and match.player1.id == player1.id or match.player0.id == player1.id and match.player1.id == player0.id:
-            return True
-    return False
 
 #creates an invalid match
 def createInvalidMatch():
@@ -92,6 +90,7 @@ def createInvalidMatch():
 def createInvalidPlayer():
     player = Player()
     player.id = ""
+    player.playerdata = PlayerData()
     return player
 
 #converts a match to json
@@ -101,14 +100,28 @@ def getMatchJson(match):
         'player0':
             {
             'id':match.player0.id,
-            'hitPoints':match.player0.hitPoints,
-            'attackPower':match.player0.attackPower,
+            'playerdata':
+                {
+                    'dairy':match.player0.playerdata.dairy,
+                    'protein':match.player0.playerdata.protein,
+                    'grain':match.player0.playerdata.grain,
+                    'vegetable':match.player0.playerdata.vegetable,
+                    'fruit':match.player0.playerdata.fruit,
+                    'sweets':match.player0.playerdata.sweets,
+                }
             },
         'player1':
             {
             'id':match.player1.id,
-            'hitPoints':match.player1.hitPoints,
-            'attackPower':match.player1.attackPower,
+            'playerdata':
+                {
+                    'dairy':match.player1.playerdata.dairy,
+                    'protein':match.player1.playerdata.protein,
+                    'grain':match.player1.playerdata.grain,
+                    'vegetable':match.player1.playerdata.vegetable,
+                    'fruit':match.player1.playerdata.fruit,
+                    'sweets':match.player1.playerdata.sweets,
+                }
             },
         }
     matchJson = json.dumps(matchData)
@@ -130,9 +143,20 @@ def createPlayerFromJson(player):
     playerJson = json.loads(player)
     newPlayer = Player()
     newPlayer.id = playerJson['id']
-    newPlayer.hitPoints = playerJson['hitPoints']
-    newPlayer.attackPower = playerJson['attackPower']
+    playerdataJson = json.dumps(playerJson['playerdata'])
+    newPlayer.playerdata = createPlayerDataFromJson(playerdataJson)
     return newPlayer
+
+def createPlayerDataFromJson(playerdata):
+    playerdataJson = json.loads(playerdata)
+    newPlayerdata = PlayerData()
+    newPlayerdata.dairy = playerdataJson['dairy']
+    newPlayerdata.protein = playerdataJson['protein']
+    newPlayerdata.grain = playerdataJson['grain']
+    newPlayerdata.vegetable = playerdataJson['vegetable']
+    newPlayerdata.fruit = playerdataJson['fruit']
+    newPlayerdata.sweets = playerdataJson['sweets']
+    return newPlayerdata
 
 if __name__ == "__main__":
     app.debug = True
