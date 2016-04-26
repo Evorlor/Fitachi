@@ -6,15 +6,35 @@ using adventureUI;
 
 public class AdventuringPlayer : MonoBehaviour
 {
+	public RuntimeAnimatorController male;
+	public RuntimeAnimatorController female;
+
     [Tooltip("How many hit points the player has")]
     [SerializeField]
     private int hitPoints;
+	private string gender;
+	private RuntimeAnimatorController animator;
 
-    void Awake()
+	void Awake()
     {
         hitPoints = int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps);
         Debug.Log(hitPoints);
-    }
+
+		gender = FitbitRestClient.Profile.user.gender;
+		animator = GetComponent<Animator>().runtimeAnimatorController;
+	}
+
+	void Start()
+	{
+		if (gender == "MALE")
+		{
+			animator = male;
+		}
+		else
+		{
+			animator = female;
+		}
+	}
 
     public void AddDamage(int damage)
     {
