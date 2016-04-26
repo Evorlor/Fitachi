@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("WHYYY");
     }
 
     /// <summary>
@@ -52,6 +53,8 @@ public class UIController : MonoBehaviour
         FoodPyramid.gameObject.SetActive(true);
         FoodMenu.gameObject.SetActive(true);
     }
+    //private string activeFood = "sam";
+    private int fuckthis = -2;
 
     public void BuyFood(int foodCost)
     {
@@ -61,6 +64,27 @@ public class UIController : MonoBehaviour
         //AdventureStats.Nutrition.Hunger++;
         //AdventureStats.Rest.Sleep++;
         //AdventureStats.Speed.Steps++;
+        switch (fuckthis)
+        {
+            case 0:
+                AdventureStats.Dairy += foodCost;
+                break;
+            case 1:
+                AdventureStats.Protein += foodCost;
+                break;
+            case 2:
+                AdventureStats.Grain += foodCost;
+                break;
+            case 3:
+                AdventureStats.Vegetable += foodCost;
+                break;
+            case 4:
+                AdventureStats.Fruit += foodCost;
+                break;
+            default:
+                Debug.Log("GWE" + fuckthis);
+                break;
+        }
     }
 
     public void DisplayFoodToPurchase(int FoodCategory)
@@ -68,27 +92,32 @@ public class UIController : MonoBehaviour
         DestroyButtonsInList();
         Buttons.Clear();
 
+        fuckthis = FoodCategory - 1;
         switch (FoodCategory)
         {
             case 1:
+                Debug.Log("ok");
+                AdventureStats.Dairy += 1;
                 SpawnFoodItems(DairyList);
-                AdventureStats.Dairy++;
                 break;
             case 2:
+                AdventureStats.Protein += 1;
                 SpawnFoodItems(ProteinList);
-                AdventureStats.Protein++;
                 break;
             case 3:
+                AdventureStats.Grain += 1;
                 SpawnFoodItems(GrainList);
-                AdventureStats.Grain++;
                 break;
             case 4:
+                AdventureStats.Vegetable += 1;
                 SpawnFoodItems(VegetableList);
-                AdventureStats.Vegetable++;
                 break;
             case 5:
+                AdventureStats.Fruit += 1;
                 SpawnFoodItems(FruitList);
-                AdventureStats.Fruit++;
+                break;
+            default:
+                Debug.Log("fuck");
                 break;
         }
     }
