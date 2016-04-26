@@ -9,6 +9,7 @@ public class AdventureCoin : MonoBehaviour
     private const float InvisiblizeRate = 0.01f;
 
     private SpriteRenderer spriteRenderer;
+    public AudioClip coinSound;
 
     void Awake()
     {
@@ -18,6 +19,7 @@ public class AdventureCoin : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        AudioManager.Instance.PlayAudio(coinSound);
         AdventureStats.Gold++;
         InvokeRepeating(InvisiblizeMethodName, InvisiblizeRate, InvisiblizeRate);
     }

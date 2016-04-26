@@ -17,7 +17,7 @@ public class AdventuringPlayer : MonoBehaviour
 
 	void Awake()
     {
-        hitPoints = int.Parse(FitbitRestClient.ActivitiesDaily.summary.steps);
+        hitPoints = int.Parse(FitbitRestClient.Instance.ActivitiesDaily.summary.steps);
         Debug.Log(hitPoints);
 
 		gender = FitbitRestClient.Profile.user.gender;
@@ -64,8 +64,8 @@ public class AdventuringPlayer : MonoBehaviour
     //   // Use this for initialization
     //   void Start () {
     //       hp = 10;
-    //	attackSpeed = float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / attackspeedmodifier;
-    //	AttackDamage = (int)(float.Parse(FitbitRestClient.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
+    //	attackSpeed = float.Parse(FitbitRestClient.Instance.Activities.lifetime.total.distance) / attackspeedmodifier;
+    //	AttackDamage = (int)(float.Parse(FitbitRestClient.Instance.Activities.lifetime.total.distance) / weakenPlayerMultiplier);
 
     //	enemies = new List<Enemy>();
     //       InvokeRepeating("attackEnemies", 0, attackSpeed);

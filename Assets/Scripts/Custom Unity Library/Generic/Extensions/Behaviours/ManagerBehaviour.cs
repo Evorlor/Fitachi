@@ -26,7 +26,7 @@ public abstract class ManagerBehaviour<ManagerType> : MonoBehaviour where Manage
                     manager.transform.SetParent(masterManager.transform);
                     instance = manager.AddComponent<ManagerType>();
                 }
-                var root = instance.gameObject.transform;
+                var root = instance.transform;
                 while (root.parent)
                 {
                     root = root.parent;

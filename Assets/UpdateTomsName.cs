@@ -15,10 +15,11 @@ public class UpdateTomsName : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-	{
-		if (FitbitRestClient.Profile.user.fullName != null)
+    {
+        if (FitbitRestClient.Instance.Profile.user == null)
         {
-			tom.text = FitbitRestClient.Profile.user.fullName.ToString();
-		}
-	}
+            return;
+        }
+        tom.text = FitbitRestClient.Instance.Profile.user.fullName;
+    }
 }

@@ -5,12 +5,12 @@ public class Serializer
     public static string SerializePlayer()
     {
         var playerData = new PlayerData();
-        playerData.Dairy = AdventureStats.Dairy;
-        playerData.Protein = AdventureStats.Protein;
-        playerData.Grain = AdventureStats.Grain;
-        playerData.Vegetable = AdventureStats.Vegetable;
-        playerData.Fruit = AdventureStats.Fruit;
-        playerData.Sweets = AdventureStats.Sweets;
+        playerData.dairy = AdventureStats.Dairy;
+        playerData.protein = AdventureStats.Protein;
+        playerData.grain = AdventureStats.Grain;
+        playerData.vegetable = AdventureStats.Vegetable;
+        playerData.fruit = AdventureStats.Fruit;
+        playerData.sweets = AdventureStats.Sweets;
         string playerJson = JsonUtility.ToJson(playerData);
         return playerJson;
     }
