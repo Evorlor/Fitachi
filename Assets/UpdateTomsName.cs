@@ -20,6 +20,6 @@ public class UpdateTomsName : MonoBehaviour
         {
             return;
         }
-        tom.text = "Welcome back " + FitbitRestClient.Profile.user.fullName + "!";
+        tom.text = FitbitRestClient.Profile.user.fullName.ToString();
     }
 }

@@ -17,6 +17,8 @@ public class FuryStrikesScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        AttackAmount = 0;
+
         GameObject AttackPositions = Instantiate(AttackButtonPositions);
 
         AttackPositions.transform.parent = gameObject.transform;
