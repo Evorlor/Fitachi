@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public static class AdventureStats {
     public static int Gold;
@@ -84,7 +85,20 @@ public static class AdventureStats {
         }
     }
     public static void SetNewDate(){
-        resetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,4,0,0);
+        if (!PlayerPrefs.HasKey("ResetYear")) {
+            resetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 4, 0, 0);
+            PlayerPrefs.SetInt("ResetYear", DateTime.Now.Year);
+            PlayerPrefs.SetInt("ResetMonth", DateTime.Now.Month);
+            PlayerPrefs.SetInt("ResetDay", DateTime.Now.Day);
+        }
+        if (PlayerPrefs.HasKey("ResetYear")) {
+            resetTime = new DateTime(PlayerPrefs.GetInt("ResetYear"), PlayerPrefs.GetInt("ResetMonth"), PlayerPrefs.GetInt("ResetDay"), 4, 0, 0);
+        }
+    }
+    public static void SaveResetTime() {
+        PlayerPrefs.SetInt("ResetYear", resetTime.Year);
+        PlayerPrefs.SetInt("ResetMonth", resetTime.Month);
+        PlayerPrefs.SetInt("ResetDay", resetTime.Day);
     }
 
 }
