@@ -55,6 +55,7 @@ public class FuryStrikesScript : MonoBehaviour
         {
             SetButtons(2, 6);
         }
+        if(Random.Range(0, 10) <= 1)
         AdventureStats.Gold++;
     }
 

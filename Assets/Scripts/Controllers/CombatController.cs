@@ -59,7 +59,7 @@ public class CombatController : ManagerBehaviour<CombatController>
         AdventureStats.Sweets = playerData.sweets - opponentData.sweets;
         AdventureStats.Vegetable = playerData.vegetable - opponentData.vegetable;
         int total = AdventureStats.Dairy + AdventureStats.Fruit + AdventureStats.Grain + AdventureStats.Protein + AdventureStats.Sweets + AdventureStats.Vegetable;
-        victoryImg.enabled = true;
+        victoryImg.gameObject.SetActive(true);
         if (total > 0)
         {
             Debug.Log("WIN");
