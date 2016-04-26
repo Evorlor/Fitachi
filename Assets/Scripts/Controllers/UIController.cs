@@ -55,7 +55,7 @@ public class UIController : MonoBehaviour
 
     public void BuyFood(int foodCost)
     {
-        AdventureStats.Gold -= 9;
+        AdventureStats.Gold -= foodCost;
         AdventureStats.Gold = Mathf.Max(0, AdventureStats.Gold);
         //AdventureStats.Endurance.HeartRate += 3;
         //AdventureStats.Nutrition.Hunger++;
