@@ -54,7 +54,7 @@ public class UIController : MonoBehaviour
         FoodMenu.gameObject.SetActive(true);
     }
     //private string activeFood = "sam";
-    private int fuckthis = -2;
+    private static int activeFood = -2;
 
     public void BuyFood(int foodCost)
     {
@@ -64,7 +64,7 @@ public class UIController : MonoBehaviour
         //AdventureStats.Nutrition.Hunger++;
         //AdventureStats.Rest.Sleep++;
         //AdventureStats.Speed.Steps++;
-        switch (fuckthis)
+        switch (activeFood)
         {
             case 0:
                 AdventureStats.Dairy += foodCost;
@@ -82,7 +82,6 @@ public class UIController : MonoBehaviour
                 AdventureStats.Fruit += foodCost;
                 break;
             default:
-                Debug.Log("GWE" + fuckthis);
                 break;
         }
     }
@@ -92,7 +91,7 @@ public class UIController : MonoBehaviour
         DestroyButtonsInList();
         Buttons.Clear();
 
-        fuckthis = FoodCategory - 1;
+        activeFood = FoodCategory - 1;
         switch (FoodCategory)
         {
             case 1:
