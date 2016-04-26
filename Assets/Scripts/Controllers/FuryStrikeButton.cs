@@ -3,6 +3,13 @@ using System.Collections;
 
 public class FuryStrikeButton : MonoBehaviour
 {
+    public GameObject FuryStrikesObject;
+
+    void Awake()
+    {
+        FuryStrikesObject = GameObject.FindWithTag("ButtonParentReference");
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -11,7 +18,7 @@ public class FuryStrikeButton : MonoBehaviour
 
     public void OnClickFuryStrike()
     {
-        FuryStrikesScript.AttackAmount++;
+        FuryStrikesObject.GetComponent<FuryStrikesScript>().AttackAmount++;
         gameObject.SetActive(false);
     }
 }
