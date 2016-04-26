@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CombatController : ManagerBehaviour<CombatController>
+public class CombatController : MonoBehaviour
 {
     public GameObject victoryText;
 
@@ -27,9 +27,8 @@ public class CombatController : ManagerBehaviour<CombatController>
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
 
-    protected override void Awake()
+    void Awake()
     {
-        base.Awake();
     }
 
     void Start()
