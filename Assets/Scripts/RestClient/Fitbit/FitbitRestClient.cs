@@ -138,10 +138,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/profile.json", null, headers);
 
-		while (!www.isDone)
-		{
-			yield return null;
-		}
+		yield return new WaitUntil(() => www.isDone);
+
 		Debug.Log("DEBUG: " + www.text);
 		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
         Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
@@ -158,10 +156,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities.json", null, headers);
 
-		while (!www.isDone)
-		{
-			yield return null;
-		}
+		yield return new WaitUntil(() => www.isDone);
+
 		Debug.Log("DEBUG: " + www.text);
 		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
 	}
@@ -177,10 +173,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		headers.Add("Authorization", "Bearer " + mAccessToke);
 		var www = new WWW("https://api.fitbit.com/1/user/" + mUserId + "/activities/date/" + date.ToString("yyyy-MM-dd")+ ".json", null, headers);
 
-		while (!www.isDone)
-		{
-			yield return null;
-		}
+		yield return new WaitUntil(() => www.isDone);
+
 		Debug.Log("DEBUG: " + www.text);
 		ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
 	}
