@@ -140,9 +140,12 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 		yield return new WaitUntil(() => www.isDone);
 
-		Debug.Log("DEBUG: " + www.text);
-		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
-        Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
+		if (!www.text.Contains("errors"))
+		{
+			Debug.Log("DEBUG: " + www.text);
+			Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
+			Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
+		}
     }
 
 	public Coroutine GetActiviesLifeTimeState()
@@ -158,8 +161,11 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 		yield return new WaitUntil(() => www.isDone);
 
-		Debug.Log("DEBUG: " + www.text);
-		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
+		if (!www.text.Contains("errors"))
+		{
+			Debug.Log("DEBUG: " + www.text);
+			Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
+		}
 	}
 
 	public Coroutine GetActiviesDailyState(System.DateTime date)
@@ -175,8 +181,11 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 		yield return new WaitUntil(() => www.isDone);
 
-		Debug.Log("DEBUG: " + www.text);
-		ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
+		if (!www.text.Contains("errors"))
+		{
+			Debug.Log("DEBUG: " + www.text);
+			ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
+		}
 	}
 
 	// Update is called once per frame
