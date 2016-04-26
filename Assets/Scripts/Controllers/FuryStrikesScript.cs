@@ -7,7 +7,7 @@ using System.Collections;
 public class FuryStrikesScript : MonoBehaviour
 {
     public float AttackTimeLimit;
-    public static int AttackAmount = 0;
+    public int AttackAmount = 0;
 
     public GameObject AttackButtonPositions;
     public GameObject AttackButton;
@@ -17,7 +17,7 @@ public class FuryStrikesScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        AttackAmount = 0;
+        //AttackAmount = 0;
 
         GameObject AttackPositions = Instantiate(AttackButtonPositions);
 

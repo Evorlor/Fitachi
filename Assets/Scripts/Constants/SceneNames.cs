@@ -6,4 +6,8 @@ public class SceneNames : MonoBehaviour {
     /// Main starting scene
     /// </summary>
     public const string MainMenu = "Main";
+
+    public const string BigHit = "BigHit";
+    public const string RangedAttack = "Ranged Attack";
+    public const string FuryStrikes = "FuryStrikes";
 }
