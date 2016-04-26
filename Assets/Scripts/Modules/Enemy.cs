@@ -23,13 +23,13 @@ public class Enemy : MonoBehaviour
 
     private Animator animator;
 
-	private adventureUI.AdventureUI adventureUI;
+    private adventureUI.AdventureUI adventureUI;
     private AdventuringPlayer player;
 
     Rigidbody2D characterRigidbody;
 
-	void Awake()
-	{
+    void Awake()
+    {
         adventureUI = FindObjectOfType<adventureUI.AdventureUI>();
         animator = GetComponent<Animator>();
     }
@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
         {
             characterRigidbody.velocity = Vector3.zero;
         }
-		if (!dead && transform.position.x <= xDeath)
+        if (!dead && transform.position.x <= xDeath)
         {
             Die();
         }
@@ -55,7 +55,10 @@ public class Enemy : MonoBehaviour
 
     void OnDestroy()
     {
-
+        if (!player)
+        {
+            return;
+        }
         var coinPosition = player.transform.position;
         coinPosition.y += coinYOffset;
         Instantiate(coin, coinPosition, Quaternion.identity);
@@ -66,14 +69,14 @@ public class Enemy : MonoBehaviour
         if (GetComponent<TreasureTurtle>())
         {
             Debug.Log("Treasure turtle is DEADDDDD!!!");
-			adventureUI.UpdatePowerUpsCollectedUI();
-		}
-		else
+            adventureUI.UpdatePowerUpsCollectedUI();
+        }
+        else
         {
             AudioManager.Instance.PlayAudio(HitSound);
             animator.SetTrigger("Die");
         }
-		adventureUI.UpdateMonstersDefeatedUI();
+        adventureUI.UpdateMonstersDefeatedUI();
         dead = true;
         Destroy(gameObject, 0.8f);
     }

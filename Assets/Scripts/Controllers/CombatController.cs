@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CombatController : ManagerBehaviour<CombatController>
 {
-	public GameObject victoryText;
+    public GameObject victoryText;
 
     [Tooltip("Container for Matches UI")]
     [SerializeField]
@@ -22,28 +22,9 @@ public class CombatController : ManagerBehaviour<CombatController>
     private const string MatchSearchable = "Start Battle!";
     private const string SearchingForMatch = "Searching for match...";
 
-    private List<Match> matches = new List<Match>();
-    private UIMatch[] matchesUIArray;
-
-    void OnLevelWasLoaded(int level)
-    {
-        if(level == 2)
-        {
-            Debug.Log("YIO");
-            //matchesUI = GameObject.Find("Matches").GetComponent<CanvasRenderer>();
-            matchesUIArray = new UIMatch[5];
-            for(int i = 0; i < matchesUIArray.Length; i++)
-            {
-                matchesUIArray[i] = GameObject.Find("Match #" + (i + 1)).GetComponent<UIMatch>();
-            }
-            searchForMatch = GameObject.Find("Start Battle").GetComponent<Button>();
-        }
-    }
-
     protected override void Awake()
     {
         base.Awake();
-        matchesUIArray = matchesUI.GetComponentsInChildren<UIMatch>();
     }
 
     void Start()
@@ -64,9 +45,35 @@ public class CombatController : ManagerBehaviour<CombatController>
 
     private void OnMatchFound(Match match)
     {
-		Debug.Log(JsonUtility.ToJson(match));
-		// TODO: Determine the winner
-		// Play the animation
+        var playerData = match.player0.id == FitbitRestClient.Instance.GetUserId() ? match.player0.playerdata : match.player1.playerdata;
+        var opponentData = match.player1.id == FitbitRestClient.Instance.GetUserId() ? match.player0.playerdata : match.player1.playerdata;
+        AdventureStats.Dairy = playerData.dairy - opponentData.dairy;
+        AdventureStats.Fruit = playerData.fruit - opponentData.fruit;
+        AdventureStats.Grain = playerData.grain - opponentData.grain;
+        AdventureStats.Protein = playerData.protein - opponentData.protein;
+        AdventureStats.Sweets = playerData.sweets - opponentData.sweets;
+        AdventureStats.Vegetable = playerData.vegetable - opponentData.vegetable;
+        int total = AdventureStats.Dairy + AdventureStats.Fruit + AdventureStats.Grain + AdventureStats.Protein + AdventureStats.Sweets + AdventureStats.Vegetable;
+        if (total > 0)
+        {
+            Debug.Log("YOU WIN!");
+        }
+        else if (total == 0)
+        {
+            Debug.Log("YOU TIE!");
+        }
+        else
+        {
+            Debug.Log("YOU LOSE!");
+        }
+        AdventureStats.Dairy = Mathf.Max(0, playerData.dairy - opponentData.dairy);
+        AdventureStats.Fruit = Mathf.Max(0, playerData.fruit - opponentData.fruit);
+        AdventureStats.Grain = Mathf.Max(0, playerData.grain - opponentData.grain);
+        AdventureStats.Protein = Mathf.Max(0, playerData.protein - opponentData.protein);
+        AdventureStats.Sweets = Mathf.Max(0, playerData.sweets - opponentData.sweets);
+        AdventureStats.Vegetable = Mathf.Max(0, playerData.vegetable - opponentData.vegetable);
+        // TODO: Determine the winner
+        // Play the animation
         //var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();
         //if (startMatchButtonText)
         //{
@@ -80,7 +87,7 @@ public class CombatController : ManagerBehaviour<CombatController>
     {
         var player = new Player();
         player.id = FitbitRestClient.Instance.GetUserId();
-		player.playerdata = PlayerData.GetPlayerData();
+        player.playerdata = PlayerData.GetPlayerData();
         return player;
     }
 }
