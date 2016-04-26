@@ -8,35 +8,35 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 	public string DEBUG_USERID = "";
 	public string DEBUG_TOKEN = "";
 
-	private static string CLIENT_ID = "227FWT";
-	private static string EXPIRED_TIME = "2592000";
-	private static string LOGIN_API = "https://www.fitbit.com/oauth2/authorize";
+	private const string CLIENT_ID = "227FWT";
+	private const string EXPIRED_TIME = "2592000";
+	private const string LOGIN_API = "https://www.fitbit.com/oauth2/authorize";
 
-	private static string TokenKey = "Token";
-	private static string UserIDKey = "UserID";
+	private const string TokenKey = "Token";
+	private const string UserIDKey = "UserID";
 
-	private static string ANDROID_URL = LOGIN_API + "?response_type=token&client_id="+ CLIENT_ID+ "&redirect_uri=fitachi%3A%2F%2Fcb&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=" + EXPIRED_TIME;
-	private static string WIN_URL = LOGIN_API + "?response_type=token&client_id=" + CLIENT_ID + "&redirect_uri=http%3A%2F%2Fwww.fiea.ucf.edu&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=" + EXPIRED_TIME;
+	private const string ANDROID_URL = LOGIN_API + "?response_type=token&client_id="+ CLIENT_ID+ "&redirect_uri=fitachi%3A%2F%2Fcb&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=" + EXPIRED_TIME;
+	private const string WIN_URL = LOGIN_API + "?response_type=token&client_id=" + CLIENT_ID + "&redirect_uri=http%3A%2F%2Fwww.fiea.ucf.edu&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=" + EXPIRED_TIME;
 
 	private string mAccessToke = "";
 	private string mUserId = "";
 
 	private bool mIsLogin = false;
-	public static Fitbit.User.Profile Profile = new Fitbit.User.Profile();
-	public static Fitbit.Activity.Activities Activities = new Fitbit.Activity.Activities();
-	public static Fitbit.ActivitiesDaily.ActivitiesDaily ActivitiesDaily = new Fitbit.ActivitiesDaily.ActivitiesDaily();
+	public Fitbit.User.Profile Profile = new Fitbit.User.Profile();
+	public Fitbit.Activity.Activities Activities = new Fitbit.Activity.Activities();
+	public Fitbit.ActivitiesDaily.ActivitiesDaily ActivitiesDaily = new Fitbit.ActivitiesDaily.ActivitiesDaily();
 
-	public static bool IsLogin()
+	public bool IsLogin()
 	{
-		return Instance.mIsLogin;
+		return mIsLogin;
 	}
 
-	public static string GetUserId()
+	public string GetUserId()
 	{
-		return Instance.mUserId;
+		return mUserId;
 	}
 
-	public static void SaveData(string token, string userID)
+	public void SaveData(string token, string userID)
 	{
 		Debug.Log("Save.. " + token + " " + userID);
 		PlayerPrefs.SetString(TokenKey, token);
@@ -96,6 +96,8 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
         // try get access toke from preference
         yield return LoadData();
 
+		Debug.Log("ID: "+ GetHashCode());
+
 		if (!mIsLogin) {
 
 			string url = ANDROID_URL;
@@ -125,10 +127,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		}
     }
 
-	public static Coroutine GetProfile()
+	public Coroutine GetProfile()
 	{
-		if (Instance == null) return null;
-		return Instance.StartCoroutine(Instance.GetProfileInternal());
+		return StartCoroutine(Instance.GetProfileInternal());
 	}
 
 	IEnumerator GetProfileInternal()
@@ -146,10 +147,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
         Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
     }
 
-	public static Coroutine GetActiviesLifeTimeState()
+	public Coroutine GetActiviesLifeTimeState()
 	{
-		if (Instance == null) return null;
-		return Instance.StartCoroutine(Instance.GetActiviesLifeTimeStateInternal());
+		return StartCoroutine(Instance.GetActiviesLifeTimeStateInternal());
 	}
 
 	IEnumerator GetActiviesLifeTimeStateInternal()
@@ -166,10 +166,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
 	}
 
-	public static Coroutine GetActiviesDailyState(System.DateTime date)
+	public Coroutine GetActiviesDailyState(System.DateTime date)
 	{
-		if (Instance == null) return null;
-		return Instance.StartCoroutine(Instance.GetActiviesDailyStateInternal(date));
+		return StartCoroutine(Instance.GetActiviesDailyStateInternal(date));
 	}
 
 	IEnumerator GetActiviesDailyStateInternal(System.DateTime date)
