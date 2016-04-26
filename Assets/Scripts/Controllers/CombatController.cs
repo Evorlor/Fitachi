@@ -17,6 +17,11 @@ public class CombatController : ManagerBehaviour<CombatController>
     [SerializeField]
     private Button searchForMatch;
 
+    public Image victoryImg;
+    public Sprite tie;
+    public Sprite win;
+    public Sprite lose;
+
     private const float MatchSearchPollTime = 2.0f;
     private const float CurrentStatusPollTime = 1.0f;
     private const string MatchSearchable = "Start Battle!";
@@ -54,17 +59,21 @@ public class CombatController : ManagerBehaviour<CombatController>
         AdventureStats.Sweets = playerData.sweets - opponentData.sweets;
         AdventureStats.Vegetable = playerData.vegetable - opponentData.vegetable;
         int total = AdventureStats.Dairy + AdventureStats.Fruit + AdventureStats.Grain + AdventureStats.Protein + AdventureStats.Sweets + AdventureStats.Vegetable;
+        victoryImg.gameObject.SetActive(true);
         if (total > 0)
         {
-            Debug.Log("YOU WIN!");
+            Debug.Log("WIN");
+            victoryImg.sprite = win;
         }
         else if (total == 0)
         {
-            Debug.Log("YOU TIE!");
+            Debug.Log("TIE");
+            victoryImg.sprite = tie;
         }
         else
         {
-            Debug.Log("YOU LOSE!");
+            Debug.Log("LOSE");
+            victoryImg.sprite = lose;
         }
         AdventureStats.Dairy = Mathf.Max(0, playerData.dairy - opponentData.dairy);
         AdventureStats.Fruit = Mathf.Max(0, playerData.fruit - opponentData.fruit);

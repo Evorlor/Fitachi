@@ -20,7 +20,7 @@ public class AdventureCoin : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayAudio(coinSound);
-        AdventureStats.Gold++;
+        AdventureStats.Gold += 9;  //magic number 9, there for nostalgic purposes
         InvokeRepeating(InvisiblizeMethodName, InvisiblizeRate, InvisiblizeRate);
     }
 

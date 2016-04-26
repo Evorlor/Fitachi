@@ -21,8 +21,8 @@ class Match:
     player0 = None
     player1 = None
 
-playersWaiting = []
-matchesReady = {}
+playerWaiting = None
+matchesReady = None
 matchCount = 0
 
 #Default entry point for server
@@ -33,12 +33,12 @@ def start():
 #Finds the player a match, or enqueues them if none are available
 @app.route('/find_match', methods=['POST'])
 def findMatch():
-    global playersWaiting
+    global playerWaiting
     postData = request.form['post_data']
     print(postData)
     searchingPlayer = createPlayerFromJson(postData)
-    if searchingPlayer not in playersWaiting:
-        playersWaiting.append(searchingPlayer)
+    if playerWaiting is None:
+        playerWaiting = searchingPlayer
     return getMatchStatus(postData)
 
 #Checks if the match is ready to begin
@@ -50,29 +50,25 @@ def getMatchStatus():
 
 
 def getMatchStatus(player):
-    global playersWaiting
+    global playerWaiting
     global matchCount
+    global matchesReady
     searchingPlayer = createPlayerFromJson(player)
-    if searchingPlayer.id in matchesReady:
-        matchReady = matchesReady[searchingPlayer.id]
-        for playerWaiting in playersWaiting:
-            if playerWaiting.id == searchingPlayer.id:
-                playersWaiting.remove(playerWaiting)
-        del matchesReady[searchingPlayer.id]
-        return getMatchJson(matchReady)
-    for playerWaiting in playersWaiting:
-        if playerWaiting.id == searchingPlayer.id:
-            continue
-        matchCount += 1
-        match = Match()
-        match.id = matchCount
-        match.player0 = playerWaiting
-        match.player1 = searchingPlayer
-        matchesReady[playerWaiting.id] = match
-        for playerWaiting in playersWaiting:
-            if playerWaiting.id == searchingPlayer.id:
-                playersWaiting.remove(playerWaiting)
-        return getMatchJson(match)
+    if playerWaiting is not None:
+        if playerWaiting.id != searchingPlayer.id:
+            matchCount += 1
+            match = Match()
+            match.id = matchCount
+            match.player0 = playerWaiting
+            match.player1 = searchingPlayer
+            matchesReady = match
+            playerWaiting = None
+            return getMatchJson(match)
+    if matchesReady is not None:
+        playerWaiting = None
+        matchesTemp = matchesReady
+        matchesReady = None
+        return getMatchJson(matchesTemp)
     invalidMatch = createInvalidMatch()
     print invalidMatch.id
     return getMatchJson(invalidMatch)
@@ -160,4 +156,5 @@ def createPlayerDataFromJson(playerdata):
 
 if __name__ == "__main__":
     app.debug = True
+    #app.run()
     app.run(host='0.0.0.0')

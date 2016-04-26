@@ -39,7 +39,7 @@ namespace adventureUI
 
 		public void UpdateMonstersDefeatedUI()
 		{
-			monstersDefeated += 1;
+			monstersDefeated += 9;
 			MonstersDefeatedValue.text = monstersDefeated.ToString();
 		}
 
