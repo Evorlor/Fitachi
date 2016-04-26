@@ -95,6 +95,11 @@ public static class AdventureStats {
             resetTime = new DateTime(PlayerPrefs.GetInt("ResetYear"), PlayerPrefs.GetInt("ResetMonth"), PlayerPrefs.GetInt("ResetDay"), 4, 0, 0);
         }
     }
+    public static void SaveResetTime() {
+        PlayerPrefs.SetInt("ResetYear", resetTime.Year);
+        PlayerPrefs.SetInt("ResetMonth", resetTime.Month);
+        PlayerPrefs.SetInt("ResetDay", resetTime.Day);
+    }
 
 }
 public enum Sex {
