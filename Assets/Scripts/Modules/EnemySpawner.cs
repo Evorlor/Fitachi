@@ -37,22 +37,25 @@ public class EnemySpawner : MonoBehaviour
 
     private int stepRate = 5000;
 
-    public int defaultSteps = 10000;
+    public const int defaultSteps = 10000;
 
     void Awake()
     {
-        if(steps == 0)
-        {
-            steps = defaultSteps;
-        }
-        steps /= stepRate;
-        spawnRate = 1.0f / (steps + 1.0f);
-        bagoodyba = spawnDuration;
+
     }
 
     void Start()
     {
-        Physics2D.IgnoreLayerCollision(8, 8, true);
+		if (steps == 0)
+		{
+			steps = defaultSteps;
+		}
+
+		steps /= stepRate;
+		spawnRate = 1.0f / (steps + 1.0f);
+		bagoodyba = spawnDuration;
+
+		Physics2D.IgnoreLayerCollision(8, 8, true);
         InvokeRepeating("SpawnEnemy", 1, spawnRate);
     }
 

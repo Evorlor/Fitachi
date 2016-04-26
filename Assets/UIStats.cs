@@ -9,7 +9,7 @@ public class UIStats : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        stepsTxt.text = "Steps: " + FitbitRestClient.Instance.ActivitiesDaily.summary.steps;
+        stepsTxt.text = "Steps:\n" + FitbitRestClient.Instance.ActivitiesDaily.summary.steps;
     }
 
     // Update is called once per frame
