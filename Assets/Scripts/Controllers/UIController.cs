@@ -10,7 +10,13 @@ public class UIController : MonoBehaviour
     public GameObject FoodPyramid;
     public GameObject FoodMenu;
 
-    public List<GameObject> Buttons = new List<GameObject>();
+    public List<GameObject> DairyList = new List<GameObject>();
+    public List<GameObject> ProteinList = new List<GameObject>();
+    public List<GameObject> GrainList = new List<GameObject>();
+    public List<GameObject> VegetableList = new List<GameObject>();
+    public List<GameObject> FruitList = new List<GameObject>();
+
+    private List<GameObject> Buttons = new List<GameObject>();
 
     void Awake()
     {
@@ -26,9 +32,9 @@ public class UIController : MonoBehaviour
 
     public void CloseFoodScreen()
     {
-        DishButton.gameObject.SetActive(true);
-        FoodPyramid.gameObject.SetActive(false);
-        FoodMenu.gameObject.SetActive(false);
+        //DishButton.gameObject.SetActive(true);
+        //FoodPyramid.gameObject.SetActive(false);
+        //FoodMenu.gameObject.SetActive(false);
 
         DestroyButtonsInList();
         Buttons.Clear();
@@ -51,14 +57,36 @@ public class UIController : MonoBehaviour
         //AdventureStats.Speed.Steps++;
     }
 
-    public void DisplayFoodToPurchase(int ButtonAmount)
+    public void DisplayFoodToPurchase(int FoodCategory)
     {
         DestroyButtonsInList();
         Buttons.Clear();
 
-        for (int i = 0; i < ButtonAmount; i++)
+        switch (FoodCategory)
         {
-            GameObject Button = Instantiate(FoodPanelButton);
+            case 1:
+                SpawnFoodItems(DairyList);
+                break;
+            case 2:
+                SpawnFoodItems(ProteinList);
+                break;
+            case 3:
+                SpawnFoodItems(GrainList);
+                break;
+            case 4:
+                SpawnFoodItems(VegetableList);
+                break;
+            case 5:
+                SpawnFoodItems(FruitList);
+                break;
+        }
+    }
+
+    private void SpawnFoodItems(List<GameObject> FoodList)
+    {
+        for (int i = 0; i < FoodList.Count; i++)
+        {
+            GameObject Button = Instantiate(FoodList[i]);
             Button.transform.SetParent(DisplayPanel.transform, false);
             Buttons.Add(Button);
         }

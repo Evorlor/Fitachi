@@ -37,7 +37,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Awake()
     {
-        steps /= 1000;
+        steps = 10000;
+        Debug.LogError("There is a hardcode value of 10 steps...is this what you want?");
         spawnRate = 1.0f / (steps + 1.0f);
         bagoodyba = spawnDuration;
     }
@@ -55,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         stepsTaken = (int)(steps - steps * spawnDuration / bagoodyba);
         if(stepsTaken % treasureTurtleStep == 0)
         {
-            //Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+            Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
         }
         if (spawnDuration <= 0)
         {

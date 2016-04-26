@@ -38,6 +38,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 
 	public static void SaveData(string token, string userID)
 	{
+		Debug.Log("Save.. " + token + " " + userID);
 		PlayerPrefs.SetString(TokenKey, token);
 		PlayerPrefs.SetString(UserIDKey, userID);
 		PlayerPrefs.Save();
@@ -140,7 +141,9 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		{
 			yield return null;
 		}
+		Debug.Log("DEBUG: " + www.text);
 		Profile = JsonUtility.FromJson<Fitbit.User.Profile>(www.text);
+        Debug.Log("DEBUG: " + JsonUtility.ToJson(Profile));
     }
 
 	public static Coroutine GetActiviesLifeTimeState()
@@ -159,6 +162,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		{
 			yield return null;
 		}
+		Debug.Log("DEBUG: " + www.text);
 		Activities = JsonUtility.FromJson<Fitbit.Activity.Activities>(www.text);
 	}
 
@@ -178,6 +182,7 @@ public class FitbitRestClient : ManagerBehaviour<FitbitRestClient>
 		{
 			yield return null;
 		}
+		Debug.Log("DEBUG: " + www.text);
 		ActivitiesDaily = JsonUtility.FromJson<Fitbit.ActivitiesDaily.ActivitiesDaily>(www.text);
 	}
 
