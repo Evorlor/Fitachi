@@ -72,18 +72,23 @@ public class UIController : MonoBehaviour
         {
             case 1:
                 SpawnFoodItems(DairyList);
+                AdventureStats.Dairy++;
                 break;
             case 2:
                 SpawnFoodItems(ProteinList);
+                AdventureStats.Protein++;
                 break;
             case 3:
                 SpawnFoodItems(GrainList);
+                AdventureStats.Grain++;
                 break;
             case 4:
                 SpawnFoodItems(VegetableList);
+                AdventureStats.Vegetable++;
                 break;
             case 5:
                 SpawnFoodItems(FruitList);
+                AdventureStats.Fruit++;
                 break;
         }
     }
