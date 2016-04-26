@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System;
 
 public static class AdventureStats {
     public static int Gold;
+
+    public static DateTime resetTime;
 
     private static Queue<int> fourDaysOfSteps = new Queue<int>(1);
 
@@ -23,14 +26,15 @@ public static class AdventureStats {
 
     public static int currentStepCount;
 
+    public static int Sweets;
+
+    public static int calories;
+
     public static void Feed(FoodType food, int foodCaloires, int foodValue) {
         AdventurerNutrition[(int)food] = foodValue;
         calories += foodCaloires;
     }
 
-    public static int Sweets;
-
-    public static int calories;
 
     public static void UpdateSteps(int newStepsCount) {
         if (fourDaysOfSteps.Count==4) {
@@ -73,10 +77,18 @@ public static class AdventureStats {
 
         return combatStrength;
     }
+    public static void checkForNewDate(){
+        if (DateTime.Now>resetTime) {
+            Reset();
+            resetTime.AddDays(1);
+        }
+    }
+    public static void SetNewDate(){
+        resetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,4,0,0);
+    }
 
 }
 public enum Sex {
     Male,
     Female
 }
-
