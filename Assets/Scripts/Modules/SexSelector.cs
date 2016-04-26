@@ -23,11 +23,13 @@ public class SexSelector : MonoBehaviour
         }
         
         var gender = FitbitRestClient.Instance.Profile.user.gender;
-        if(gender != null)
+        if(gender != null && gender != "")
         {
+            Debug.Log(gender);
             sexed = true;
             if (gender == "MALE")
             {
+                Debug.Log(gender);
                 AdventureStats.gender = Sex.Male;
                 profilePic.sprite = malePic;
             }

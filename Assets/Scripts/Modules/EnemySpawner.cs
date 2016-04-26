@@ -37,11 +37,11 @@ public class EnemySpawner : MonoBehaviour
 
     private int stepRate = 5000;
 
-    public int defaultSteps = 10000;
+    public const int defaultSteps = 10000;
 
     void Awake()
     {
-        if(steps == 0)
+        if (steps == 0)
         {
             steps = defaultSteps;
         }
@@ -65,7 +65,12 @@ public class EnemySpawner : MonoBehaviour
         if (stepsTaken > treasureTurtleStep)
         {
             treasureTurtleStep += treasureTurtleStep;
-            Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+            var enemy = Instantiate(treasureTurtle, new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity) as TreasureTurtle;
+            var spriteRenderer = enemy.GetComponent<SpriteRenderer>();
+            Debug.Log("GREWGFRE: " + enemy);
+            spriteRenderer.sortingOrder = (int)((-enemy.transform.position.y - spriteRenderer.sprite.bounds.extents.y) * Screen.height);
+            spriteRenderer.sortingOrder = int.MaxValue;
+            spriteRenderer.sortingOrder = 10000;
         }
         if (spawnDuration <= 0)
         {
@@ -88,6 +93,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity);
+        var enemy = Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)], new Vector3(startingPosition.x, Random.Range(endingPosition.y, startingPosition.y)), Quaternion.identity) as Enemy;
+        var spriteRenderer = enemy.GetComponent<SpriteRenderer>();
+        spriteRenderer.sortingOrder = (int)((-enemy.transform.position.y - spriteRenderer.sprite.bounds.extents.y) * Screen.height);
     }
 }
