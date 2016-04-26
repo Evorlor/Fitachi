@@ -1,9 +1,21 @@
 fileFormatVersion: 2
 guid: ee889029137f4e44bb7a84ca94cc6525
-timeCreated: 1461616525
-licenseType: Free
+timeCreated: 1461619472
+licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: SlimeWalks_122x122Sprites_5
+    21300002: SlimeWalks_122x122Sprites_8
+    21300004: SlimeWalks_122x122Sprites_10
+    21300006: SlimeWalks_122x122Sprites_12
+    21300008: SlimeWalks_122x122Sprites_21
+    21300010: SlimeWalks_122x122Sprites_23
+    21300012: SlimeWalks_122x122Sprites_25
+    21300014: SlimeWalks_122x122Sprites_27
+    21300016: SlimeWalks_122x122Sprites_37
+    21300018: SlimeWalks_122x122Sprites_39
+    21300020: SlimeWalks_122x122Sprites_41
+    21300022: SlimeWalks_122x122Sprites_43
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +42,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +50,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +61,285 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: SlimeWalks_122x122Sprites_5
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 392
+        width: 107
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.5, y: 53}
+        - {x: -53.5, y: -1}
+        - {x: -53.5, y: -53}
+        - {x: 47.5, y: -53}
+        - {x: 53.5, y: -23}
+        - {x: 53.5, y: 53}
+    - name: SlimeWalks_122x122Sprites_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 392
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 51}
+        - {x: -16, y: 46}
+        - {x: -51, y: 3}
+        - {x: -51, y: -51}
+        - {x: 48, y: -51}
+        - {x: 51, y: -48}
+        - {x: 51, y: 39}
+        - {x: 44, y: 51}
+    - name: SlimeWalks_122x122Sprites_10
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 392
+        width: 108
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4, y: 53}
+        - {x: -53, y: 10}
+        - {x: -54, y: 5}
+        - {x: -54, y: -52}
+        - {x: -53, y: -53}
+        - {x: 46, y: -53}
+        - {x: 54, y: -52}
+        - {x: 54, y: 53}
+    - name: SlimeWalks_122x122Sprites_12
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 392
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39.5, y: 22.5}
+        - {x: 38.5, y: 22.5}
+        - {x: 34.5, y: 26.5}
+        - {x: 39.5, y: 22.5}
+        - {x: 46.5, y: 22.5}
+        - {x: 50.5, y: 23.5}
+        - {x: 50.5, y: 41.5}
+        - {x: 45.5, y: 50.5}
+        - {x: 8.5, y: 50.5}
+        - {x: -50.5, y: 20.5}
+        - {x: -50.5, y: -50.5}
+        - {x: 49.5, y: -50.5}
+        - {x: 50.5, y: -49.5}
+        - {x: 50.5, y: -0.5}
+        - {x: 49.5, y: 13.5}
+    - name: SlimeWalks_122x122Sprites_21
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 271
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39.5, y: 21.5}
+        - {x: 38.5, y: 21.5}
+        - {x: 34.5, y: 25.5}
+        - {x: 39.5, y: 21.5}
+        - {x: 46.5, y: 21.5}
+        - {x: 50.5, y: 24.5}
+        - {x: 50.5, y: 38.5}
+        - {x: 40.5, y: 50.5}
+        - {x: 7.5, y: 50.5}
+        - {x: -50.5, y: 12.5}
+        - {x: -50.5, y: -50.5}
+        - {x: 50.5, y: -50.5}
+        - {x: 50.5, y: -0.5}
+        - {x: 49.5, y: 12.5}
+    - name: SlimeWalks_122x122Sprites_23
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 270
+        width: 108
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 46, y: 53.5}
+        - {x: 11, y: 53.5}
+        - {x: -54, y: -1.5}
+        - {x: -54, y: -53.5}
+        - {x: 43, y: -53.5}
+        - {x: 48, y: -52.5}
+        - {x: 54, y: -8.5}
+        - {x: 54, y: 50.5}
+    - name: SlimeWalks_122x122Sprites_25
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 271
+        width: 101
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39.5, y: 22}
+        - {x: 38.5, y: 22}
+        - {x: 34.5, y: 26}
+        - {x: 39.5, y: 22}
+        - {x: 46.5, y: 22}
+        - {x: 50.5, y: 23}
+        - {x: 50.5, y: 41}
+        - {x: 41.5, y: 50}
+        - {x: 4.5, y: 50}
+        - {x: -50.5, y: 10}
+        - {x: -50.5, y: -50}
+        - {x: 50.5, y: -50}
+        - {x: 50.5, y: 0}
+        - {x: 49.5, y: 13}
+    - name: SlimeWalks_122x122Sprites_27
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 270
+        width: 109
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 46.5, y: 48}
+        - {x: 40.5, y: 45}
+        - {x: 41.5, y: 45}
+        - {x: 40.5, y: 49}
+        - {x: 40.5, y: 53}
+        - {x: -8.5, y: 53}
+        - {x: -27.5, y: 47}
+        - {x: -53.5, y: -1}
+        - {x: -54.5, y: -8}
+        - {x: -54.5, y: -53}
+        - {x: 54.5, y: -53}
+        - {x: 54.5, y: 47}
+        - {x: 51.5, y: 48}
+    - name: SlimeWalks_122x122Sprites_37
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 148
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39.5, y: 22.5}
+        - {x: 38.5, y: 22.5}
+        - {x: 34.5, y: 26.5}
+        - {x: 39.5, y: 22.5}
+        - {x: 46.5, y: 22.5}
+        - {x: 50.5, y: 23.5}
+        - {x: 50.5, y: 41.5}
+        - {x: 45.5, y: 50.5}
+        - {x: 8.5, y: 50.5}
+        - {x: -50.5, y: 20.5}
+        - {x: -50.5, y: -50.5}
+        - {x: 49.5, y: -50.5}
+        - {x: 50.5, y: -49.5}
+        - {x: 50.5, y: -0.5}
+        - {x: 49.5, y: 13.5}
+    - name: SlimeWalks_122x122Sprites_39
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 150
+        width: 106
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40, y: 44}
+        - {x: 41, y: 44}
+        - {x: 40, y: 48}
+        - {x: 34, y: 52}
+        - {x: 9, y: 52}
+        - {x: -53, y: -1}
+        - {x: -53, y: -52}
+        - {x: 45, y: -52}
+        - {x: 53, y: -33}
+        - {x: 53, y: 52}
+        - {x: 49, y: 52}
+        - {x: 46, y: 47}
+    - name: SlimeWalks_122x122Sprites_41
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 148
+        width: 101
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39.5, y: 22}
+        - {x: 38.5, y: 22}
+        - {x: 34.5, y: 26}
+        - {x: 39.5, y: 22}
+        - {x: 46.5, y: 22}
+        - {x: 50.5, y: 25}
+        - {x: 50.5, y: 46}
+        - {x: 42.5, y: 51}
+        - {x: 1.5, y: 51}
+        - {x: -34.5, y: 24}
+        - {x: -46.5, y: 8}
+        - {x: -50.5, y: -12}
+        - {x: -50.5, y: -49}
+        - {x: -45.5, y: -51}
+        - {x: 44.5, y: -51}
+        - {x: 50.5, y: -48}
+        - {x: 50.5, y: -1}
+        - {x: 49.5, y: 13}
+    - name: SlimeWalks_122x122Sprites_43
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 148
+        width: 109
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31.5, y: 22}
+        - {x: 35.5, y: 18}
+        - {x: 51.5, y: 25}
+        - {x: 54.5, y: 32}
+        - {x: 54.5, y: 49}
+        - {x: 39.5, y: 53}
+        - {x: 17.5, y: 53}
+        - {x: 11.5, y: 46}
+        - {x: -21.5, y: 29}
+        - {x: -54.5, y: 6}
+        - {x: -54.5, y: -53}
+        - {x: 36.5, y: -53}
+        - {x: 47.5, y: -48}
+        - {x: 43.5, y: 7}
+        - {x: 40.5, y: 12}
     outline: []
   spritePackingTag: 
   userData: 
