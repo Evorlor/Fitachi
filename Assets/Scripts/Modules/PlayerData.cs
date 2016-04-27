@@ -10,12 +10,12 @@ public class PlayerData {
 	public static PlayerData GetPlayerData()
 	{
 		var playerData = new PlayerData();
-		playerData.dairy = AdventureStats.Dairy;
-		playerData.protein = AdventureStats.Protein;
-		playerData.grain = AdventureStats.Grain;
-		playerData.vegetable = AdventureStats.Vegetable;
-		playerData.fruit = AdventureStats.Fruit;
-		playerData.sweets = AdventureStats.Sweets;
+		playerData.dairy = AdventureStats.GetStat(FoodType.Dairy);
+		playerData.protein = AdventureStats.GetStat(FoodType.Protien);
+		playerData.grain = AdventureStats.GetStat(FoodType.Grain);
+		playerData.vegetable = AdventureStats.GetStat(FoodType.Vegetable);
+		playerData.fruit = AdventureStats.GetStat(FoodType.Fruit);
+		playerData.sweets = AdventureStats.GetCombatStrength();
 		return playerData;
 	}
 }

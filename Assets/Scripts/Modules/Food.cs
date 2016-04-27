@@ -4,16 +4,16 @@ using System.Collections;
 public class Food : MonoBehaviour {
 
     [SerializeField]
-    int foodCost;
+    public int foodCost;
 
     [SerializeField]
-    FoodType type;
+    public FoodType type;
 
     [SerializeField]
-    int value;
+    public int value;
 
     [SerializeField]
-    int calories;
+    public int calories;
 
     public void Eat() {
 

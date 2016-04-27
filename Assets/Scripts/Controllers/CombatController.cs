@@ -54,13 +54,14 @@ public class CombatController : ManagerBehaviour<CombatController>
     {
         var playerData = match.player0.id == FitbitRestClient.Instance.GetUserId() ? match.player0.playerdata : match.player1.playerdata;
         var opponentData = match.player1.id == FitbitRestClient.Instance.GetUserId() ? match.player0.playerdata : match.player1.playerdata;
-        AdventureStats.Dairy = playerData.dairy - opponentData.dairy;
-        AdventureStats.Fruit = playerData.fruit - opponentData.fruit;
-        AdventureStats.Grain = playerData.grain - opponentData.grain;
-        AdventureStats.Protein = playerData.protein - opponentData.protein;
-        AdventureStats.Sweets = playerData.sweets - opponentData.sweets;
-        AdventureStats.Vegetable = playerData.vegetable - opponentData.vegetable;
-        int total = AdventureStats.Dairy + AdventureStats.Fruit + AdventureStats.Grain + AdventureStats.Protein + AdventureStats.Sweets + AdventureStats.Vegetable;
+        //AdventureStats.SetStat(FoodType.Dairy, playerData.dairy - opponentData.dairy);
+        //AdventureStats.SetStat(FoodType.Fruit, playerData.fruit - opponentData.fruit);
+        //AdventureStats.SetStat(FoodType.Grain, playerData.grain - opponentData.grain);
+        //AdventureStats.SetStat(FoodType.Protien, playerData.protein - opponentData.protein);
+        //AdventureStats.SetStat(FoodType.Sweets, playerData.sweets - opponentData.sweets);
+        //AdventureStats.SetStat(FoodType.Vegetable, playerData.vegetable - opponentData.vegetable);
+        //int total = AdventureStats.Dairy + AdventureStats.Fruit + AdventureStats.Grain + AdventureStats.Protein + AdventureStats.Sweets + AdventureStats.Vegetable;
+        int total = playerData.sweets - opponentData.sweets;
         victoryImg.gameObject.SetActive(true);
         if (total > 0)
         {
@@ -78,12 +79,12 @@ public class CombatController : ManagerBehaviour<CombatController>
             victoryImg.sprite = lose;
         }
         fight.gameObject.SetActive(false);
-        AdventureStats.Dairy = Mathf.Max(0, playerData.dairy - opponentData.dairy);
-        AdventureStats.Fruit = Mathf.Max(0, playerData.fruit - opponentData.fruit);
-        AdventureStats.Grain = Mathf.Max(0, playerData.grain - opponentData.grain);
-        AdventureStats.Protein = Mathf.Max(0, playerData.protein - opponentData.protein);
-        AdventureStats.Sweets = Mathf.Max(0, playerData.sweets - opponentData.sweets);
-        AdventureStats.Vegetable = Mathf.Max(0, playerData.vegetable - opponentData.vegetable);
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.dairy - opponentData.dairy));
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.fruit - opponentData.fruit));
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.grain - opponentData.grain));
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.protein - opponentData.protein));
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.sweets - opponentData.sweets));
+        AdventureStats.SetStat(FoodType.Dairy, Mathf.Max(0, playerData.vegetable - opponentData.vegetable));
         // TODO: Determine the winner
         // Play the animation
         //var startMatchButtonText = searchForMatch.GetComponentInChildren<Text>();

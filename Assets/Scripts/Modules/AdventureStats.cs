@@ -74,9 +74,9 @@ public static class AdventureStats {
         }
     }
 
-    public static void Feed(FoodType food, int foodCaloires, int foodValue) {
-        AdventurerNutrition[(int)food] = foodValue;
-        calories += foodCaloires;
+    public static void Feed(Food food) {
+        AdventurerNutrition[(int)food.type] = food.value;
+        calories += food.calories;
     }
 
 
@@ -104,8 +104,11 @@ public static class AdventureStats {
     public static int GetStat(FoodType type) {
         return AdventurerNutrition[(int)type];
     }
+    public static void SetStat(FoodType type, int newValue) {
+        AdventurerNutrition[(int)type] = newValue;
+    }
 
-    public static float GetCombatStrength() {
+    public static int GetCombatStrength() {
         float combatStrength = 0;
         float totalServingsOverage = 0;
         for (int i = 0; i < AdventurerNutrition.Length; i++) {
@@ -123,7 +126,7 @@ public static class AdventureStats {
 
         combatStrength *= (1 - totalOveragePenalty);
 
-        return combatStrength;
+        return (int)(combatStrength*100);
     }
 
     //update
