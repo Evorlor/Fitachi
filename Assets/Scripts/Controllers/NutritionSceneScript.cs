@@ -50,7 +50,7 @@ public class NutritionSceneScript : MonoBehaviour {
         AdventureStats.Feed(foodItem);
         switch (foodItem.type) {
             case FoodType.Dairy:
-                //AdventureStats.Dairy += foodItem.foodCost;
+
                 GameObject.FindGameObjectWithTag("DairySlider").GetComponent<Image>().fillAmount += 0.2f;
                 break;
             case FoodType.Protien:

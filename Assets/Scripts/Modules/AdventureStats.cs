@@ -74,8 +74,10 @@ public static class AdventureStats {
         }
     }
 
+
+
     public static void Feed(Food food) {
-        AdventurerNutrition[(int)food.type] = food.value;
+        AdventurerNutrition[(int)food.type] += food.value;
         calories += food.calories;
     }
 
