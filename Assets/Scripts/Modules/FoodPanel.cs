@@ -15,7 +15,7 @@ public class FoodPanel : MonoBehaviour
 
     void Awake()
     {
-        FoodImage.sprite = FoodSprite;
+        //FoodImage.sprite = FoodSprite;
         CaloricText.text = CaloriesAmount.ToString();
         CostText.text = CostAmount.ToString();
     }
