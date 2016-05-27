@@ -99,7 +99,7 @@ public class CombatController : MonoBehaviour
     {
         var player = new Player();
         player.id = FitbitRestClient.Instance.GetUserId();
-        player.playerdata = PlayerData.GetPlayerData();
+        player.playerdata = PlayerDataHelper.GetPlayerData();
         return player;
     }
 }
